@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NFLX 중장기 전망 · Nasdaq 100 Top 20 분석</title>
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --void:#05060a; --deep:#0b0e17; --panel:#11151f; --panel2:#161b27;
+  --line:#222a3a; --ink:#e8ecf4; --mute:#8a93a8; --faint:#5a6378;
+  --accent:#e3b24a; --accent2:#ffd277; --gold:#e3b24a;
+  --green:#3ee08f; --red:#ff5071; --amber:#ffc24b; --grid:rgba(255,255,255,.06);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;background:var(--void)}
+body{background:radial-gradient(circle at 20% 0%,rgba(255,255,255,.045),transparent 28%),var(--void);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;line-height:1.58;overflow-x:hidden}
+a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(255,255,255,.18)}
+#prog{position:fixed;top:0;left:0;width:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--gold));z-index:50}
+.slide{min-height:100vh;max-width:1500px;margin:0 auto;padding:clamp(56px,6vw,92px) clamp(22px,6vw,112px);display:flex;flex-direction:column;justify-content:center;border-bottom:1px solid var(--line);position:relative}
+.slide::before{content:attr(data-no);position:absolute;top:clamp(18px,3vw,38px);right:clamp(20px,6vw,90px);font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);letter-spacing:0}
+#cover{overflow:hidden}
+#field{position:absolute;inset:0;opacity:.55;z-index:0}
+.cover-inner{position:relative;z-index:1;max-width:1080px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:12px;margin-bottom:16px;letter-spacing:0}
+.eyebrow::before{content:"";width:34px;height:1px;background:var(--accent)}
+.eyebrow.gold{color:var(--gold)}.eyebrow.gold::before{background:var(--gold)}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(46px,9vw,128px);line-height:1.02;letter-spacing:0}
+h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(26px,3.4vw,44px);line-height:1.1;letter-spacing:0;margin-bottom:10px}
+h3{font-size:18px;font-weight:600;margin-bottom:8px;letter-spacing:0}
+p{color:var(--mute);font-weight:300}
+.lead{font-size:clamp(15px,1.5vw,18px);max-width:880px;margin-bottom:24px}
+.ticker-row{display:flex;align-items:baseline;gap:18px;flex-wrap:wrap;margin:12px 0 24px}
+.price-now{font-family:'IBM Plex Mono',monospace;font-size:clamp(24px,3vw,36px)}
+.chg{font-family:'IBM Plex Mono',monospace;font-size:14px;padding:4px 9px;border-radius:6px;border:1px solid var(--line)}
+.up{color:var(--green)}.down{color:var(--red)}.neu{color:var(--accent2)}
+.live{display:inline-flex;gap:9px;align-items:center;border:1px solid var(--line);border-radius:999px;padding:8px 15px;color:var(--accent2);background:rgba(255,255,255,.035);font-family:'IBM Plex Mono',monospace;font-size:12px;margin-bottom:28px}
+.pulse{width:7px;height:7px;border-radius:999px;background:var(--amber);animation:pulse 2s infinite}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,194,75,.45)}70%{box-shadow:0 0 0 9px rgba(255,194,75,0)}100%{box-shadow:0 0 0 0 rgba(255,194,75,0)}}
+.cover-sub{font-size:clamp(16px,1.8vw,21px);max-width:860px;margin-bottom:34px}
+.cover-meta,.grid2,.grid3{display:grid;gap:16px}
+.cover-meta{grid-template-columns:repeat(4,minmax(150px,1fr));font-family:'IBM Plex Mono',monospace;color:var(--faint);font-size:12px}
+.cover-meta b{display:block;color:var(--mute);font-size:10px;margin-bottom:4px;font-weight:500}
+.grid2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.grid3{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-radius:8px;padding:22px;position:relative;overflow:hidden}
+.card.accent::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--accent),transparent)}
+.card.gold::before{content:"";position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+.kpi{font-family:'IBM Plex Mono',monospace;font-size:clamp(28px,3.4vw,42px);font-weight:600;line-height:1}
+.kpi-label{font-size:12px;color:var(--faint);margin-top:10px;line-height:1.5}
+.tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;padding:3px 8px;border-radius:5px;margin:0 6px 8px 0}
+.tag.bull{color:var(--green);background:rgba(62,224,143,.1);border:1px solid rgba(62,224,143,.24)}
+.tag.bear{color:var(--red);background:rgba(255,80,113,.1);border:1px solid rgba(255,80,113,.24)}
+.tag.warn{color:var(--amber);background:rgba(255,194,75,.1);border:1px solid rgba(255,194,75,.24)}
+.tag.gold{color:var(--gold);background:rgba(227,178,74,.1);border:1px solid rgba(227,178,74,.25)}
+.chartwrap{background:var(--deep);border:1px solid var(--line);border-radius:8px;padding:18px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+.axis{stroke:var(--line);stroke-width:1}.gl{stroke:var(--grid);stroke-width:1}
+.alab{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:var(--faint)}.nodebig{font-family:'Space Grotesk',sans-serif;font-size:26px;fill:var(--ink);font-weight:700}.nodesm{font-family:'IBM Plex Mono',monospace;font-size:10.5px;fill:var(--mute)}
+.legend{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--mute)}
+.dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
+.barrow{display:grid;grid-template-columns:120px 1fr 74px;gap:10px;align-items:center;margin:10px 0}
+.barname,.barval{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}.barval{text-align:right;color:var(--ink)}.bartrack{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden}.barfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+ul.clean{list-style:none}ul.clean li{position:relative;padding-left:18px;margin:0 0 10px;color:var(--mute);font-weight:300;font-size:15px}ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}ul.clean.red li::before{background:var(--red)}ul.clean.gold li::before{background:var(--gold)}
+table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left}th{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);font-weight:500}td{color:var(--mute);font-weight:300}td.mono,th.mono{font-family:'IBM Plex Mono',monospace}tr:last-child td{border-bottom:none}
+.footnote{margin-top:22px;padding-top:14px;border-top:1px dashed var(--line)}.src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);line-height:1.65}
+.big-num{font-family:'Space Grotesk',sans-serif;font-size:clamp(58px,9vw,118px);line-height:.9;font-weight:700}.verdict{font-family:'Space Grotesk',sans-serif;font-size:clamp(22px,2.5vw,32px);line-height:1.25;font-weight:600;color:var(--ink)}
+.disclaimer{font-size:12px;color:var(--faint);font-weight:300;line-height:1.7}
+.reveal{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease}.reveal.in{opacity:1;transform:none}
+@media(max-width:900px){.grid2,.grid3,.cover-meta{grid-template-columns:1fr}.slide{padding:60px 22px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.reveal{opacity:1;transform:none;transition:none}.pulse{animation:none}}
+</style>
+
+</head>
+<body>
+<div id="prog"></div>
+
+<section class="slide" id="cover" data-no="00 / NFLX">
+  <canvas id="field"></canvas>
+  <div class="cover-inner">
+    <div class="live"><span class="pulse"></span> NASDAQ 100 TOP 20 · GOLD THEME</div>
+    <div class="eyebrow gold">미국주식 중장기 전망 · 데이터 기준 2026-06-26</div>
+    <h1>NFLX</h1>
+    <div class="ticker-row">
+      <span class="price-now">$70.90</span>
+      <span class="chg down">▼ YTD -22.1%</span>
+      <span class="src">Jun 25, 2026, 4:00 PM EDT</span>
+    </div>
+    <p class="cover-sub">Netflix, Inc.는 콘텐츠 규모와 광고 티어가 결합된 글로벌 스트리밍 플랫폼로 요약된다. 핵심 질문은 현재 밸류에이션이 최근 성장률과 애널리스트 목표가가 말하는 업사이드를 충분히 보상하는가다.</p>
+    <div class="cover-meta">
+      <div><b>시가총액</b>$298.6B</div>
+      <div><b>최근분기</b>$12.2B / YoY 16.19%</div>
+      <div><b>핵심지표</b>EPS 1.23 / surprise -1.4%</div>
+      <div><b>컨센서스</b>Buy · 평균 $114</div>
+    </div>
+  </div>
+</section>
+
+<section class="slide reveal" data-no="01 / SNAPSHOT">
+  <div class="eyebrow">Executive Snapshot</div>
+  <h2>Netflix, Inc.: 매력도 6.1/10</h2>
+  <p class="lead">글로벌 스트리밍 1위의 광고·라이브·게임 확장 실험. 숫자로 보면 최근 분기 매출 성장률은 <strong>16.19%</strong>, EPS 성장률은 <strong>86.36%</strong>, 평균 목표가 기준 업사이드는 <strong>61%</strong>다.</p>
+  <div class="grid3">
+    <div class="card accent"><div class="kpi down">-22.1%</div><div class="kpi-label">2026 YTD 주가 성과 · Yahoo Finance 조정종가 기준 내부 계산</div></div>
+    <div class="card accent"><div class="kpi neu">$298.6B</div><div class="kpi-label">Nasdaq 100 내 시가총액 순위 #21 · Alphabet 중복 share class 제외 전 순위</div></div>
+    <div class="card accent"><div class="kpi up">61%</div><div class="kpi-label">애널리스트 평균 목표가 대비 여력 · 컨센서스 Buy</div></div>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card"><span class="tag bull">BULL</span><p>글로벌 가입자 기반과 콘텐츠 추천 알고리즘은 규모의 경제를 만든다.</p></div>
+    <div class="card"><span class="tag bear">BEAR</span><p>콘텐츠 비용과 스포츠·라이브 권리 비용이 FCF를 압박할 수 있다.</p></div>
+  </div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. YTD는 2026-01-02 종가 대비 2026-06-25 종가로 계산.</span></div>
+</section>
+
+<section class="slide reveal" data-no="02 / MARKET MAP">
+  <div class="eyebrow">가격과 위치</div>
+  <h2>현재가는 52주 박스 안에서 어디에 있나</h2>
+  <p class="lead">주가 성과는 종목별로 극단적으로 갈렸다. 이 슬라이드는 현재가, 52주 범위, YTD, 시가총액을 한 화면에 묶어 과열과 소외를 동시에 본다.</p>
+  <div class="grid2">
+    <div class="card accent">
+      <h3>시장 메타</h3>
+      <table>
+        <tr><th>항목</th><th class="mono">값</th></tr>
+        <tr><td>현재가</td><td class="mono">$70.90</td></tr>
+        <tr><td>일일 변동</td><td class="mono">-1.31%</td></tr>
+        <tr><td>52주 레인지</td><td class="mono">70.86 - 134.12</td></tr>
+        <tr><td>TTM 매출</td><td class="mono">46.89B (+16.7%)</td></tr>
+        <tr><td>TTM EPS</td><td class="mono">3.10 (+46.6%)</td></tr>
+      </table>
+    </div>
+    <div class="card">
+      <h3>핵심 해석</h3>
+      <div class="barrow"><div class="barname">YTD</div><div class="bartrack"><div class="barfill" style="width:7.4%"></div></div><div class="barval">-22.1%</div></div>
+      <div class="barrow"><div class="barname">매출 YoY</div><div class="bartrack"><div class="barfill" style="width:16.2%"></div></div><div class="barval">16.19%</div></div>
+      <div class="barrow"><div class="barname">EPS YoY</div><div class="bartrack"><div class="barfill" style="width:43.2%"></div></div><div class="barval">86.36%</div></div>
+      <div class="barrow"><div class="barname">목표가 여력</div><div class="bartrack"><div class="barfill" style="width:61.0%"></div></div><div class="barval">61%</div></div>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </span></div>
+</section>
+
+<section class="slide reveal" data-no="03 / FUNDAMENTALS">
+  <div class="eyebrow">재무와 최근 실적</div>
+  <h2>최근 분기: 성장률과 현금흐름의 질</h2>
+  <p class="lead">최근 분기 표는 StockAnalysis의 분기 손익계산서·현금흐름 데이터를 사용했다. EPS surprise는 Yahoo Finance의 최근 발표 EPS와 컨센서스 비교다.</p>
+  <div class="grid2">
+    <div class="chartwrap">
+      <div class="src" style="margin-bottom:8px">분기 매출 막대 / EPS 라인</div>
+      
+      <svg viewBox="0 0 560 280" role="img" aria-label="NFLX quarterly revenue and EPS chart">
+        <line class="gl" x1="52" y1="64" x2="532" y2="64"/><line class="gl" x1="52" y1="142" x2="532" y2="142"/><line class="axis" x1="52" y1="220" x2="532" y2="220"/>
+        <text class="alab" x="20" y="68">EPS</text><text class="alab" x="12" y="224">REV</text>
+        <rect x="78" y="85.7" width="48" height="134.3" rx="3" fill="#e3b24a" opacity="0.46"/><text class="alab" x="102" y="77.7" text-anchor="middle">$10.5B</text><rect x="170" y="78.9" width="48" height="141.1" rx="3" fill="#e3b24a" opacity="0.56"/><text class="alab" x="194" y="70.9" text-anchor="middle">$11.1B</text><rect x="262" y="73.4" width="48" height="146.6" rx="3" fill="#e3b24a" opacity="0.66"/><text class="alab" x="286" y="65.4" text-anchor="middle">$11.5B</text><rect x="354" y="66.5" width="48" height="153.5" rx="3" fill="#e3b24a" opacity="0.76"/><text class="alab" x="378" y="58.5" text-anchor="middle">$12.1B</text><rect x="446" y="64.0" width="48" height="156.0" rx="3" fill="#e3b24a" opacity="0.86"/><text class="alab" x="470" y="56.0" text-anchor="middle">$12.2B</text>
+        <polyline points="102.0,148.0 194.0,139.6 286.0,157.8 378.0,162.0 470.0,68.0" fill="none" stroke="#ffd277" stroke-width="2.4"/><circle cx="102.0" cy="148.0" r="4" fill="#ffd277"/><circle cx="194.0" cy="139.6" r="4" fill="#ffd277"/><circle cx="286.0" cy="157.8" r="4" fill="#ffd277"/><circle cx="378.0" cy="162.0" r="4" fill="#ffd277"/><circle cx="470.0" cy="68.0" r="4" fill="#ffd277"/>
+        <text class="alab" x="102" y="246" text-anchor="middle">Q1
+2025</text><text class="alab" x="194" y="246" text-anchor="middle">Q2
+2025</text><text class="alab" x="286" y="246" text-anchor="middle">Q3
+2025</text><text class="alab" x="378" y="246" text-anchor="middle">Q4
+2025</text><text class="alab" x="470" y="246" text-anchor="middle">Q1
+2026</text>
+      </svg>
+    
+      <div class="legend"><span><i class="dot" style="background:#e3b24a"></i>Revenue</span><span><i class="dot" style="background:#ffd277"></i>EPS diluted</span></div>
+    </div>
+    <div class="card accent">
+      <h3>Q1 2026 · Mar &#x27;26 Mar 31, 2026</h3>
+      <table>
+        <tr><th>항목</th><th class="mono">값</th><th class="mono">YoY/상태</th></tr>
+        <tr><td>매출</td><td class="mono">$12.2B</td><td class="mono">16.19%</td></tr>
+        <tr><td>EPS diluted</td><td class="mono">1.23</td><td class="mono">86.36%</td></tr>
+        <tr><td>Gross margin</td><td class="mono">51.93%</td><td class="mono">수익성</td></tr>
+        <tr><td>FCF</td><td class="mono">$5.1B</td><td class="mono">91.44%</td></tr>
+        <tr><td>EPS surprise</td><td class="mono">EPS 1.23 vs 1.25 / surprise -1.4%</td><td class="mono">2026-04-16</td></tr>
+      </table>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. EPS surprise는 Yahoo Finance earnings dates의 reported EPS와 estimate 비교.</span></div>
+</section>
+
+<section class="slide reveal" data-no="04 / QUALITY">
+  <div class="eyebrow">이익의 질과 성장 동력</div>
+  <h2>무엇이 숫자를 밀어 올리는가</h2>
+  <p class="lead">성장 동력은 회사 IR의 사업 설명과 최근 재무 데이터에서 반복적으로 확인되는 요인을 분리했다. 추정·해석은 아래 문장에 명시적으로 반영했다.</p>
+  <div class="grid3">
+    <div class="card accent"><div class="kpi neu">51.93%</div><div class="kpi-label">최근 분기 gross margin</div></div>
+    <div class="card accent"><div class="kpi neu">41.59%</div><div class="kpi-label">최근 분기 FCF margin</div></div>
+    <div class="card accent"><div class="kpi up">91.44%</div><div class="kpi-label">FCF 성장률 YoY</div></div>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3 style="color:var(--green)">Bull drivers</h3>
+      <ul class="clean "><li>글로벌 가입자 기반과 콘텐츠 추천 알고리즘은 규모의 경제를 만든다.</li><li>광고 티어와 계정공유 단속은 ARPU와 가입자 전환을 동시에 자극한다.</li><li>라이브 이벤트와 게임은 체류시간과 광고 인벤토리를 넓힐 수 있다.</li></ul>
+    </div>
+    <div class="card">
+      <h3>주요 사업축</h3>
+      <ul class="clean "><li>Streaming subscription: 성장 축</li><li>Advertising tier: 수익성/락인 축</li><li>Live / Games: 옵션/방어 축</li></ul>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 사업축은 회사 IR/사업 설명 기반 요약, 정량 수치는 StockAnalysis 분기 재무제표 기반.</span></div>
+</section>
+
+<section class="slide reveal" data-no="05 / ECOSYSTEM">
+  <div class="eyebrow gold">정책·규제·생태계</div>
+  <h2>숫자 밖에서 가격을 움직이는 변수</h2>
+  <p class="lead">정치적 위법성 같은 단정은 하지 않는다. 여기서는 공개 IR·시장 데이터·정책 환경에서 투자자가 모니터링해야 할 사실 기반 변수만 분리한다.</p>
+  <div class="grid2">
+    <div class="chartwrap">
+      <svg viewBox="0 0 720 360" role="img" aria-label="NFLX ecosystem map">
+        <line x1="360" y1="178" x2="180" y2="90" stroke="#e3b24a" stroke-width="1.4" opacity=".65"/>
+        <line x1="360" y1="178" x2="540" y2="90" stroke="#ffd277" stroke-width="1.4" opacity=".65"/>
+        <line x1="360" y1="178" x2="178" y2="270" stroke="#ffd277" stroke-width="1.4" opacity=".55"/>
+        <line x1="360" y1="178" x2="542" y2="270" stroke="#e3b24a" stroke-width="1.4" opacity=".55"/>
+        <circle cx="360" cy="178" r="62" fill="#e3b24a" opacity=".16"/><circle cx="360" cy="178" r="48" fill="var(--panel2)" stroke="#e3b24a" stroke-width="2"/>
+        <text class="nodebig" x="360" y="168" text-anchor="middle"><tspan x="360" dy="4">NFLX</tspan></text><text class="alab" x="360" y="194" text-anchor="middle"><tspan x="360" dy="-5">콘텐츠 규모와 광고 티어가 결합된 글로벌</tspan><tspan x="360" dy="14">스트리밍 플랫폼</tspan></text>
+        <g><circle cx="180" cy="90" r="46" fill="var(--panel)" stroke="#e3b24a" stroke-width="1.5"/><text class="nodesm" x="180" y="90" text-anchor="middle"><tspan x="180" dy="-5">Streaming</tspan><tspan x="180" dy="14">subscription</tspan></text></g>
+        <g><circle cx="540" cy="90" r="46" fill="var(--panel)" stroke="#ffd277" stroke-width="1.5"/><text class="nodesm" x="540" y="90" text-anchor="middle"><tspan x="540" dy="4">Advertising tier</tspan></text></g>
+        <g><circle cx="178" cy="270" r="46" fill="var(--panel)" stroke="#ffd277" stroke-width="1.5"/><text class="nodesm" x="178" y="270" text-anchor="middle"><tspan x="178" dy="4">Live / Games</tspan></text></g>
+        <g><circle cx="542" cy="270" r="46" fill="var(--panel)" stroke="#e3b24a" stroke-width="1.5"/><text class="nodesm" x="542" y="270" text-anchor="middle"><tspan x="542" dy="4">정책 / 규제</tspan></text></g>
+      </svg>
+    </div>
+    <div class="card gold">
+      <h3 style="color:var(--gold)">정책/규제 체크포인트</h3>
+      <ul class="clean gold"><li>현지 콘텐츠 쿼터와 디지털세는 국가별 비용 구조를 바꾼다.</li><li>광고 개인정보 규제는 광고 티어 수익화 속도에 영향을 준다.</li><li>망사용료 논쟁은 일부 지역의 비용 리스크로 남아 있다.</li></ul>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 정책 항목은 공개 보도·규제 환경에 대한 리스크 분류이며 위법 단정이 아님.</span></div>
+</section>
+
+<section class="slide reveal" data-no="06 / RISKS">
+  <div class="eyebrow">Bear Case</div>
+  <h2>가장 먼저 확인해야 할 세 가지 리스크</h2>
+  <p class="lead">강한 종목일수록 리스크는 주가가 비쌀 때 갑자기 커진다. 아래 세 항목은 사업·재무·규제/거시로 분리한 핵심 약세 논리다.</p>
+  <div class="grid3">
+    <div class="card"><span class="tag bear">BUSINESS</span><p>콘텐츠 비용과 스포츠·라이브 권리 비용이 FCF를 압박할 수 있다.</p></div>
+    <div class="card"><span class="tag warn">FINANCIAL</span><p>스트리밍 경쟁과 가격 인상 피로는 해지율 리스크를 만든다.</p></div>
+    <div class="card"><span class="tag gold">POLICY/MACRO</span><p>환율과 지역별 가격 민감도는 글로벌 성장률을 흔든다.</p></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3 style="color:var(--red)">핵심 경고</h3>
+    <p>현재 밸류에이션은 <span class="mono">P/E 22.9</span>, <span class="mono">P/S 6.37</span>, <span class="mono">EV/EBITDA 21.21</span>다. 성장률이 높아도 기대치가 이미 가격에 반영된 종목은 실적보다 가이던스의 작은 변화에 더 크게 반응할 수 있다.</p>
+  </div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 밸류에이션 멀티플은 StockAnalysis statistics 기준.</span></div>
+</section>
+
+<section class="slide reveal" data-no="07 / VALUATION">
+  <div class="eyebrow">밸류에이션 & 컨센서스</div>
+  <h2>평균 목표가가 말하는 기대수익률</h2>
+  <p class="lead">컨센서스는 투자 결론이 아니라 시장 기대치의 위치를 알려주는 좌표다. 최근 상향·하향 코멘트와 peer 대비 멀티플을 함께 봐야 한다.</p>
+  <div class="chartwrap">
+    
+      <svg viewBox="0 0 700 150" role="img" aria-label="NFLX analyst target spectrum">
+        <line class="axis" x1="70" y1="78" x2="630" y2="78"/>
+        <rect x="133.3" y="70" width="496.7" height="16" rx="8" fill="#e3b24a" opacity=".22"/>
+        <circle cx="133.3" cy="78" r="7" fill="var(--red)"/><text class="alab" x="133.3" y="112" text-anchor="middle">LOW $80</text>
+        <circle cx="370.9" cy="78" r="9" fill="#ffd277"/><text class="alab" x="370.9" y="46" text-anchor="middle">AVG $114</text>
+        <circle cx="376.8" cy="78" r="6" fill="#e3b24a"/><text class="alab" x="376.8" y="132" text-anchor="middle">MED $115</text>
+        <circle cx="630.0" cy="78" r="7" fill="var(--green)"/><text class="alab" x="630.0" y="112" text-anchor="middle">HIGH $151</text>
+        <line x1="70.0" y1="42" x2="70.0" y2="112" stroke="var(--ink)" stroke-width="2"/>
+        <text class="alab" x="70.0" y="30" text-anchor="middle" fill="var(--ink)">현재 $70.90</text>
+      </svg>
+    
+    <div class="legend"><span><i class="dot" style="background:#ffd277"></i>평균 목표가</span><span><i class="dot" style="background:var(--ink)"></i>현재가</span><span>강력매수 29 · 매수 8 · 보유 13 · 매도 0 · 강력매도 0</span></div>
+  </div>
+  <div class="grid2" style="margin-top:16px">
+    <div class="card">
+      <h3>최근 애널리스트 액션</h3>
+      <table><tr><th>기관</th><th>등급</th><th>액션</th><th class="mono">목표가</th><th class="mono">일자</th></tr><tr><td>Bernstein</td><td>Buy Maintains $110</td><td>Maintains</td><td class="mono">$110</td><td class="mono">Jun 23, 2026</td></tr><tr><td>DBS</td><td>Buy Maintains $112</td><td>Maintains</td><td class="mono">$112</td><td class="mono">Jun 22, 2026</td></tr><tr><td>Citizens JMP</td><td>Hold Maintains n/a</td><td>Maintains</td><td class="mono">—</td><td class="mono">Jun 18, 2026</td></tr><tr><td>Evercore ISI</td><td>Buy Reiterates $115</td><td>Reiterates</td><td class="mono">$115</td><td class="mono">Jun 10, 2026</td></tr></table>
+    </div>
+    <div class="card">
+      <h3>동종/연관 종목 비교</h3>
+      <table><tr><th>티커</th><th>시총</th><th class="mono">P/E</th><th class="mono">P/S</th><th class="mono">YTD</th></tr><tr><td class="mono">NFLX</td><td>$298.6B</td><td class="mono">22.9</td><td class="mono">6.37</td><td class="mono">-22.1%</td></tr><tr><td class="mono">META</td><td>$1.38T</td><td class="mono">19.75</td><td class="mono">6.41</td><td class="mono">-16.4%</td></tr><tr><td class="mono">GOOGL</td><td>$4.19T</td><td class="mono">26.22</td><td class="mono">9.93</td><td class="mono">9.2%</td></tr><tr><td class="mono">AMZN</td><td>$2.44T</td><td class="mono">27.15</td><td class="mono">3.29</td><td class="mono">0.2%</td></tr><tr><td class="mono">COST</td><td>$417.9B</td><td class="mono">47.39</td><td class="mono">1.42</td><td class="mono">10.6%</td></tr></table>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 애널리스트 목표가는 S&P Global 기반 StockAnalysis forecast 집계.</span></div>
+</section>
+
+<section class="slide reveal" data-no="08 / VERDICT">
+  <div class="eyebrow">종합 판단</div>
+  <h2>진입은 숫자보다 기대치의 온도를 보고 결정</h2>
+  <div class="grid2" style="align-items:center">
+    <div>
+      <div class="big-num" style="color:var(--accent)">6.1</div>
+      <div class="src">투자 매력도 / 10 · 정량지표 + 질적 리스크를 반영한 주관 점수</div>
+    </div>
+    <div>
+      <p class="verdict">글로벌 스트리밍 1위의 광고·라이브·게임 확장 실험</p>
+      <p style="margin-top:14px">Base case는 평균 목표가 <span class="mono">$114</span>, bear case는 <span class="mono">$80</span>, bull case는 <span class="mono">$151</span>로 둔다. 이는 애널리스트 목표가 범위를 그대로 사용한 시나리오이며, 내부 DCF가 아니다.</p>
+    </div>
+  </div>
+  <div class="grid3" style="margin-top:22px">
+    <div class="card accent"><h3>진입전략</h3><p>추격매수보다 실적 발표 전후 변동성, 52주 범위 하단 접근, 목표가 대비 안전마진 회복 구간을 우선 확인한다.</p></div>
+    <div class="card accent"><h3>모니터링</h3><p>다음 실적일, 분기 매출 성장률, EPS surprise, gross/FCF margin, 가이던스 톤 변화를 우선 추적한다.</p></div>
+    <div class="card accent"><h3>캘린더</h3><p>최근 발표일 2026-04-16; StockAnalysis earnings date와 회사 IR 이벤트 캘린더를 다음 업데이트 기준으로 둔다.</p></div>
+  </div>
+  <div class="footnote">
+    <p class="disclaimer">본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 모든 수치는 기준일 이후 변동될 수 있습니다. 정치·정책 내용은 공개 공시·보도·규제 환경 기반의 사실 정리이며 위법성을 단정하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
+    <p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/nflx/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nflx/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nflx/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nflx/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NFLX/history/">Yahoo Finance history</a>, <a href="https://ir.netflix.net/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </p>
+  </div>
+</section>
+
+<script>
+const root = document.documentElement;
+const prog = document.getElementById('prog');
+window.addEventListener('scroll', () => {
+  const h = document.documentElement.scrollHeight - innerHeight;
+  prog.style.width = (h > 0 ? scrollY / h * 100 : 0) + '%';
+}, {passive:true});
+const io = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if(entry.isIntersecting) entry.target.classList.add('in');
+  });
+}, {threshold:.18});
+document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+const canvas = document.getElementById('field');
+const ctx = canvas.getContext('2d');
+const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let nodes = [];
+function resize(){
+  canvas.width = innerWidth * devicePixelRatio;
+  canvas.height = innerHeight * devicePixelRatio;
+  ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);
+  const count = Math.min(46, Math.max(18, Math.floor(innerWidth / 38)));
+  nodes = Array.from({length:count}, () => ({
+    x: Math.random()*innerWidth, y: Math.random()*innerHeight,
+    vx: (Math.random()-.5)*0.35, vy: (Math.random()-.5)*0.35,
+    r: 1.2 + Math.random()*2.2
+  }));
+}
+function draw(){
+  ctx.clearRect(0,0,innerWidth,innerHeight);
+  const accent = getComputedStyle(root).getPropertyValue('--accent').trim();
+  const accent2 = getComputedStyle(root).getPropertyValue('--accent2').trim();
+  for(let i=0;i<nodes.length;i++){
+    const a = nodes[i];
+    if(!reduce){ a.x += a.vx; a.y += a.vy; }
+    if(a.x < 0 || a.x > innerWidth) a.vx *= -1;
+    if(a.y < 0 || a.y > innerHeight) a.vy *= -1;
+    ctx.beginPath(); ctx.arc(a.x,a.y,a.r,0,Math.PI*2); ctx.fillStyle = i%2 ? accent : accent2; ctx.globalAlpha=.6; ctx.fill();
+    for(let j=i+1;j<nodes.length;j++){
+      const b=nodes[j], dx=a.x-b.x, dy=a.y-b.y, d=Math.hypot(dx,dy);
+      if(d < 150){ ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.strokeStyle = accent; ctx.globalAlpha = (1-d/150)*.18; ctx.stroke(); }
+    }
+  }
+  ctx.globalAlpha=1;
+  if(!reduce) requestAnimationFrame(draw);
+}
+addEventListener('resize', resize, {passive:true});
+resize(); draw();
+</script>
+</body>
+</html>
