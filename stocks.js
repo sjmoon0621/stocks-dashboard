@@ -123,6 +123,19 @@ const STOCKS = [
     flags: ["Nasdaq 100 Top 20"]
   },
   {
+    ticker: "GOOG",
+    name: "Alphabet Inc. Class C",
+    sector: "소프트웨어",
+    marketCap: 4190.0,
+    price: 336.0,
+    score: 7.6,
+    asOf: "2026-06-26",
+    file: "goog_deck.html",
+    theme: "azure",
+    tagline: "의결권 없는 Class C로 보는 Alphabet AI·광고·Waymo 옵션",
+    flags: ["Nasdaq 100", "Class C"]
+  },
+  {
     ticker: "AAPL",
     name: "Apple Inc.",
     sector: "하드웨어",
