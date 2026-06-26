@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DRAM · RAM 메모리 ETF 분석 — AI 슈퍼사이클</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+  :root{
+    --void:#04060a;--deep:#090d15;--panel:#0e131d;--panel2:#131927;--line:#202838;
+    --ink:#eaf0f8;--mute:#8a94a9;--faint:#566074;
+    --mem:#7c5cff;          /* 메모리 퍼플 */
+    --mem2:#a892ff;
+    --circuit:#2fd4c4;      /* 회로 시안 */
+    --kr:#ff5071;           /* 한국 노출 레드 */
+    --us:#3a8dde;           /* 미국 블루 */
+    --gold:#e3b24a;
+    --green:#3ee08f;--red:#ff5071;--amber:#ffc24b;
+    --grid:rgba(124,92,255,.08);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--void);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .slide{min-height:100vh;padding:clamp(28px,5vw,80px) clamp(20px,6vw,110px);border-bottom:1px solid var(--line);position:relative;display:flex;flex-direction:column;justify-content:center;max-width:1500px;margin:0 auto}
+  .slide::before{content:attr(data-no);position:absolute;top:clamp(20px,3.5vw,46px);right:clamp(20px,6vw,110px);font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.25em;color:var(--faint)}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--mem2);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--mem)}
+  .eyebrow.red{color:var(--red)} .eyebrow.red::before{background:var(--red)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.04;letter-spacing:-.02em}
+  h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(26px,3.4vw,44px);line-height:1.1;letter-spacing:-.015em;margin-bottom:6px}
+  h3{font-weight:600;font-size:18px;margin-bottom:8px;letter-spacing:-.01em}
+  p{color:var(--mute);font-weight:300}
+  .lead{font-size:clamp(15px,1.5vw,18px);color:var(--mute);max-width:800px}
+  #cover{justify-content:center;overflow:hidden}
+  .gridbg{position:absolute;inset:0;z-index:0;opacity:.6}
+  .cover-inner{position:relative;z-index:2}
+  .cover-tag{display:inline-flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.26em;color:var(--mem2);border:1px solid var(--line);border-radius:100px;padding:8px 18px;margin-bottom:30px;background:rgba(124,92,255,.05)}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 0 rgba(62,224,143,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(62,224,143,.5)}70%{box-shadow:0 0 0 9px rgba(62,224,143,0)}100%{box-shadow:0 0 0 0 rgba(62,224,143,0)}}
+  #cover h1{font-size:clamp(46px,9vw,120px)}
+  .dualticker{display:flex;gap:18px;flex-wrap:wrap;margin:10px 0 26px}
+  .tk{border:1px solid var(--line);border-radius:12px;padding:14px 20px;background:rgba(124,92,255,.04)}
+  .tk .sym{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:22px}
+  .tk .meta{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);margin-top:2px}
+  .cover-sub{max-width:730px;font-size:clamp(16px,1.7vw,20px);color:var(--mute);font-weight:300;margin-bottom:36px}
+  .cover-meta{display:flex;gap:36px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);letter-spacing:.05em}
+  .cover-meta b{color:var(--mute);font-weight:500;display:block;margin-bottom:3px;letter-spacing:.18em;font-size:10px}
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,34px)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;overflow:hidden}
+  .card.accent::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--mem),transparent)}
+  .card.accentr::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--red),transparent)}
+  .kpi{font-family:'IBM Plex Mono',monospace;font-size:clamp(28px,3.6vw,42px);font-weight:600;letter-spacing:-.02em;line-height:1}
+  .kpi.up{color:var(--green)} .kpi.down{color:var(--red)} .kpi.mem{color:var(--mem2)} .kpi.gold{color:var(--gold)}
+  .kpi-label{font-size:12px;color:var(--faint);margin-top:10px;letter-spacing:.04em;line-height:1.5}
+  .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;padding:3px 9px;border-radius:5px;text-transform:uppercase}
+  .tag.bull{color:var(--green);background:rgba(62,224,143,.1);border:1px solid rgba(62,224,143,.25)}
+  .tag.bear{color:var(--red);background:rgba(255,80,113,.1);border:1px solid rgba(255,80,113,.25)}
+  .tag.kr{color:var(--kr);background:rgba(255,80,113,.1);border:1px solid rgba(255,80,113,.25)}
+  .tag.us{color:var(--us);background:rgba(58,141,222,.12);border:1px solid rgba(58,141,222,.25)}
+  .tag.jp{color:var(--amber);background:rgba(255,194,75,.1);border:1px solid rgba(255,194,75,.25)}
+  .tag.tw{color:var(--circuit);background:rgba(47,212,196,.1);border:1px solid rgba(47,212,196,.25)}
+  ul.clean{list-style:none}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:11px;color:var(--mute);font-weight:300;font-size:15px}
+  ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:1px;background:var(--mem)}
+  ul.clean.red li::before{background:var(--red)}
+  ul.clean.green li::before{background:var(--green)}
+  strong{color:var(--ink);font-weight:600}
+  .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);letter-spacing:.03em;line-height:1.6}
+  .chartwrap{background:var(--deep);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:8px}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .alab{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:var(--faint)}
+  .legend{display:flex;gap:20px;flex-wrap:wrap;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--mute)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+  .footnote{margin-top:26px;padding-top:16px;border-top:1px dashed var(--line)}
+  .verdict{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,2.4vw,30px);font-weight:600;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
+  .big-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(54px,9vw,120px);line-height:.9;letter-spacing:-.03em}
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+  th,td{text-align:left;padding:10px 12px;border-bottom:1px solid var(--line)}
+  th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  td{color:var(--mute);font-weight:300}
+  td.mono,th.mono{font-family:'IBM Plex Mono',monospace}
+  tr:last-child td{border-bottom:none}
+  .disclaimer{font-size:12px;color:var(--faint);font-weight:300;line-height:1.7}
+  .barrow{display:flex;align-items:center;gap:12px;margin:7px 0}
+  .barname{width:130px;font-size:13px;color:var(--ink);flex:0 0 auto}
+  .bartrack{flex:1;height:13px;background:rgba(255,255,255,.04);border-radius:7px;overflow:hidden}
+  .barfill{height:100%;border-radius:7px}
+  .barval{width:56px;text-align:right;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute);flex:0 0 auto}
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}#cover h1{font-size:clamp(40px,14vw,80px)}.slide{padding:60px 22px}.barname{width:92px}}
+  #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--mem),var(--circuit),var(--gold));z-index:99;width:0%}
+  .reveal{opacity:0;transform:translateY(24px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.pulse{animation:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- COVER -->
+<section class="slide" id="cover" data-no="00 / MEMORY">
+  <canvas class="gridbg" id="gridCanvas"></canvas>
+  <div class="cover-inner">
+    <div class="cover-tag"><span class="pulse"></span> AI 메모리 슈퍼사이클 · 역대 최고속 ETF</div>
+    <div class="eyebrow">DRAM · RAM 메모리 ETF 분석</div>
+    <h1>DRAM<span style="color:var(--faint);font-weight:400"> / </span><span style="color:var(--red)">RAM</span></h1>
+    <div class="dualticker">
+      <div class="tk"><div class="sym" style="color:var(--mem2)">DRAM</div><div class="meta">Roundhill Memory · 1배 · 0.65%</div></div>
+      <div class="tk" style="border-color:rgba(255,80,113,.3)"><div class="sym" style="color:var(--red)">RAM</div><div class="meta">T-REX 2X Long DRAM · 어제 상장(6/24)</div></div>
+    </div>
+    <p class="cover-sub">"메모리는 AI 빌드업의 결정적 병목." HBM 부족이 메모리를 commodity에서 인프라로 바꿨다. 그 테마를 한 티커에 담은 DRAM, 그리고 그것을 2배로 증폭한 RAM — 전혀 다른 두 도구.</p>
+    <div class="cover-meta">
+      <div><b>DRAM 자산</b>약 $200억 (상장 2개월+)</div>
+      <div><b>누적수익</b>+179.84% (상장이래)</div>
+      <div><b>보유종목</b>16개 (스왑 포함)</div>
+      <div><b>기준일</b>2026.06.24</div>
+    </div>
+  </div>
+</section>
+
+<!-- 01 두 상품 구분 -->
+<section class="slide reveal" data-no="01 / TWO TOOLS">
+  <div class="eyebrow">먼저, 두 티커는 완전히 다른 물건이다</div>
+  <h2>DRAM은 투자, RAM은 트레이딩 도구</h2>
+  <p class="lead" style="margin-bottom:28px">이름이 비슷해 헷갈리기 쉽지만, 보유 목적·기간·위험이 근본적으로 다르다. RAM을 "DRAM의 2배 버전"으로만 생각하면 위험하다.</p>
+  <div class="grid2">
+    <div class="card accent">
+      <span class="tag" style="color:var(--mem2);background:rgba(124,92,255,.1);border:1px solid rgba(124,92,255,.25)">DRAM · 1배</span>
+      <h3 style="margin-top:14px">Roundhill Memory ETF</h3>
+      <ul class="clean">
+        <li><strong>성격:</strong> 메모리 기업 16종목 바스켓 (현물+스왑)</li>
+        <li><strong>보수:</strong> 연 0.65%</li>
+        <li><strong>용도:</strong> 중장기 테마 보유 가능 (위성 포지션)</li>
+        <li><strong>상장:</strong> 2026.04.02, 역대 최고속 성장</li>
+      </ul>
+    </div>
+    <div class="card accentr">
+      <span class="tag bear">RAM · 2배 레버리지</span>
+      <h3 style="margin-top:14px">T-REX 2X Long DRAM Daily Target</h3>
+      <ul class="clean red">
+        <li><strong>성격:</strong> DRAM의 <strong>일일</strong> 수익률 2배 추종 (스왑+ETF)</li>
+        <li><strong>핵심 함정:</strong> "일일" 2배지 기간 2배 아님</li>
+        <li><strong>용도:</strong> 적극적 단타 전용, 매일 모니터링 필수</li>
+        <li><strong>상장:</strong> 2026.06.24 (어제) — 트랙레코드 없음</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card accentr" style="margin-top:18px;background:linear-gradient(160deg,var(--panel2),var(--deep))">
+    <p style="font-size:15px"><strong style="color:var(--red)">반드시 이해할 한 가지 — 변동성 감쇠(volatility decay):</strong> RAM은 "기초 ETF가 장기적으로 올라도 손실이 날 수 있다"고 <strong>설명서에 명시</strong>한다. 일일 복리가 누적되면서, 변동성이 크고 보유기간이 길수록 2배에서 멀어진다. 운용사 스스로 "정교한 투자자 전용"이라 경고.</p>
+  </div>
+  <div class="footnote"><span class="src">출처: Roundhill/T-REX 보도자료·펀드 페이지(2026.06.24), PR Newswire · RAM 설명서 경고문 직접 확인 권장</span></div>
+</section>
+
+<!-- 02 슈퍼사이클 -->
+<section class="slide reveal" data-no="02 / SUPERCYCLE">
+  <div class="eyebrow">왜 지금 메모리인가 — HBM 병목</div>
+  <h2>commodity에서 인프라로, 구조가 바뀌었다</h2>
+  <p class="lead" style="margin-bottom:22px">수십 년간 메모리는 "호황-과잉공급-붕괴"의 commodity였다. AI가 그 규칙을 다시 쓰는 중이라는 게 이 테마의 핵심 베팅.</p>
+  <div class="grid3" style="margin-bottom:18px">
+    <div class="card"><div class="kpi up">+179.8%</div><div class="kpi-label">DRAM 상장(4/2)이래 누적 총수익 · S&P500 크게 상회</div></div>
+    <div class="card"><div class="kpi mem">2027</div><div class="kpi-label">SK하이닉스 '26년·마이크론 '27년까지 물량 매진(보도)</div></div>
+    <div class="card"><div class="kpi gold">3TB+</div><div class="kpi-label">HBM4 스택당 대역폭 — AI 실용화의 열쇠</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(62,224,143,.25)">
+      <h3 style="color:var(--green)">강세 — 구조적 전환</h3>
+      <ul class="clean green">
+        <li><strong>HBM 부족은 현실:</strong> NVIDIA Blackwell이 적층 DRAM에 의존, 3개사만 양산 가능.</li>
+        <li><strong>선주문 매진:</strong> 하이퍼스케일러가 2027년 너머까지 캐파 선점.</li>
+        <li><strong>가격결정력:</strong> 수십 년 만에 메모리 3사가 pricing power 획득.</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(255,80,113,.25)">
+      <h3 style="color:var(--red)">약세 — 사이클은 돈다</h3>
+      <ul class="clean red">
+        <li><strong>역사적 반납:</strong> 메모리 주식은 가격 고점 후 6개월 내 40~60% 반납 전례.</li>
+        <li><strong>가격 전환 신호:</strong> DDR5 계약가 2개월 연속 하락 + capex 정체 시 멀티플 급압축.</li>
+        <li><strong>이미 선반영:</strong> "테마가 이미 가격에 반영된 채 도착한 펀드"라는 평가.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: 24/7 Wall St., ETF.com, Roundhill · 매진·가격 전망은 보도/업계 추정이며 실제와 다를 수 있음</span></div>
+</section>
+
+<!-- 03 전체 구성종목 -->
+<section class="slide reveal" data-no="03 / HOLDINGS">
+  <div class="eyebrow">DRAM 전체 구성종목 — 16개 전부</div>
+  <h2>스왑을 풀어 보면 실질은 "3사 + α"</h2>
+  <p class="lead" style="margin-bottom:18px">표면상 16개지만, 같은 기업의 현물+스왑(TRS)을 합치면 실질 익스포저는 단순해진다. 아래는 <strong>스왑 합산 실질 비중</strong>(2026.06.22 기준).</p>
+
+  <div class="grid2" style="align-items:start">
+    <div class="card">
+      <h3 style="margin-bottom:14px">실질 기업별 익스포저 (현물+스왑 합산)</h3>
+      <div class="barrow"><div class="barname">마이크론 <span class="tag us">US</span></div><div class="bartrack"><div class="barfill" style="width:99%;background:linear-gradient(90deg,#3a8dde,#6fb6ff)"></div></div><div class="barval">27.6%</div></div>
+      <div class="barrow"><div class="barname">SK하이닉스 <span class="tag kr">KR</span></div><div class="bartrack"><div class="barfill" style="width:96%;background:linear-gradient(90deg,#ff5071,#ff8095)"></div></div><div class="barval">26.9%</div></div>
+      <div class="barrow"><div class="barname">삼성전자 <span class="tag kr">KR</span></div><div class="bartrack"><div class="barfill" style="width:63%;background:linear-gradient(90deg,#ff5071,#ff8095)"></div></div><div class="barval">17.6%</div></div>
+      <div class="barrow"><div class="barname">Kioxia <span class="tag jp">JP</span></div><div class="bartrack"><div class="barfill" style="width:29%;background:linear-gradient(90deg,#ffc24b,#ffd277)"></div></div><div class="barval">8.0%</div></div>
+      <div class="barrow"><div class="barname">SanDisk <span class="tag us">US</span></div><div class="bartrack"><div class="barfill" style="width:20%;background:#3a8dde"></div></div><div class="barval">5.5%</div></div>
+      <div class="barrow"><div class="barname">Western Digital <span class="tag us">US</span></div><div class="bartrack"><div class="barfill" style="width:16%;background:#3a8dde"></div></div><div class="barval">4.4%</div></div>
+      <div class="barrow"><div class="barname">Seagate <span class="tag us">US</span></div><div class="bartrack"><div class="barfill" style="width:15%;background:#3a8dde"></div></div><div class="barval">4.3%</div></div>
+      <div class="barrow"><div class="barname">Nanya <span class="tag tw">TW</span></div><div class="bartrack"><div class="barfill" style="width:12%;background:#2fd4c4"></div></div><div class="barval">3.3%</div></div>
+      <div class="barrow"><div class="barname">Winbond <span class="tag tw">TW</span></div><div class="bartrack"><div class="barfill" style="width:7%;background:#2fd4c4"></div></div><div class="barval">2.1%</div></div>
+      <div class="barrow"><div class="barname">T-Bill+현금 <span class="tag" style="color:var(--faint);border:1px solid var(--line)">CASH</span></div><div class="bartrack"><div class="barfill" style="width:53%;background:#3a4358"></div></div><div class="barval">14.6%</div></div>
+    </div>
+    <div>
+      <div class="card accentr" style="margin-bottom:14px">
+        <h3 style="color:var(--red)">집중도 — 양날의 검</h3>
+        <p style="font-size:14.5px">상위 3사(마이크론·SK하이닉스·삼성)가 <strong>약 72%</strong>. AI 메모리 스택의 핵심을 그대로 담았다는 강점이자, 한 종목 악재가 펀드 전체를 흔드는 약점. <strong>국가별로는 한국 약 45%, 미국 약 38%</strong>.</p>
+      </div>
+      <div class="card" style="border-color:rgba(255,80,113,.25)">
+        <h3 style="color:var(--kr)">⚠️ 성진님 포트폴리오 직접 중복</h3>
+        <p style="font-size:14px">RIA 계좌 핵심 보유인 <strong>SK하이닉스(26.9%)·삼성전자(17.6%)</strong>가 펀드의 절반 가까이. DRAM 매수는 분산이 아니라 <strong>기존 한국 메모리 익스포저의 농축</strong>이 된다. RAM이면 그 농축이 2배.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: stockanalysis.com/Finnhub DRAM holdings(2026.06.22). 실질 비중은 현물+TRS 스왑 라인을 기업별 합산한 추정치(마이크론 13.11+10.78+3.68, SK하이닉스 17.52+9.35, 삼성 11.50+6.14). 합계는 반올림·스왑 명목가 영향으로 100% 초과 가능</span></div>
+</section>
+
+<!-- 04 종목별 분석 -->
+<section class="slide reveal" data-no="04 / NAME BY NAME">
+  <div class="eyebrow">구성종목 개별 분석</div>
+  <h2>각 종목은 메모리 스택의 어디를 맡나</h2>
+  <div class="card" style="padding:14px 18px;overflow-x:auto">
+    <table>
+      <tr><th>종목</th><th>국가</th><th class="mono">실질비중</th><th>역할 / 포인트</th></tr>
+      <tr><td><strong style="color:var(--us)">Micron (MU)</strong></td><td><span class="tag us">US</span></td><td class="mono">27.6%</td><td>유일한 미국 DRAM·HBM 대형주. YTD +273%, 시총 $1조 근접. 펀드의 미국 노출 핵심</td></tr>
+      <tr><td><strong style="color:var(--kr)">SK하이닉스</strong></td><td><span class="tag kr">KR</span></td><td class="mono">26.9%</td><td>NVIDIA HBM 최대 공급. 삼성 제치고 한국 시총 1위 등극. HBM 리더십이 테마의 심장</td></tr>
+      <tr><td><strong style="color:var(--kr)">삼성전자</strong></td><td><span class="tag kr">KR</span></td><td class="mono">17.6%</td><td>세계 최대 메모리 제조. HBM4 추격, 파운드리 겸업. 가장 다각화된 메모리주</td></tr>
+      <tr><td><strong style="color:var(--amber)">Kioxia</strong></td><td><span class="tag jp">JP</span></td><td class="mono">8.0%</td><td>일본 NAND 강자(옛 도시바메모리). NAND 사이클 노출</td></tr>
+      <tr><td><strong style="color:var(--us)">SanDisk (SNDK)</strong></td><td><span class="tag us">US</span></td><td class="mono">5.5%</td><td>WD에서 '25.2 분사 후 +600%대. NAND·스토리지 순수주</td></tr>
+      <tr><td><strong style="color:var(--us)">Western Digital</strong></td><td><span class="tag us">US</span></td><td class="mono">4.4%</td><td>HDD+NAND. 데이터센터 스토리지 수요</td></tr>
+      <tr><td><strong style="color:var(--us)">Seagate (STX)</strong></td><td><span class="tag us">US</span></td><td class="mono">4.3%</td><td>HDD 양강. AI 데이터 폭증→대용량 저장 수혜</td></tr>
+      <tr><td><strong style="color:var(--circuit)">Nanya</strong></td><td><span class="tag tw">TW</span></td><td class="mono">3.3%</td><td>대만 DRAM. 레거시 DRAM 가격 회복 레버리지</td></tr>
+      <tr><td><strong style="color:var(--circuit)">Winbond</strong></td><td><span class="tag tw">TW</span></td><td class="mono">2.1%</td><td>대만 틈새 메모리(스페셜티·임베디드)</td></tr>
+      <tr><td>T-Bill / 현금(KRW·TWD)</td><td><span class="tag" style="color:var(--faint);border:1px solid var(--line)">—</span></td><td class="mono">14.6%</td><td>RIC 분산 요건·스왑 담보용. 미국채 7/14 만기 + 원화·대만달러 잔액</td></tr>
+    </table>
+  </div>
+  <div class="footnote"><span class="src">출처: stockanalysis/Finnhub(비중), 24/7 Wall St.·Motley Fool(개별 수익률·SK하이닉스 한국 시총 1위). 개별 수익률은 보도 시점 기준이며 변동 큼</span></div>
+</section>
+
+<!-- 05 환율·구조 리스크 -->
+<section class="slide reveal" data-no="05 / HIDDEN RISKS">
+  <div class="eyebrow red">숨은 리스크 — 환율·스왑·리밸런싱</div>
+  <h2>이 ETF엔 "메모리 가격" 말고도 변수가 많다</h2>
+  <div class="grid3">
+    <div class="card accentr">
+      <h3 style="color:var(--red)">① 원화 프록시</h3>
+      <p style="font-size:14px">삼성+SK하이닉스가 절반 가까이 → DRAM은 사실상 <strong>원/달러 프록시</strong>. 원화가 달러 대비 5% 움직이면 기초주식 변동 전에도 NAV가 약 2.5%p 출렁. RAM은 이게 2배.</p>
+    </div>
+    <div class="card accentr">
+      <h3 style="color:var(--red)">② 리밸런싱 상단 제한</h3>
+      <p style="font-size:14px">3종목이 각 25% 근처라 단일산업 ETF 분산규칙이 작동 → <strong>강세장에 강제 매도(trim into strength)</strong>. 마이크론 단독 보유 대비 상단이 깎일 수 있음.</p>
+    </div>
+    <div class="card accentr">
+      <h3 style="color:var(--red)">③ 스왑 의존</h3>
+      <p style="font-size:14px">현물 일부를 <strong>총수익스왑(TRS)</strong>으로 보유(RIC 요건). 거래상대방 리스크·롤 비용·추적오차 가능성. RAM은 스왑+ETF로 200% 노출을 매일 재구성.</p>
+    </div>
+  </div>
+  <div class="card accentr" style="margin-top:18px;background:linear-gradient(160deg,var(--panel2),var(--deep))">
+    <h3 style="color:var(--red)">모니터링 체크리스트</h3>
+    <p style="font-size:14.5px">① TrendForce <strong>DDR5 계약가</strong> 2개월 연속 추이 · ② 마이크론 차기 가이던스의 <strong>2027 수주북</strong> 코멘트 · ③ <strong>원/달러</strong>(한국은행 일일 고시) · ④ 하이퍼스케일러 <strong>capex 가이던스</strong> · ⑤ Roundhill <strong>리밸런싱 공시</strong>. 이 중 ①③이 가장 빠른 경고등.</p>
+  </div>
+  <div class="footnote"><span class="src">출처: 24/7 Wall St.(원화 프록시·리밸런싱·DDR5 시그널), Roundhill(스왑 구조 FAQ) · 폴리마켓은 연내 AI버블 붕괴 확률을 약 23%로 가격 책정(반대 신호)</span></div>
+</section>
+
+<!-- 06 RAM 레버리지 위험 시뮬 -->
+<section class="slide reveal" data-no="06 / 2X DECAY">
+  <div class="eyebrow red">RAM 2배의 진실 — 변동성 감쇠</div>
+  <h2>"2배"는 하루만 2배다</h2>
+  <p class="lead" style="margin-bottom:20px">횡보장에서 일일 2배 상품이 어떻게 원금을 깎는지, 단순 예시로 본다. 같은 출발·같은 도착인데 결과가 다르다.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="chartwrap">
+      <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:8px">예시: DRAM이 +10% → −9.09%로 제자리 복귀할 때</div>
+      <svg viewBox="0 0 500 260" role="img" aria-label="레버리지 감쇠 예시">
+        <line class="axis" x1="60" y1="40" x2="60" y2="210"/>
+        <line class="axis" x1="60" y1="125" x2="460" y2="125"/>
+        <text class="alab" x="14" y="48">+20%</text>
+        <text class="alab" x="22" y="129">0</text>
+        <text class="alab" x="14" y="210">−20%</text>
+        <!-- DRAM path: 0 -> +10 -> 0 -->
+        <polyline points="60,125 200,82 440,125" fill="none" stroke="#a892ff" stroke-width="2.5"/>
+        <circle cx="200" cy="82" r="4" fill="#a892ff"/><circle cx="440" cy="125" r="4" fill="#a892ff"/>
+        <text class="alab" x="200" y="72" text-anchor="middle" fill="#a892ff">DRAM +10%</text>
+        <text class="alab" x="446" y="115" fill="#a892ff">제자리 0%</text>
+        <!-- RAM path: 0 -> +20 -> -18.18 net -1.8 -->
+        <polyline points="60,125 200,40 440,140" fill="none" stroke="#ff5071" stroke-width="2.5"/>
+        <circle cx="200" cy="40" r="4" fill="#ff5071"/><circle cx="440" cy="140" r="4" fill="#ff5071"/>
+        <text class="alab" x="200" y="32" text-anchor="middle" fill="#ff5071">RAM +20%</text>
+        <text class="alab" x="446" y="155" fill="#ff5071">−1.8% 손실!</text>
+        <text class="alab" x="250" y="235" text-anchor="middle" fill="#566074">기초가 제자리여도 2배 상품은 마이너스</text>
+      </svg>
+      <div class="legend">
+        <span><i class="dot" style="background:#a892ff"></i> DRAM(1배): 0%</span>
+        <span><i class="dot" style="background:#ff5071"></i> RAM(2배): −1.8%</span>
+      </div>
+    </div>
+    <div>
+      <div class="card accentr" style="margin-bottom:14px">
+        <h3 style="color:var(--red)">계산</h3>
+        <p style="font-size:14px" class="mono">Day1: DRAM +10% → RAM +20% (1.00→1.20)<br>Day2: DRAM −9.09% → RAM −18.18% (1.20→0.982)<br>DRAM 순변화 0%, <strong style="color:var(--red)">RAM 순변화 −1.8%</strong></p>
+        <p style="font-size:13px;margin-top:10px">메모리처럼 변동성 큰 기초자산에선 이 감쇠가 매우 빠르게 누적된다.</p>
+      </div>
+      <div class="card">
+        <h3>그럼 RAM은 누구를 위한 건가</h3>
+        <ul class="clean red">
+          <li><strong>방향+타이밍 확신</strong>이 있는 단타 트레이더</li>
+          <li><strong>매일</strong> 포지션을 점검·조정할 수 있는 사람</li>
+          <li><strong>장기 보유 금물</strong> — 운용사도 "일/단위로만 측정"하라 명시</li>
+          <li>상장 하루차라 <strong>유동성·추적오차 미검증</strong></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: RAM 펀드 설명서·Roundhill FAQ(복리·변동성·보유기간이 길수록 2배에서 이탈). 위 예시는 설명용 단순 계산이며 실제 수수료·금융비용 제외</span></div>
+</section>
+
+<!-- 07 종합 -->
+<section class="slide reveal" data-no="07 / VERDICT">
+  <div class="eyebrow">종합 판단 & 활용법</div>
+  <h2 style="margin-bottom:24px">매력도 — 테마는 강하나 도구 선택이 전부</h2>
+  <div style="display:flex;gap:30px;flex-wrap:wrap;margin-bottom:8px">
+    <div>
+      <div class="big-num" style="font-size:clamp(40px,7vw,84px);background:linear-gradient(120deg,#a892ff,#2fd4c4);-webkit-background-clip:text;background-clip:text;color:transparent">DRAM 6/10</div>
+      <p class="src" style="margin-top:6px">강한 테마 · 단 집중·환율·선반영 감안</p>
+    </div>
+    <div>
+      <div class="big-num" style="font-size:clamp(40px,7vw,84px);background:linear-gradient(120deg,#ff5071,#ff8095);-webkit-background-clip:text;background-clip:text;color:transparent">RAM 3/10</div>
+      <p class="src" style="margin-top:6px">단타 전용 · 장기보유시 감쇠로 부적합</p>
+    </div>
+  </div>
+
+  <div class="grid3" style="margin:24px 0 0">
+    <div class="card"><h3 style="color:var(--mem2)">DRAM 활용법</h3>
+      <ul class="clean">
+        <li>반도체 배분 내 <strong>위성 포지션</strong>(코어 아님)</li>
+        <li>SMH/SOXX로 코어, DRAM으로 메모리 가중</li>
+        <li>한국 메모리 직접보유자는 <strong>중복 점검</strong> 필수</li>
+      </ul>
+    </div>
+    <div class="card"><h3 style="color:var(--red)">RAM 활용법</h3>
+      <ul class="clean red">
+        <li>명확한 단기 뷰가 있을 때만, 소액</li>
+        <li>매일 점검·손절선 사전 설정</li>
+        <li>장기 보유·물타기 절대 금물</li>
+      </ul>
+    </div>
+    <div class="card"><h3 style="color:var(--circuit)">대안 (분산 순)</h3>
+      <ul class="clean">
+        <li><strong>SOXX</strong> 0.34% — 광범위 반도체</li>
+        <li><strong>SMH</strong> — 장비·메가캡 중심</li>
+        <li><strong>EWY</strong> — 한국 전체(삼성·SK 큰 비중)</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card accent" style="margin-top:18px;background:linear-gradient(160deg,#131927,#090d15)">
+    <p style="font-size:15px;color:var(--mute)"><strong style="color:var(--ink)">균형 코멘트.</strong> 메모리 슈퍼사이클 논리는 강력하다 — HBM 부족은 실재하고 3사가 가격결정력을 쥐었다. 하지만 ① 이미 +180% 오른 뒤이고 ② 메모리는 역사적으로 고점 후 급반납했으며 ③ 성진님은 <strong style="color:var(--kr)">이미 SK하이닉스·삼성을 직접 보유</strong>해 DRAM은 농축, RAM은 2배 농축이 된다. <strong>테마에 동의해도, 도구는 신중히.</strong> 순수 메모리 가중을 더 원하면 DRAM 소액 위성, 단기 방향 베팅이면 RAM은 매일 들여다볼 각오가 있을 때만.</p>
+  </div>
+
+  <div class="footnote">
+    <p class="disclaimer">⚠️ <strong>고지.</strong> 본 자료는 정보 제공용이며 투자 권유가 아닙니다. 작성자는 재무 자문가가 아닙니다. 레버리지 ETF(RAM)는 변동성 감쇠로 장기 보유 시 기초자산이 올라도 손실이 날 수 있는 고위험 상품이며, 상장 1일차로 유동성·추적오차가 검증되지 않았습니다. 구성종목·비중은 2026.06.22 기준으로 매일 변동하며, 실질 비중은 스왑 합산 추정치입니다. 메모리 업황은 변동성이 크고 모든 수치는 빠르게 바뀔 수 있습니다. 투자 전 반드시 공식 팩트시트·설명서를 직접 확인하시고, 판단과 책임은 본인에게 있습니다.</p>
+    <p class="src" style="margin-top:12px">데이터 출처: stockanalysis.com·Finnhub(DRAM holdings) · Roundhill Investments·T-REX(펀드 페이지·보도자료) · PR Newswire · 24/7 Wall St. · ETF.com · U.S.News · Motley Fool (2026.04–06)</p>
+  </div>
+</section>
+
+<script>
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// memory-cell grid animation
+const c=document.getElementById('gridCanvas');
+if(c){
+  const x=c.getContext('2d');let w,h,cells,t=0,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function size(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;
+    const gs=44,cols=Math.ceil(w/gs),rows=Math.ceil(h/gs);cells=[];
+    for(let i=0;i<cols;i++)for(let j=0;j<rows;j++)cells.push({x:i*gs+gs/2,y:j*gs+gs/2,p:Math.random()*Math.PI*2,s:Math.random()*.02+.005});}
+  function draw(){x.clearRect(0,0,w,h);t+=1;
+    cells.forEach(ce=>{const a=(Math.sin(ce.p+t*ce.s)+1)/2;
+      x.fillStyle='rgba(124,92,255,'+a*.28+')';x.fillRect(ce.x-2,ce.y-2,4,4);
+      if(a>.85){x.strokeStyle='rgba(47,212,196,'+(a-.85)*1.5+')';x.lineWidth=1;x.strokeRect(ce.x-5,ce.y-5,10,10);}});
+    requestAnimationFrame(draw);}
+  size();addEventListener('resize',size);
+  if(!rm)draw();else{cells.forEach(ce=>{x.fillStyle='rgba(124,92,255,.2)';x.fillRect(ce.x-2,ce.y-2,4,4);});}
+}
+</script>
+</body>
+</html>

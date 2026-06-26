@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Equity Research Hub — 종목 분석 대시보드</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+  :root{
+    --void:#05060a;--deep:#0b0e17;--panel:#11151f;--panel2:#161b27;--line:#222a3a;
+    --ink:#e8ecf4;--mute:#8a93a8;--faint:#5a6378;
+    --accent:#5cc8ff;--accent2:#7b6cff;--gold:#e3b24a;
+    --green:#3ee08f;--amber:#ffc24b;--red:#ff5071;
+    --grid:rgba(255,255,255,.05);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--void);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;min-height:100vh}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  a{color:inherit;text-decoration:none}
+
+  /* bg field */
+  #bgCanvas{position:fixed;inset:0;z-index:0;opacity:.4;pointer-events:none}
+  .wrap{position:relative;z-index:1;max-width:1400px;margin:0 auto;padding:clamp(28px,5vw,64px) clamp(20px,5vw,72px) 80px}
+
+  /* header */
+  header{margin-bottom:38px}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--accent);margin-bottom:16px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--accent)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(34px,5.5vw,64px);line-height:1.02;letter-spacing:-.02em;margin-bottom:14px}
+  .sub{color:var(--mute);font-weight:300;font-size:clamp(15px,1.6vw,18px);max-width:680px}
+
+  /* stat strip */
+  .stats{display:flex;gap:14px;flex-wrap:wrap;margin-top:26px}
+  .stat{background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-radius:13px;padding:14px 20px;min-width:120px}
+  .stat .v{font-family:'IBM Plex Mono',monospace;font-size:24px;font-weight:600;line-height:1}
+  .stat .l{font-size:11px;color:var(--faint);letter-spacing:.06em;margin-top:6px}
+
+  /* controls */
+  .controls{display:flex;flex-wrap:wrap;gap:18px;align-items:flex-end;margin:34px 0 26px;padding-bottom:22px;border-bottom:1px solid var(--line)}
+  .ctl{display:flex;flex-direction:column;gap:7px}
+  .ctl label{font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint)}
+  .seg{display:flex;gap:4px;background:var(--deep);border:1px solid var(--line);border-radius:10px;padding:4px;flex-wrap:wrap}
+  .seg button{font-family:'IBM Plex Sans KR',sans-serif;font-size:13px;color:var(--mute);background:transparent;border:none;padding:7px 14px;border-radius:7px;cursor:pointer;transition:all .18s;white-space:nowrap}
+  .seg button:hover{color:var(--ink)}
+  .seg button.on{background:linear-gradient(160deg,var(--accent),var(--accent2));color:#06080d;font-weight:600}
+  .search{flex:1;min-width:180px}
+  .search input{width:100%;background:var(--deep);border:1px solid var(--line);border-radius:10px;padding:10px 14px;color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;font-size:14px;outline:none;transition:border .18s}
+  .search input:focus{border-color:var(--accent)}
+  .search input::placeholder{color:var(--faint)}
+  .dirbtn{background:var(--deep);border:1px solid var(--line);border-radius:10px;color:var(--mute);padding:9px 13px;cursor:pointer;font-family:'IBM Plex Mono',monospace;font-size:13px;transition:all .18s}
+  .dirbtn:hover{color:var(--ink);border-color:var(--accent)}
+
+  /* grid */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(310px,1fr));gap:18px}
+  .card{position:relative;display:block;background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-radius:18px;padding:24px;overflow:hidden;transition:transform .2s cubic-bezier(.2,.7,.2,1),border-color .2s;cursor:pointer}
+  .card:hover{transform:translateY(-4px);border-color:var(--cardc,var(--accent))}
+  .card::before{content:"";position:absolute;top:0;left:0;width:100%;height:3px;background:linear-gradient(90deg,var(--cardc,var(--accent)),transparent)}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:14px}
+  .tk{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:30px;letter-spacing:-.02em;line-height:1;color:var(--cardc,var(--ink))}
+  .nm{font-size:12.5px;color:var(--mute);margin-top:5px;font-weight:300}
+  .score-badge{flex:0 0 auto;text-align:center;border:1px solid var(--line);border-radius:11px;padding:8px 11px;background:var(--deep)}
+  .score-badge .n{font-family:'IBM Plex Mono',monospace;font-size:20px;font-weight:600;line-height:1}
+  .score-badge .x{font-size:9px;color:var(--faint);letter-spacing:.1em;margin-top:2px}
+  .tagline{font-size:13px;color:var(--mute);font-weight:300;line-height:1.5;margin-bottom:16px;min-height:38px}
+  .meta-row{display:flex;justify-content:space-between;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;padding-top:14px;border-top:1px solid var(--line)}
+  .meta-row .mlabel{color:var(--faint);font-size:9.5px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:3px}
+  .meta-row .mval{color:var(--ink);font-size:14px}
+  .flags{display:flex;flex-wrap:wrap;gap:5px;margin-top:14px}
+  .flag{font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.06em;padding:3px 8px;border-radius:5px;color:var(--gold);background:rgba(227,178,74,.1);border:1px solid rgba(227,178,74,.25)}
+  .flag.lev{color:var(--red);background:rgba(255,80,113,.1);border-color:rgba(255,80,113,.25)}
+  .flag.etf{color:var(--accent);background:rgba(92,200,255,.1);border-color:rgba(92,200,255,.25)}
+  .sector-pill{position:absolute;top:18px;right:18px}
+
+  .empty{grid-column:1/-1;text-align:center;padding:60px 20px;color:var(--faint);font-size:15px}
+
+  /* ---------- 리스트(한 줄) 뷰 ---------- */
+  .list{display:flex;flex-direction:column;gap:6px}
+  .lrow{display:grid;grid-template-columns:80px 1fr 96px 96px 92px 104px 72px;align-items:center;gap:14px;
+    background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-left:3px solid var(--cardc,var(--accent));
+    border-radius:11px;padding:13px 18px;transition:transform .15s,border-color .2s;cursor:pointer}
+  .lrow:hover{transform:translateX(3px);border-color:var(--cardc,var(--accent))}
+  .lhead{background:transparent;border:none;border-left:3px solid transparent;padding:4px 18px 6px;cursor:default;
+    font-family:'IBM Plex Mono',monospace;font-size:10px;letter-spacing:.12em;text-transform:uppercase;color:var(--faint)}
+  .lhead:hover{transform:none}
+  .lc-tk{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:18px;letter-spacing:-.01em}
+  .lhead .lc-tk{font:inherit;font-family:'IBM Plex Mono',monospace}
+  .lc-nm{font-size:13.5px;color:var(--mute);font-weight:300;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .lc-sec .sectag{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--mute);background:var(--deep);border:1px solid var(--line);border-radius:5px;padding:3px 8px}
+  .lc-num{font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--ink);text-align:right}
+  .lc-date{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute);text-align:right}
+  .lc-score{font-family:'IBM Plex Mono',monospace;font-size:18px;font-weight:600;text-align:right}
+  .lc-score .x{font-size:10px;color:var(--faint);font-weight:400}
+  .lhead .lc-num,.lhead .lc-date,.lhead .lc-score{font:inherit;font-family:'IBM Plex Mono',monospace;color:var(--faint)}
+
+  @media(max-width:760px){
+    /* 리스트 뷰: 좁은 화면에선 회사명·분석일 숨겨 핵심만 */
+    .lrow{grid-template-columns:64px 1fr 78px 64px;gap:10px;padding:12px 14px}
+    .lc-nm,.lc-date{display:none}
+    .lhead .lc-nm,.lhead .lc-date{display:none}
+  }
+
+  footer{margin-top:54px;padding-top:22px;border-top:1px dashed var(--line)}
+  .disclaimer{font-size:11.5px;color:var(--faint);font-weight:300;line-height:1.7;max-width:900px}
+  .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);margin-top:10px}
+
+  @media(max-width:560px){
+    .grid{grid-template-columns:1fr}
+    .controls{gap:14px}
+    .seg button{padding:6px 10px;font-size:12px}
+  }
+  /* score color helper set inline via JS */
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div class="wrap">
+
+  <header>
+    <div class="eyebrow">Equity Research Hub</div>
+    <h1>종목 분석 대시보드</h1>
+    <p class="sub">Codex로 생성한 기업 분석 발표자료를 한곳에서 관리합니다. 카드를 클릭하면 해당 종목의 상세 분석 페이지로 이동합니다. 시가총액·섹터·현재가·매력도 기준으로 정렬할 수 있습니다.</p>
+    <div class="stats" id="stats"></div>
+  </header>
+
+  <div class="controls">
+    <div class="ctl search">
+      <label>검색</label>
+      <input type="text" id="search" placeholder="티커 또는 회사명...">
+    </div>
+    <div class="ctl">
+      <label>섹터</label>
+      <div class="seg" id="sectorSeg"></div>
+    </div>
+    <div class="ctl">
+      <label>정렬 기준</label>
+      <div class="seg" id="sortSeg">
+        <button data-sort="marketCap" class="on">시가총액</button>
+        <button data-sort="score">매력도</button>
+        <button data-sort="price">현재가</button>
+        <button data-sort="asOf">분석일</button>
+        <button data-sort="ticker">티커</button>
+      </div>
+    </div>
+    <div class="ctl">
+      <label>방향</label>
+      <button class="dirbtn" id="dirBtn">▼ 내림차순</button>
+    </div>
+    <div class="ctl">
+      <label>보기</label>
+      <div class="seg" id="viewSeg">
+        <button data-view="grid" class="on" title="블럭 보기">▦ 블럭</button>
+        <button data-view="list" title="한 줄 보기">≡ 리스트</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    <p class="disclaimer">⚠️ 본 대시보드와 링크된 분석 자료는 정보 제공용이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 시가총액·현재가·매력도 등 모든 수치는 각 분석 기준일 시점이며 빠르게 변동될 수 있습니다. 매력도 점수는 작성자 주관 종합입니다. 투자 판단과 책임은 전적으로 본인에게 있습니다.</p>
+    <p class="src" id="footMeta"></p>
+  </footer>
+
+</div>
+
+<script src="stocks.js"></script>
+<script>
+/* ---------- 점수 색상 ---------- */
+function scoreColor(s){
+  if(s>=7) return 'var(--green)';
+  if(s>=5) return 'var(--amber)';
+  return 'var(--red)';
+}
+/* ---------- flag 스타일 분류 ---------- */
+function flagClass(f){
+  if(/레버리지/.test(f)) return 'flag lev';
+  if(/ETF/.test(f)) return 'flag etf';
+  return 'flag';
+}
+
+/* ---------- 상태 ---------- */
+let state = { sector:'전체', sort:'marketCap', dir:-1, q:'', view:'grid' };
+
+/* ---------- 섹터 세그먼트 빌드 ---------- */
+function buildSectorSeg(){
+  const seg = document.getElementById('sectorSeg');
+  const cats = ['전체', ...SECTORS.filter(s=>STOCKS.some(x=>x.sector===s))];
+  seg.innerHTML = cats.map((c,i)=>
+    `<button data-sector="${c}" class="${i===0?'on':''}">${c}</button>`).join('');
+  seg.querySelectorAll('button').forEach(b=>{
+    b.onclick=()=>{
+      seg.querySelectorAll('button').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on'); state.sector=b.dataset.sector; render();
+    };
+  });
+}
+
+/* ---------- 정렬 세그먼트 ---------- */
+document.querySelectorAll('#sortSeg button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#sortSeg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); state.sort=b.dataset.sort; render();
+  };
+});
+/* ---------- 뷰 토글 (블럭/리스트) ---------- */
+document.querySelectorAll('#viewSeg button').forEach(b=>{
+  b.onclick=()=>{
+    document.querySelectorAll('#viewSeg button').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on'); state.view=b.dataset.view; render();
+  };
+});
+/* 티커·섹터는 오름차순이 자연스러우니 기본 방향 보정 */
+document.getElementById('dirBtn').onclick=function(){
+  state.dir*=-1;
+  this.textContent = state.dir<0 ? '▼ 내림차순' : '▲ 오름차순';
+  render();
+};
+document.getElementById('search').oninput=e=>{ state.q=e.target.value.trim().toLowerCase(); render(); };
+
+/* ---------- 통계 스트립 ---------- */
+function buildStats(){
+  const n=STOCKS.length;
+  const avg=(STOCKS.reduce((a,b)=>a+(b.score||0),0)/n).toFixed(1);
+  const sectors=new Set(STOCKS.map(s=>s.sector)).size;
+  const top=[...STOCKS].sort((a,b)=>b.score-a.score)[0];
+  document.getElementById('stats').innerHTML=`
+    <div class="stat"><div class="v">${n}</div><div class="l">분석 종목</div></div>
+    <div class="stat"><div class="v">${sectors}</div><div class="l">섹터</div></div>
+    <div class="stat"><div class="v" style="color:${scoreColor(avg)}">${avg}</div><div class="l">평균 매력도</div></div>
+    <div class="stat"><div class="v" style="color:var(--green)">${top?top.ticker:'—'}</div><div class="l">최고 매력도</div></div>`;
+}
+
+/* ---------- 렌더 (블럭/리스트) ---------- */
+function render(){
+  const grid=document.getElementById('grid');
+  let list=STOCKS.filter(s=>{
+    if(state.sector!=='전체' && s.sector!==state.sector) return false;
+    if(state.q && !(s.ticker.toLowerCase().includes(state.q)||s.name.toLowerCase().includes(state.q))) return false;
+    return true;
+  });
+  list.sort((a,b)=>{
+    let va=a[state.sort], vb=b[state.sort];
+    if(typeof va==='string'){
+      // 문자열(티커/분석일): dir=-1(내림차순)일 때 역순, dir=1일 때 정순
+      return va.localeCompare(vb) * (state.dir<0 ? 1 : -1);
+    }
+    return (va-vb)*state.dir;  // 숫자: dir=-1 내림차순(큰 값 먼저)
+  });
+
+  // 뷰 클래스 토글
+  grid.className = state.view==='list' ? 'list' : 'grid';
+
+  if(!list.length){ grid.innerHTML='<div class="empty">조건에 맞는 종목이 없습니다.</div>'; return; }
+
+  if(state.view==='list'){
+    grid.innerHTML = `
+      <div class="lrow lhead">
+        <div class="lc-tk">티커</div>
+        <div class="lc-nm">회사명</div>
+        <div class="lc-sec">섹터</div>
+        <div class="lc-num">시가총액</div>
+        <div class="lc-num">현재가</div>
+        <div class="lc-date">분석일</div>
+        <div class="lc-score">매력도</div>
+      </div>` +
+      list.map(s=>{
+        const th=(typeof THEMES!=='undefined'&&THEMES[s.theme])||{primary:'var(--accent)'};
+        return `
+        <a class="lrow" href="${s.file}" style="--cardc:${th.primary}">
+          <div class="lc-tk" style="color:${th.primary}">${s.ticker}</div>
+          <div class="lc-nm">${s.name}</div>
+          <div class="lc-sec"><span class="sectag">${s.sector}</span></div>
+          <div class="lc-num">${fmtMarketCap(s.marketCap)}</div>
+          <div class="lc-num">$${(s.price||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div>
+          <div class="lc-date">${s.asOf||'—'}</div>
+          <div class="lc-score" style="color:${scoreColor(s.score)}">${s.score}<span class="x">/10</span></div>
+        </a>`;
+      }).join('');
+    return;
+  }
+
+  // 블럭(카드) 뷰
+  grid.innerHTML=list.map(s=>{
+    const th=(typeof THEMES!=='undefined'&&THEMES[s.theme])||{primary:'var(--accent)'};
+    const flags=(s.flags||[]).map(f=>`<span class="${flagClass(f)}">${f}</span>`).join('');
+    return `
+    <a class="card" href="${s.file}" style="--cardc:${th.primary}">
+      <span class="flag sector-pill" style="color:var(--mute);background:var(--deep);border-color:var(--line)">${s.sector}</span>
+      <div class="card-top">
+        <div>
+          <div class="tk">${s.ticker}</div>
+          <div class="nm">${s.name}</div>
+        </div>
+        <div class="score-badge">
+          <div class="n" style="color:${scoreColor(s.score)}">${s.score}</div>
+          <div class="x">/10</div>
+        </div>
+      </div>
+      <div class="tagline">${s.tagline||''}</div>
+      ${flags?`<div class="flags">${flags}</div>`:''}
+      <div class="meta-row">
+        <div><div class="mlabel">시가총액</div><div class="mval">${fmtMarketCap(s.marketCap)}</div></div>
+        <div style="text-align:center"><div class="mlabel">현재가</div><div class="mval">$${(s.price||0).toLocaleString(undefined,{minimumFractionDigits:2,maximumFractionDigits:2})}</div></div>
+        <div style="text-align:right"><div class="mlabel">분석일</div><div class="mval" style="font-size:12.5px">${s.asOf||'—'}</div></div>
+      </div>
+    </a>`;
+  }).join('');
+}
+
+/* ---------- 푸터 메타 ---------- */
+function buildFoot(){
+  const dates=STOCKS.map(s=>s.asOf).filter(Boolean).sort();
+  document.getElementById('footMeta').textContent=
+    `총 ${STOCKS.length}개 종목 · 분석 기준일 ${dates[0]||'—'} ~ ${dates[dates.length-1]||'—'} · 데이터: stocks.js`;
+}
+
+/* ---------- bg particles ---------- */
+(function(){
+  const c=document.getElementById('bgCanvas');if(!c)return;
+  const x=c.getContext('2d');let w,h,pts,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function size(){w=c.width=innerWidth;h=c.height=innerHeight;
+    pts=Array.from({length:Math.min(48,Math.floor(w/40))},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.15,vy:(Math.random()-.5)*.15}));}
+  function draw(){x.clearRect(0,0,w,h);
+    for(let i=0;i<pts.length;i++){const a=pts[i];a.x+=a.vx;a.y+=a.vy;
+      if(a.x<0||a.x>w)a.vx*=-1;if(a.y<0||a.y>h)a.vy*=-1;
+      for(let j=i+1;j<pts.length;j++){const b=pts[j],dx=a.x-b.x,dy=a.y-b.y,d=Math.hypot(dx,dy);
+        if(d<150){x.strokeStyle='rgba(123,108,255,'+(1-d/150)*.14+')';x.lineWidth=1;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+      x.fillStyle='rgba(92,200,255,.5)';x.fillRect(a.x-1,a.y-1,2,2);}
+    requestAnimationFrame(draw);}
+  size();addEventListener('resize',size);if(!rm)draw();
+})();
+
+/* ---------- init ---------- */
+buildSectorSeg();
+buildStats();
+buildFoot();
+render();
+</script>
+</body>
+</html>

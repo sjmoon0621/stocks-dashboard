@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>DELL 중장기 전망 · 트럼프 포트폴리오 연계 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --void:#06070b;
+    --deep:#0c0f16;
+    --panel:#10141d;
+    --panel2:#151a25;
+    --line:#222a39;
+    --ink:#eef1f7;
+    --mute:#8b94a8;
+    --faint:#586176;
+    --steel:#4aa8ff;      /* Dell 블루 */
+    --steel2:#7cc4ff;
+    --gold:#e8b54a;       /* 권력/포트폴리오 금색 */
+    --gold2:#ffd277;
+    --green:#3ee08f;
+    --red:#ff4d6d;
+    --amber:#ffc24b;
+    --grid:rgba(74,168,255,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--void);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'IBM Plex Mono',monospace}
+  .disp{font-family:'Space Grotesk',sans-serif}
+
+  .slide{min-height:100vh;padding:clamp(28px,5vw,80px) clamp(20px,6vw,110px);border-bottom:1px solid var(--line);position:relative;display:flex;flex-direction:column;justify-content:center;max-width:1500px;margin:0 auto}
+  .slide::before{content:attr(data-no);position:absolute;top:clamp(20px,3.5vw,46px);right:clamp(20px,6vw,110px);font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.25em;color:var(--faint)}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--steel);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--steel)}
+  .eyebrow.gold{color:var(--gold)} .eyebrow.gold::before{background:var(--gold)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.04;letter-spacing:-.02em}
+  h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(26px,3.4vw,44px);line-height:1.1;letter-spacing:-.015em;margin-bottom:6px}
+  h3{font-weight:600;font-size:18px;margin-bottom:8px;letter-spacing:-.01em}
+  p{color:var(--mute);font-weight:300}
+  .lead{font-size:clamp(15px,1.5vw,18px);color:var(--mute);max-width:780px}
+
+  /* cover */
+  #cover{justify-content:center;overflow:hidden}
+  .circuit{position:absolute;inset:0;z-index:0;opacity:.5}
+  .cover-inner{position:relative;z-index:2}
+  .cover-tag{display:inline-flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.28em;color:var(--gold);border:1px solid rgba(232,181,74,.3);border-radius:100px;padding:8px 18px;margin-bottom:30px;background:rgba(232,181,74,.05)}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--gold);box-shadow:0 0 0 0 rgba(232,181,74,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(232,181,74,.5)}70%{box-shadow:0 0 0 9px rgba(232,181,74,0)}100%{box-shadow:0 0 0 0 rgba(232,181,74,0)}}
+  #cover h1{font-size:clamp(46px,9vw,128px)}
+  .ticker-row{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;margin:8px 0 26px}
+  .price-now{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,3vw,34px);color:var(--ink)}
+  .chg{font-family:'IBM Plex Mono',monospace;font-size:15px;padding:3px 10px;border-radius:6px}
+  .chg.up{color:var(--green);border:1px solid rgba(62,224,143,.3);background:rgba(62,224,143,.07)}
+  .cover-sub{max-width:700px;font-size:clamp(16px,1.7vw,20px);color:var(--mute);font-weight:300;margin-bottom:40px}
+  .cover-meta{display:flex;gap:40px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);letter-spacing:.05em}
+  .cover-meta b{color:var(--mute);font-weight:500;display:block;margin-bottom:3px;letter-spacing:.18em;font-size:10px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,34px)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;overflow:hidden}
+  .card.accent::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--steel),transparent)}
+  .card.accentg::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+  .kpi{font-family:'IBM Plex Mono',monospace;font-size:clamp(28px,3.6vw,42px);font-weight:600;letter-spacing:-.02em;line-height:1}
+  .kpi.up{color:var(--green)} .kpi.down{color:var(--red)} .kpi.neu{color:var(--steel)} .kpi.gold{color:var(--gold)}
+  .kpi-label{font-size:12px;color:var(--faint);margin-top:10px;letter-spacing:.04em;line-height:1.5}
+  .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;padding:3px 9px;border-radius:5px;text-transform:uppercase}
+  .tag.bull{color:var(--green);background:rgba(62,224,143,.1);border:1px solid rgba(62,224,143,.25)}
+  .tag.bear{color:var(--red);background:rgba(255,77,109,.1);border:1px solid rgba(255,77,109,.25)}
+  .tag.warn{color:var(--amber);background:rgba(255,194,75,.1);border:1px solid rgba(255,194,75,.25)}
+  .tag.gold{color:var(--gold);background:rgba(232,181,74,.1);border:1px solid rgba(232,181,74,.25)}
+
+  ul.clean{list-style:none}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:11px;color:var(--mute);font-weight:300;font-size:15px}
+  ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:1px;background:var(--steel)}
+  ul.clean.gold li::before{background:var(--gold)}
+  ul.clean.red li::before{background:var(--red)}
+  strong{color:var(--ink);font-weight:600}
+  .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);letter-spacing:.03em;line-height:1.6}
+
+  .chartwrap{background:var(--deep);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:8px}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .alab{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:var(--faint)}
+
+  .legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--mute)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  .footnote{margin-top:26px;padding-top:16px;border-top:1px dashed var(--line)}
+  .verdict{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,2.4vw,30px);font-weight:600;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
+  .big-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(54px,9vw,120px);line-height:.9;letter-spacing:-.03em}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+  th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  td{color:var(--mute);font-weight:300}
+  td.mono,th.mono{font-family:'IBM Plex Mono',monospace}
+  tr:last-child td{border-bottom:none}
+
+  .disclaimer{font-size:12px;color:var(--faint);font-weight:300;line-height:1.7}
+
+  @media(max-width:860px){
+    .grid2,.grid3{grid-template-columns:1fr}
+    #cover h1{font-size:clamp(44px,15vw,88px)}
+    .slide{padding:60px 22px}
+  }
+  #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--steel),var(--steel2),var(--gold));z-index:99;width:0%}
+  .reveal{opacity:0;transform:translateY(24px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.pulse{animation:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- ============ COVER ============ -->
+<section class="slide" id="cover" data-no="00 / DELL">
+  <canvas class="circuit" id="circuitCanvas"></canvas>
+  <div class="cover-inner">
+    <div class="cover-tag"><span class="pulse"></span> AI 인프라의 척추 · 그리고 대통령의 픽</div>
+    <div class="eyebrow gold">미국주식 중장기 전망 · 정책 연계 분석</div>
+    <h1>DELL</h1>
+    <div class="ticker-row">
+      <span class="price-now">$422.86</span>
+      <span class="chg up">▲ 2026 YTD +236%</span>
+      <span class="src">2026.06.23 · NYSE</span>
+    </div>
+    <p class="cover-sub">"낡은 PC 회사"에서 AI 데이터센터의 핵심 공급자로. 그리고 2026년, 대통령 포트폴리오에 편입되고 공개 추천을 받은 뒤 90억 달러 펜타곤 계약을 따낸 종목.</p>
+    <div class="cover-meta">
+      <div><b>시가총액</b>약 $2,650억</div>
+      <div><b>Q1 FY27 매출</b>$43.8B (+88% YoY)</div>
+      <div><b>AI 서버 백로그</b>$51.3B (사상 최대)</div>
+      <div><b>컨센서스 평균</b>약 $480 (중앙값 $500)</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 한눈에 ============ -->
+<section class="slide reveal" data-no="01 / OVERVIEW">
+  <div class="eyebrow">Executive Snapshot</div>
+  <h2>두 개의 엔진 — 폭발하는 펀더멘털 + 정치 프리미엄</h2>
+  <p class="lead" style="margin-bottom:30px">SPCX가 "사업보다 수급"이었다면, Dell은 정반대다. <strong>실적이 먼저 폭발</strong>했고 거기에 정책·정치 내러티브가 얹혔다. 다만 그 둘이 동시에 주가를 끌어올린 만큼, 둘 다 리스크 요인이기도 하다.</p>
+  <div class="grid3" style="margin-bottom:18px">
+    <div class="card accent"><div class="kpi up">757%</div><div class="kpi-label">Q1 FY27 AI 최적화 서버 매출 증가율(YoY) · $16.1B <span class="src">(Dell 8-K)</span></div></div>
+    <div class="card accent"><div class="kpi up">+236%</div><div class="kpi-label">2026년 YTD 주가 상승 · 52주 저점 $110 → 고점 $469</div></div>
+    <div class="card accentg"><div class="kpi gold">$9.7B</div><div class="kpi-label">트럼프 매수·추천 직후 체결된 펜타곤 계약 (2026.05)</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3 style="color:var(--green)">강세 한 줄</h3><p style="font-size:15px">AI 데이터센터 buildout의 물리적 척추. $51.3B 백로그·$167B 연간 가이던스·정부 계약 파이프라인. NVDA의 GPU를 실제 시스템으로 통합·배송하는 규모는 경쟁 불가.</p></div>
+    <div class="card"><h3 style="color:var(--red)">약세 한 줄</h3><p style="font-size:15px">AI 서버는 한 자릿수 마진. 매출 폭발이 이익 질 저하로(총마진 21%→17.8%). 음(−)의 자기자본, 레버리지 확대, 그리고 <strong>정치 연계가 주는 평판·변동성 리스크</strong>.</p></div>
+  </div>
+  <div class="footnote"><span class="src">출처: Dell SEC 8-K(Q1 FY27), CNBC, Money Morning, Investing.com, TradingKey · 기준 2026.06.23 — 수치 변동 가능</span></div>
+</section>
+
+<!-- ============ 02 펀더멘털 ============ -->
+<section class="slide reveal" data-no="02 / FUNDAMENTALS">
+  <div class="eyebrow">재무 — "이런 분기는 처음 봤다"</div>
+  <h2>매출 곡선이 로켓처럼 꺾였다</h2>
+  <p class="lead" style="margin-bottom:20px">Melius의 기술리서치 책임자는 Dell의 이번 분기를 두고 "이런 건 본 적 없다"고 했다. AI 서버 수요가 ISG(인프라) 부문을 통째로 다시 그렸다.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="chartwrap">
+      <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:6px">분기 매출 추이 ($B) · Q1 FY27 = 컨센 $8B 상회</div>
+      <svg viewBox="0 0 520 300" role="img" aria-label="Dell 분기 매출 추이">
+        <line class="gl" x1="50" y1="50" x2="500" y2="50"/>
+        <line class="gl" x1="50" y1="110" x2="500" y2="110"/>
+        <line class="gl" x1="50" y1="170" x2="500" y2="170"/>
+        <line class="axis" x1="50" y1="230" x2="500" y2="230"/>
+        <text class="alab" x="10" y="54">$44B</text>
+        <text class="alab" x="14" y="174">$24B</text>
+        <text class="alab" x="20" y="234">$0</text>
+        <!-- bars: ~23.4, 25, 24.4, 24, 43.8 -->
+        <g>
+          <rect x="80"  y="178" width="48" height="52"  fill="#33415c" rx="3"/>
+          <rect x="160" y="172" width="48" height="58"  fill="#3a4d6e" rx="3"/>
+          <rect x="240" y="175" width="48" height="55"  fill="#41587f" rx="3"/>
+          <rect x="320" y="176" width="48" height="54"  fill="#4a68a0" rx="3"/>
+          <rect x="400" y="55"  width="58" height="175" fill="url(#dgrad)" rx="3"/>
+          <defs><linearGradient id="dgrad" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#7cc4ff"/><stop offset="1" stop-color="#4aa8ff"/></linearGradient></defs>
+        </g>
+        <text class="alab" x="104" y="248" text-anchor="middle">'25 Q1</text>
+        <text class="alab" x="184" y="248" text-anchor="middle">Q2</text>
+        <text class="alab" x="264" y="248" text-anchor="middle">Q3</text>
+        <text class="alab" x="344" y="248" text-anchor="middle">Q4</text>
+        <text class="alab" x="429" y="248" text-anchor="middle" fill="#7cc4ff">'26 Q1</text>
+        <text class="alab" x="429" y="45" text-anchor="middle" fill="#7cc4ff" font-weight="600">$43.8B</text>
+      </svg>
+      <div class="legend"><span><i class="dot" style="background:#4aa8ff"></i> 폭발 분기: +88% YoY, EPS $4.86 (컨센 $2.92)</span></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <h3>Q1 FY27 핵심 숫자</h3>
+        <table>
+          <tr><th>항목</th><th class="mono">값</th><th class="mono">YoY</th></tr>
+          <tr><td>총매출</td><td class="mono">$43.8B</td><td class="mono up" style="color:var(--green)">+88%</td></tr>
+          <tr><td>ISG(인프라)</td><td class="mono">$29.0B</td><td class="mono up" style="color:var(--green)">+181%</td></tr>
+          <tr><td>AI 서버</td><td class="mono">$16.1B</td><td class="mono up" style="color:var(--green)">+757%</td></tr>
+          <tr><td>신규 AI 수주</td><td class="mono">$24.4B</td><td class="mono">분기</td></tr>
+          <tr><td>AI 백로그</td><td class="mono">$51.3B</td><td class="mono gold" style="color:var(--gold)">사상최대</td></tr>
+          <tr><td>비GAAP EPS</td><td class="mono">$4.86</td><td class="mono up" style="color:var(--green)">+60% beat</td></tr>
+        </table>
+      </div>
+      <div class="card accentg">
+        <h3 style="color:var(--gold)">가이던스 상향</h3>
+        <p style="font-size:14.5px">FY27 연매출 가이던스를 <strong>$167B(중앙값)</strong>으로 상향 — 전년比 약 50%↑. AI 서버 연매출 전망도 $50B → <strong>$60B</strong>로 올렸다. PowerEdge XE8812(NVIDIA Vera Rubin 탑재) 등 신제품도 가세.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: Dell SEC 8-K(Q1 FY27, 회계연도 5/1 종료), Futurum, TIKR, Money Morning, CNBC(5/29) · 차트는 추세 직관화용 도식</span></div>
+</section>
+
+<!-- ============ 03 마진/리스크 ============ -->
+<section class="slide reveal" data-no="03 / QUALITY">
+  <div class="eyebrow">이익의 질 — 성장의 그림자</div>
+  <h2>매출은 로켓, 마진은 얇아진다</h2>
+  <p class="lead" style="margin-bottom:24px">AI 서버는 본질적으로 NVDA GPU를 조립·통합하는 사업이라 마진이 한 자릿수다. 폭발적 성장의 대가로 <strong>이익 구조가 희석</strong>되고 있다는 점이 약세론의 핵심.</p>
+  <div class="grid3">
+    <div class="card accent">
+      <div class="kpi down">21.1→17.8%</div>
+      <div class="kpi-label">총마진 압축 · AI 하드웨어 믹스 확대 영향</div>
+    </div>
+    <div class="card accent">
+      <div class="kpi down">−$2.47B</div>
+      <div class="kpi-label">음(−)의 자기자본 · 자사주매입 누적 + 레버리지</div>
+    </div>
+    <div class="card accent">
+      <div class="kpi neu">$3B+$6B</div>
+      <div class="kpi-label">신규 선순위채 $3B + 리볼빙 $6B · 자본집약 AI 투자 자금</div>
+    </div>
+  </div>
+  <div class="grid2" style="margin-top:18px">
+    <div class="card">
+      <h3 style="color:var(--steel)">Dell이 NVDA·Marvell과 다른 점 (강세)</h3>
+      <p style="font-size:14.5px">칩 제조사가 아니라 <strong>시스템 엔지니어링 + 엔터프라이즈 관계</strong>가 해자. 하이퍼스케일러·주권 AI·중견기업이 모두 "통합된 랙"을 필요로 하고, 그 규모·서비스·공급망을 갖춘 곳은 드물다. 백로그가 "못 만들어서 못 파는" 수준.</p>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--red)">감시 포인트 (약세)</h3>
+      <ul class="clean red">
+        <li><strong>마진:</strong> 매출↑ ≠ 이익질↑. 메모리·운임 인플레가 추가 압박.</li>
+        <li><strong>GPU 의존:</strong> NVDA Rubin 양산 차질 시 백로그 인식 지연 리스크(6/23 Nasdaq −2.2% 당시 동반 하락).</li>
+        <li><strong>내부자 매도:</strong> Silver Lake·이사진의 대규모 지분 처분이 6월 연이어 포착.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: TradingKey(6/22), Benzinga, CNN/TipRanks(내부자 거래), stockanalysis · 음의 자기자본은 자사주매입 회계의 산물로 즉각적 부실 신호와는 구분 필요</span></div>
+</section>
+
+<!-- ============ 04 트럼프 픽 (핵심) ============ -->
+<section class="slide reveal" data-no="04 / THE PICK">
+  <div class="eyebrow gold">트럼프의 픽 — 타임라인</div>
+  <h2>매수 → 추천 → 정부계약, 같은 종목에서</h2>
+  <p class="lead" style="margin-bottom:18px">2026년 5월 14일 미 정부윤리청(OGE)이 공개한 113페이지 공시가 모든 것을 드러냈다. Dell은 그 "오프닝 액트"였다. <span class="src">(아래는 보도·공시에 근거한 사실 정리이며 위법 단정이 아님)</span></p>
+
+  <div class="chartwrap">
+    <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:12px">Dell 관련 이벤트 시퀀스 (2026)</div>
+    <svg viewBox="0 0 1000 220" role="img" aria-label="트럼프-Dell 타임라인">
+      <line class="axis" x1="40" y1="120" x2="960" y2="120"/>
+      <!-- nodes -->
+      <!-- Feb10 buy -->
+      <circle cx="110" cy="120" r="11" fill="rgba(232,181,74,.2)" stroke="#e8b54a" stroke-width="2"/>
+      <text class="alab" x="110" y="92" text-anchor="middle" fill="#e8b54a">2.10 매수</text>
+      <text class="alab" x="110" y="150" text-anchor="middle">$1–5M · 주가 ~$126</text>
+      <!-- Feb19 endorse -->
+      <circle cx="320" cy="120" r="11" fill="rgba(232,181,74,.2)" stroke="#e8b54a" stroke-width="2"/>
+      <text class="alab" x="320" y="92" text-anchor="middle" fill="#e8b54a">2.19 공개추천</text>
+      <text class="alab" x="320" y="150" text-anchor="middle">"Dell 컴퓨터 사라" (조지아 집회)</text>
+      <!-- May08 sign / May14 disclose -->
+      <circle cx="560" cy="120" r="11" fill="rgba(74,168,255,.2)" stroke="#4aa8ff" stroke-width="2"/>
+      <text class="alab" x="560" y="92" text-anchor="middle" fill="#4aa8ff">5.08 서명 · 5.14 공시</text>
+      <text class="alab" x="560" y="150" text-anchor="middle">113p OGE · 3,642건 거래</text>
+      <!-- May Pentagon -->
+      <circle cx="760" cy="120" r="15" fill="rgba(62,224,143,.18)" stroke="#3ee08f" stroke-width="2"/>
+      <text class="alab" x="760" y="88" text-anchor="middle" fill="#3ee08f" font-weight="600">5월 펜타곤 $9.7B</text>
+      <text class="alab" x="760" y="154" text-anchor="middle">+ 6월 공군 $1.44B</text>
+      <!-- now -->
+      <circle cx="930" cy="120" r="9" fill="#fff"/>
+      <text class="alab" x="930" y="92" text-anchor="middle" fill="#fff">현재 $423</text>
+      <text class="alab" x="930" y="150" text-anchor="middle">매수가 대비 ~3.3×</text>
+      <!-- price ribbon -->
+      <text class="alab" x="40" y="195" fill="#586176">주가 경로: $126 ──────────────────────────▶ $430+ (고점 $469)</text>
+    </svg>
+  </div>
+
+  <div class="grid3" style="margin-top:18px">
+    <div class="card accentg">
+      <h3 style="color:var(--gold)">매수 (2.10)</h3>
+      <p style="font-size:14px">트럼프 계좌가 Dell 주식 <strong>$100만~$500만</strong> 매수. 주가 약 $126. 3월에 소액 3건 추가 — 최대 노출 약 $510만.</p>
+    </div>
+    <div class="card accentg">
+      <h3 style="color:var(--gold)">추천 (2.19)</h3>
+      <p style="font-size:14px">매수 9일 뒤 조지아 집회에서 "나가서 Dell 컴퓨터를 사라". 이후 백악관 로즈가든 오찬에서도 Dell 언급.</p>
+    </div>
+    <div class="card accentg">
+      <h3 style="color:var(--gold)">계약 (5월)</h3>
+      <p style="font-size:14px">펜타곤 <strong>$9.7B</strong> 계약 + 공군 $1.44B. 워치독은 타이밍과 사전 $6.25B 기부 정황에 의문 제기.</p>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: U.S. OGE 공시(2026.05.14), TheStreet, Detroit News, Washington Examiner, CBS News 추적DB, Zacks · 트럼프 측은 "이해상충 없음", 자산은 자녀 운용 신탁/제3자 재량계좌라고 주장. 위법 여부는 본 자료의 판단 대상 아님</span></div>
+</section>
+
+<!-- ============ 05 포트폴리오 연관성 ============ -->
+<section class="slide reveal" data-no="05 / PORTFOLIO MAP">
+  <div class="eyebrow gold">포트폴리오 연계 — Dell은 혼자가 아니다</div>
+  <h2>"AI 인프라 + 국방"이라는 하나의 테마</h2>
+  <p class="lead" style="margin-bottom:20px">2026년 1분기 공시는 단일 종목이 아니라 <strong>테마</strong>를 드러냈다. Dell과 함께 매수된 종목들은 같은 논리 — AI 인프라·정부 계약·온쇼어링 — 로 묶인다. Dell을 본다는 건 이 클러스터 전체를 보는 일.</p>
+
+  <div class="grid2" style="align-items:start">
+    <div class="chartwrap">
+      <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:10px">Q1 2026 포트폴리오 클러스터 (Dell 중심)</div>
+      <svg viewBox="0 0 500 420" role="img" aria-label="트럼프 포트폴리오 AI 클러스터">
+        <!-- links -->
+        <g stroke="#2a3447" stroke-width="1.5">
+          <line x1="250" y1="210" x2="250" y2="70"/>
+          <line x1="250" y1="210" x2="110" y2="120"/>
+          <line x1="250" y1="210" x2="390" y2="120"/>
+          <line x1="250" y1="210" x2="90" y2="250"/>
+          <line x1="250" y1="210" x2="410" y2="250"/>
+          <line x1="250" y1="210" x2="140" y2="350"/>
+          <line x1="250" y1="210" x2="360" y2="350"/>
+        </g>
+        <!-- center DELL -->
+        <circle cx="250" cy="210" r="46" fill="url(#dc)"/>
+        <defs><radialGradient id="dc"><stop offset="0" stop-color="#7cc4ff"/><stop offset="1" stop-color="#2b6fb8"/></radialGradient></defs>
+        <text x="250" y="206" text-anchor="middle" font-family="Space Grotesk" font-weight="700" font-size="22" fill="#06070b">DELL</text>
+        <text x="250" y="226" text-anchor="middle" class="mono" font-size="9" fill="#06070b">AI 서버</text>
+        <!-- satellites -->
+        <g font-family="IBM Plex Mono" font-size="11" text-anchor="middle">
+          <circle cx="250" cy="70" r="30" fill="#15202e" stroke="#4aa8ff"/><text x="250" y="68" fill="#7cc4ff">NVDA</text><text x="250" y="82" fill="#586176" font-size="8.5">GPU</text>
+          <circle cx="110" cy="120" r="30" fill="#15202e" stroke="#e8b54a"/><text x="110" y="118" fill="#ffd277">PLTR</text><text x="110" y="132" fill="#586176" font-size="8.5">국방SW</text>
+          <circle cx="390" cy="120" r="30" fill="#15202e" stroke="#4aa8ff"/><text x="390" y="118" fill="#7cc4ff">ORCL</text><text x="390" y="132" fill="#586176" font-size="8.5">클라우드</text>
+          <circle cx="90"  cy="250" r="30" fill="#15202e" stroke="#4aa8ff"/><text x="90" y="248" fill="#7cc4ff">AVGO</text><text x="90" y="262" fill="#586176" font-size="8.5">반도체</text>
+          <circle cx="410" cy="250" r="30" fill="#15202e" stroke="#4aa8ff"/><text x="410" y="248" fill="#7cc4ff">MSFT</text><text x="410" y="262" fill="#586176" font-size="8.5">기밀망</text>
+          <circle cx="140" cy="350" r="30" fill="#15202e" stroke="#4aa8ff"/><text x="140" y="348" fill="#7cc4ff">AMZN</text><text x="140" y="362" fill="#586176" font-size="8.5">기밀망</text>
+          <circle cx="360" cy="350" r="30" fill="#15202e" stroke="#e8b54a"/><text x="360" y="348" fill="#ffd277">MSI</text><text x="360" y="362" fill="#586176" font-size="8.5">방산통신</text>
+        </g>
+      </svg>
+      <div class="legend">
+        <span><i class="dot" style="background:#4aa8ff"></i> AI 인프라/클라우드</span>
+        <span><i class="dot" style="background:#e8b54a"></i> 국방·정부 직결</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <h3>함께 매수된 핵심 종목 ($1–5M 구간)</h3>
+        <table>
+          <tr><th>종목</th><th>연결 고리</th></tr>
+          <tr><td><strong style="color:var(--steel)">NVDA</strong></td><td>Dell 서버의 GPU 공급원 — 직접 동조</td></tr>
+          <tr><td><strong style="color:var(--gold)">PLTR</strong></td><td>국방·정부 AI SW, 정책 수혜 테마 동일</td></tr>
+          <tr><td><strong style="color:var(--steel)">ORCL</strong></td><td>AI 클라우드 capex, Dell과 buildout 공유</td></tr>
+          <tr><td><strong style="color:var(--steel)">AVGO</strong></td><td>AI 반도체·네트워킹</td></tr>
+          <tr><td><strong style="color:var(--steel)">MSFT·AMZN</strong></td><td>매수 후 "기밀 전산망 배치" 계약 발표</td></tr>
+          <tr><td><strong style="color:var(--gold)">MSI</strong></td><td>방산 통신, 정부 조달 직결</td></tr>
+        </table>
+      </div>
+      <div class="card accentg">
+        <h3 style="color:var(--gold)">투자자 함의</h3>
+        <p style="font-size:14px">Dell의 정치 프리미엄은 <strong>클러스터 공통 변수</strong>다. 호재(정부 capex·온쇼어링·국방예산)도, 악재(이해상충 정밀감시·공시 후 변동성)도 이 종목들에 동시 작동. Dell만 보지 말고 <strong>NVDA·PLTR·ORCL과의 동조/디커플링</strong>을 함께 추적해야 한다.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: CNBC(2026.05.15), TradingKey(포트폴리오 분석), Insider Monkey, Detroit News · 클러스터 도식은 공시상 동반 매수+테마 연관을 직관화한 것이며 투자 추천 아님</span></div>
+</section>
+
+<!-- ============ 06 정치 리스크 양면 ============ -->
+<section class="slide reveal" data-no="06 / DOUBLE-EDGE">
+  <div class="eyebrow gold">정치 연계의 양날</div>
+  <h2>대통령의 픽이라는 것은 호재이자 리스크다</h2>
+  <p class="lead" style="margin-bottom:22px">정치 연결은 단기 모멘텀과 정부 수주를 키우지만, 동시에 평판·감시·정권교체라는 새로운 리스크 축을 더한다. SPCX의 'Musk 오너 리스크'와 같은 구조가 Dell엔 'Trump 정책 리스크'로 존재한다.</p>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(62,224,143,.25)">
+      <h3 style="color:var(--green)">상방 (Bull)</h3>
+      <ul class="clean">
+        <li><strong>정부 수주 가속:</strong> 펜타곤 $9.7B·공군 $1.44B처럼 연방 AI·국방 예산이 직접 매출로.</li>
+        <li><strong>온쇼어링 수혜:</strong> 관세·리쇼어링 정책이 美 인프라 공급자 Dell에 유리.</li>
+        <li><strong>모멘텀·인지도:</strong> 대통령 공개 언급이 리테일 관심·거래량을 증폭.</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(255,77,109,.25)">
+      <h3 style="color:var(--red)">하방 (Bear)</h3>
+      <ul class="clean red">
+        <li><strong>이해상충 감시:</strong> CBS 추적DB·의회·워치독의 상시 감시 — 헤드라인 리스크 상존.</li>
+        <li><strong>정권교체 민감도:</strong> 차기 정부·중간선거 결과에 따라 정책 수주 모멘텀이 역전될 수 있음.</li>
+        <li><strong>밸류 정당화 부담:</strong> "펀더멘털 vs 정치 프리미엄" 분리가 어려워, 정치 변수에 멀티플이 출렁.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px;background:linear-gradient(160deg,var(--panel2),var(--deep))">
+    <p style="font-size:14.5px"><strong>핵심:</strong> Dell의 진짜 강점(AI 서버 백로그·실적)은 정치와 무관하게 견고하다. 그러나 현재 주가에는 <strong>실적 프리미엄 + 정치 프리미엄</strong>이 섞여 있어, 후자가 빠질 때의 변동성을 감안해야 한다. 투자자는 "이 상승분 중 얼마가 펀더멘털이고 얼마가 헤드라인인가"를 늘 분리해 봐야 한다.</p>
+  </div>
+  <div class="footnote"><span class="src">출처: Detroit News, Washington Examiner, CBS News · 균형적 리스크 식별이며 특정 정파 지지·선거 예측 아님</span></div>
+</section>
+
+<!-- ============ 07 밸류/컨센서스 ============ -->
+<section class="slide reveal" data-no="07 / VALUATION">
+  <div class="eyebrow">밸류에이션 & 컨센서스</div>
+  <h2>"강력 매수"지만 목표가는 $213~$700</h2>
+  <p class="lead" style="margin-bottom:22px">SPCX($62~$310, 적자라 PER 무의미)와 달리 Dell은 <strong>실제 이익이 나는 회사</strong>(P/E 약 33×)다. 그래서 컨센서스가 명확히 매수 쪽이지만, AI 사이클 가정에 따라 목표가 분산은 여전히 크다.</p>
+
+  <div class="chartwrap" style="margin-bottom:18px">
+    <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:14px">12개월 목표주가 스펙트럼 · 현재가 $423 기준</div>
+    <svg viewBox="0 0 1000 130" role="img" aria-label="Dell 목표주가 스펙트럼">
+      <line class="axis" x1="40" y1="90" x2="960" y2="90"/>
+      <g class="alab" text-anchor="middle">
+        <text x="40" y="112">$0</text>
+        <text x="171" y="112">$200</text>
+        <text x="302" y="112">$400</text>
+        <text x="433" y="112">$600</text>
+        <text x="525" y="112">$700</text>
+      </g>
+      <defs><linearGradient id="spec" x1="0" x2="1"><stop offset="0" stop-color="#ff4d6d"/><stop offset=".5" stop-color="#ffc24b"/><stop offset="1" stop-color="#3ee08f"/></linearGradient></defs>
+      <rect x="40" y="84" width="920" height="6" rx="3" fill="url(#spec)" opacity=".32"/>
+      <!-- map x = 40 + price/700*920 ; scale: 200->303,400->565,600->828,700->960 -->
+      <!-- current 423 -->
+      <line x1="596" y1="42" x2="596" y2="90" stroke="#fff" stroke-width="2"/>
+      <text x="596" y="34" text-anchor="middle" class="mono" font-size="12" fill="#fff" font-weight="600">현재 $423</text>
+      <!-- Goldman low 165 (Jan) -->
+      <circle cx="257" cy="87" r="7" fill="#ff4d6d"/><text class="alab" x="257" y="68" text-anchor="middle" fill="#ff4d6d">$165*</text>
+      <!-- UBS 213/243 -->
+      <circle cx="320" cy="87" r="7" fill="#ff7a4d"/><text class="alab" x="320" y="56" text-anchor="middle" fill="#ff7a4d">$213</text>
+      <!-- MS 448 -->
+      <circle cx="629" cy="87" r="7" fill="#ffc24b"/><text class="alab" x="629" y="56" text-anchor="middle" fill="#ffc24b">$448</text>
+      <!-- consensus ~483 / median 500 -->
+      <circle cx="675" cy="87" r="8" fill="#fff" stroke="#10141d"/><text class="alab" x="700" y="56" text-anchor="middle" fill="#e8f1ff">컨센 ~$483</text>
+      <!-- Goldman/Mizuho/Bernstein 500 -->
+      <circle cx="697" cy="87" r="7" fill="#3ee08f"/><text class="alab" x="697" y="68" text-anchor="middle" fill="#3ee08f">$500</text>
+      <!-- Susquehanna 700 -->
+      <circle cx="960" cy="87" r="7" fill="#3ee08f"/><text class="alab" x="945" y="68" text-anchor="middle" fill="#3ee08f">$700</text>
+    </svg>
+    <div class="legend"><span style="color:var(--faint)">* Goldman $165는 2026.01 구버전 — 이후 동사 $500로 상향. 분산은 발표 시점차도 반영</span></div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><div class="kpi neu">~33×</div><div class="kpi-label">P/E (TTM) · 적자인 SPCX와 근본적 차이</div></div>
+    <div class="card"><div class="kpi up">+22%</div><div class="kpi-label">중앙값 목표가($500) 기준 상승여력</div></div>
+    <div class="card"><div class="kpi gold">19 / 8 / 0</div><div class="kpi-label">매수 / 보유 / 매도 — Sell 0건, 컨센 'Strong Buy' 영역</div></div>
+  </div>
+  <div class="footnote"><span class="src">출처: Benzinga, MarketBeat, Public.com, TickerNerd, Investing.com(6/23) · 목표가는 2026.06 시점, 발표 시점차로 일부 구버전 혼재. Susquehanna(Hosseini) 최고 $700, Goldman/Mizuho/Bernstein $500</span></div>
+</section>
+
+<!-- ============ 08 종합 판단 ============ -->
+<section class="slide reveal" data-no="08 / VERDICT">
+  <div class="eyebrow">종합 판단 & 모니터링</div>
+  <h2 style="margin-bottom:24px">투자 매력도</h2>
+  <div style="display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;margin-bottom:8px">
+    <div class="big-num" style="background:linear-gradient(120deg,#7cc4ff,#e8b54a);-webkit-background-clip:text;background-clip:text;color:transparent">6.5<span style="font-size:.4em;color:var(--faint);-webkit-text-fill-color:var(--faint)">/10</span></div>
+    <p class="verdict" style="max-width:640px">SPCX(4/10)보다 높다 — <span style="color:var(--steel)">실적이 진짜고 이익이 난다.</span> 다만 +236% 급등 후라 <span style="color:var(--gold)">정치 프리미엄·마진 희석</span>이 상단을 누른다.</p>
+  </div>
+
+  <div class="grid3" style="margin:28px 0 0">
+    <div class="card"><h3 style="color:var(--green)">진입 전략</h3>
+      <ul class="clean">
+        <li>펀더멘털은 견고하나 단기 과열(RSI 78 부근 기록) — <strong>눌림목 분할</strong>이 합리적.</li>
+        <li>현재가가 컨센 중앙값($500) 대비 약 −15% — 밸류상 극단적 고평가는 아님.</li>
+        <li>정치 헤드라인發 변동성을 매수 기회로 활용 가능, 단 포지션 사이징 보수적으로.</li>
+      </ul>
+    </div>
+    <div class="card"><h3 style="color:var(--steel)">모니터링 포인트</h3>
+      <ul class="clean">
+        <li>AI 백로그 소진·신규 수주 추이 ($24.4B/분기 유지?)</li>
+        <li>총마진 추가 압축 여부 (17.8% 하단 방어?)</li>
+        <li>NVDA Rubin 양산·GPU 공급</li>
+        <li>내부자 매도·신규 채권 발행 규모</li>
+      </ul>
+    </div>
+    <div class="card accentg"><h3 style="color:var(--gold)">정치·정책 트래커</h3>
+      <ul class="clean gold">
+        <li>추가 정부·국방 계약 수주</li>
+        <li>이해상충 감시 헤드라인 (CBS DB·의회)</li>
+        <li>중간선거·정권 기조 변화</li>
+        <li>NVDA·PLTR·ORCL 동조/디커플링</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;background:linear-gradient(160deg,#151a25,#0c0f16);border-color:rgba(232,181,74,.22)">
+    <p style="font-size:15px;color:var(--mute)"><strong style="color:var(--ink)">균형 코멘트.</strong> Dell은 "AI buildout의 곡괭이·삽"을 파는 회사로서 본업이 탄탄하다. SPCX가 내러티브에 가격이 앞섰다면, Dell은 <strong>실적이 가격을 끌고 온</strong> 정반대 사례다. 다만 +236% 뒤에는 두 개의 프리미엄(실적·정치)이 겹쳐 있고, <strong style="color:var(--gold)">정치 프리미엄은 통제 불가능한 외생 변수</strong>다. 이 둘을 분리해 보는 투자자가 변동성을 기회로 바꿀 수 있다.</p>
+  </div>
+
+  <div class="footnote">
+    <p class="disclaimer">⚠️ <strong>고지.</strong> 본 자료는 정보 제공용이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 트럼프 포트폴리오 관련 내용은 미 정부윤리청(OGE) 공시(2026.05.14)와 언론 보도에 근거한 사실 정리이며, 어떠한 위법(내부자거래 등)도 단정하지 않습니다. 트럼프 측은 이해상충이 없으며 자산은 제3자/자녀가 운용한다고 밝혔습니다. 모든 수치는 2026년 6월 기준으로 빠르게 변동될 수 있으며, 사실과 추측을 구분해 표기했습니다. 투자 판단과 책임은 전적으로 본인에게 있습니다.</p>
+    <p class="src" style="margin-top:12px">데이터 출처: Dell SEC 8-K(Q1 FY27) · CNBC · Money Morning · Futurum · TIKR · TheStreet · Detroit News · Washington Examiner · CBS News · U.S. OGE · TradingKey · Benzinga · MarketBeat · Public.com · Investing.com · Insider Monkey · Zacks (2026.05–06)</p>
+  </div>
+</section>
+
+<script>
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// circuit board animation
+const c=document.getElementById('circuitCanvas');
+if(c){
+  const x=c.getContext('2d');let w,h,nodes,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function size(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;
+    const n=Math.min(40,Math.floor(w/40));
+    nodes=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.18,vy:(Math.random()-.5)*.18}));}
+  function draw(){x.clearRect(0,0,w,h);
+    for(let i=0;i<nodes.length;i++){const a=nodes[i];a.x+=a.vx;a.y+=a.vy;
+      if(a.x<0||a.x>w)a.vx*=-1;if(a.y<0||a.y>h)a.vy*=-1;
+      for(let j=i+1;j<nodes.length;j++){const b=nodes[j];const dx=a.x-b.x,dy=a.y-b.y;const d=Math.hypot(dx,dy);
+        if(d<140){x.strokeStyle='rgba(74,168,255,'+(1-d/140)*.18+')';x.lineWidth=1;
+          x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+      x.fillStyle='rgba(124,196,255,.5)';x.fillRect(a.x-1,a.y-1,2.4,2.4);}
+    requestAnimationFrame(draw);}
+  size();addEventListener('resize',size);
+  if(!rm)draw();else{nodes.forEach(a=>{x.fillStyle='rgba(124,196,255,.4)';x.fillRect(a.x,a.y,2,2);});}
+}
+</script>
+</body>
+</html>

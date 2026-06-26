@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MSFT 중장기 전망 · AI Capex와 정책 연계 분석</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+  :root{
+    --void:#05070c;
+    --deep:#0a0e16;
+    --panel:#0f141e;
+    --panel2:#141a26;
+    --line:#212a3b;
+    --ink:#eaf0f8;
+    --mute:#8a94a9;
+    --faint:#566074;
+    --azure:#3a8dde;       /* Azure 블루 */
+    --azure2:#6fb6ff;
+    --teal:#2fd4c4;        /* 클라우드/데이터 */
+    --gold:#e3b24a;        /* 정책/권력 */
+    --green:#3ee08f;
+    --red:#ff5071;
+    --amber:#ffc24b;
+    --grid:rgba(58,141,222,.07);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{background:var(--void);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+  .mono{font-family:'IBM Plex Mono',monospace}
+
+  .slide{min-height:100vh;padding:clamp(28px,5vw,80px) clamp(20px,6vw,110px);border-bottom:1px solid var(--line);position:relative;display:flex;flex-direction:column;justify-content:center;max-width:1500px;margin:0 auto}
+  .slide::before{content:attr(data-no);position:absolute;top:clamp(20px,3.5vw,46px);right:clamp(20px,6vw,110px);font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.25em;color:var(--faint)}
+  .eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.32em;text-transform:uppercase;color:var(--azure);margin-bottom:18px;display:flex;align-items:center;gap:12px}
+  .eyebrow::before{content:"";width:34px;height:1px;background:var(--azure)}
+  .eyebrow.gold{color:var(--gold)} .eyebrow.gold::before{background:var(--gold)}
+  h1{font-family:'Space Grotesk',sans-serif;font-weight:700;line-height:1.04;letter-spacing:-.02em}
+  h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(26px,3.4vw,44px);line-height:1.1;letter-spacing:-.015em;margin-bottom:6px}
+  h3{font-weight:600;font-size:18px;margin-bottom:8px;letter-spacing:-.01em}
+  p{color:var(--mute);font-weight:300}
+  .lead{font-size:clamp(15px,1.5vw,18px);color:var(--mute);max-width:790px}
+
+  #cover{justify-content:center;overflow:hidden}
+  .meshbg{position:absolute;inset:0;z-index:0;opacity:.55}
+  .cover-inner{position:relative;z-index:2}
+  .cover-tag{display:inline-flex;align-items:center;gap:10px;font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.26em;color:var(--azure2);border:1px solid var(--line);border-radius:100px;padding:8px 18px;margin-bottom:30px;background:rgba(58,141,222,.05)}
+  .pulse{width:7px;height:7px;border-radius:50%;background:var(--amber);box-shadow:0 0 0 0 rgba(255,194,75,.6);animation:pulse 2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(255,194,75,.5)}70%{box-shadow:0 0 0 9px rgba(255,194,75,0)}100%{box-shadow:0 0 0 0 rgba(255,194,75,0)}}
+  #cover h1{font-size:clamp(46px,9vw,128px)}
+  .ticker-row{display:flex;align-items:baseline;gap:22px;flex-wrap:wrap;margin:8px 0 26px}
+  .price-now{font-family:'IBM Plex Mono',monospace;font-size:clamp(22px,3vw,34px);color:var(--ink)}
+  .chg{font-family:'IBM Plex Mono',monospace;font-size:15px;padding:3px 10px;border-radius:6px}
+  .chg.down{color:var(--red);border:1px solid rgba(255,80,113,.3);background:rgba(255,80,113,.07)}
+  .cover-sub{max-width:720px;font-size:clamp(16px,1.7vw,20px);color:var(--mute);font-weight:300;margin-bottom:40px}
+  .cover-meta{display:flex;gap:40px;flex-wrap:wrap;font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--faint);letter-spacing:.05em}
+  .cover-meta b{color:var(--mute);font-weight:500;display:block;margin-bottom:3px;letter-spacing:.18em;font-size:10px}
+
+  .grid2{display:grid;grid-template-columns:1fr 1fr;gap:clamp(16px,2.5vw,34px)}
+  .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+  .card{background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-radius:16px;padding:26px;position:relative;overflow:hidden}
+  .card.accent::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--azure),transparent)}
+  .card.accentg::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--gold),transparent)}
+  .card.accentt::before{content:"";position:absolute;top:0;left:0;width:100%;height:2px;background:linear-gradient(90deg,var(--teal),transparent)}
+  .kpi{font-family:'IBM Plex Mono',monospace;font-size:clamp(28px,3.6vw,42px);font-weight:600;letter-spacing:-.02em;line-height:1}
+  .kpi.up{color:var(--green)} .kpi.down{color:var(--red)} .kpi.neu{color:var(--azure2)} .kpi.teal{color:var(--teal)} .kpi.gold{color:var(--gold)}
+  .kpi-label{font-size:12px;color:var(--faint);margin-top:10px;letter-spacing:.04em;line-height:1.5}
+  .tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10.5px;letter-spacing:.12em;padding:3px 9px;border-radius:5px;text-transform:uppercase}
+  .tag.bull{color:var(--green);background:rgba(62,224,143,.1);border:1px solid rgba(62,224,143,.25)}
+  .tag.bear{color:var(--red);background:rgba(255,80,113,.1);border:1px solid rgba(255,80,113,.25)}
+  .tag.warn{color:var(--amber);background:rgba(255,194,75,.1);border:1px solid rgba(255,194,75,.25)}
+  .tag.gold{color:var(--gold);background:rgba(227,178,74,.1);border:1px solid rgba(227,178,74,.25)}
+
+  ul.clean{list-style:none}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:11px;color:var(--mute);font-weight:300;font-size:15px}
+  ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:1px;background:var(--azure)}
+  ul.clean.teal li::before{background:var(--teal)}
+  ul.clean.gold li::before{background:var(--gold)}
+  ul.clean.red li::before{background:var(--red)}
+  strong{color:var(--ink);font-weight:600}
+  .src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);letter-spacing:.03em;line-height:1.6}
+
+  .chartwrap{background:var(--deep);border:1px solid var(--line);border-radius:16px;padding:20px;margin-top:8px}
+  svg{display:block;width:100%;height:auto;overflow:visible}
+  .axis{stroke:var(--line);stroke-width:1}
+  .gl{stroke:var(--grid);stroke-width:1}
+  .alab{font-family:'IBM Plex Mono',monospace;font-size:11px;fill:var(--faint)}
+
+  .legend{display:flex;gap:22px;flex-wrap:wrap;margin-top:14px;font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--mute)}
+  .legend span{display:flex;align-items:center;gap:7px}
+  .dot{width:11px;height:11px;border-radius:3px;display:inline-block}
+
+  .footnote{margin-top:26px;padding-top:16px;border-top:1px dashed var(--line)}
+  .verdict{font-family:'Space Grotesk',sans-serif;font-size:clamp(20px,2.4vw,30px);font-weight:600;line-height:1.25;letter-spacing:-.01em;color:var(--ink)}
+  .big-num{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(54px,9vw,120px);line-height:.9;letter-spacing:-.03em}
+
+  table{width:100%;border-collapse:collapse;font-size:14px;margin-top:6px}
+  th,td{text-align:left;padding:11px 12px;border-bottom:1px solid var(--line)}
+  th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--faint);font-weight:500}
+  td{color:var(--mute);font-weight:300}
+  td.mono,th.mono{font-family:'IBM Plex Mono',monospace}
+  tr:last-child td{border-bottom:none}
+
+  .disclaimer{font-size:12px;color:var(--faint);font-weight:300;line-height:1.7}
+
+  @media(max-width:860px){.grid2,.grid3{grid-template-columns:1fr}#cover h1{font-size:clamp(44px,15vw,88px)}.slide{padding:60px 22px}}
+  #prog{position:fixed;top:0;left:0;height:3px;background:linear-gradient(90deg,var(--azure),var(--teal),var(--gold));z-index:99;width:0%}
+  .reveal{opacity:0;transform:translateY(24px);transition:all .8s cubic-bezier(.2,.7,.2,1)}
+  .reveal.in{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){.reveal{opacity:1;transform:none;transition:none}.pulse{animation:none}}
+</style>
+</head>
+<body>
+<div id="prog"></div>
+
+<!-- ============ COVER ============ -->
+<section class="slide" id="cover" data-no="00 / MICROSOFT">
+  <canvas class="meshbg" id="mesh"></canvas>
+  <div class="cover-inner">
+    <div class="cover-tag"><span class="pulse"></span> Mag7의 역행주 · "$190B 베팅"의 시험대</div>
+    <div class="eyebrow gold">미국주식 중장기 전망 · Capex·정책 연계 분석</div>
+    <h1>MSFT</h1>
+    <div class="ticker-row">
+      <span class="price-now">$365.43</span>
+      <span class="chg down">▼ 2026 YTD −12%대</span>
+      <span class="src">2026.06.24 · NASDAQ</span>
+    </div>
+    <p class="cover-sub">세 번째 종목은 정반대의 이야기다. SPCX는 내러티브가, DELL은 정치가 가격을 끌어올렸지만 — MSFT는 검증된 거인임에도 2026년 시장의 의심을 받는 역행주다. 핵심 질문 하나: "$190B AI capex는 정말 ROI를 낼까?"</p>
+    <div class="cover-meta">
+      <div><b>시가총액</b>약 $2.7조</div>
+      <div><b>FY26 Q3 매출</b>$70.9B / Azure +40%</div>
+      <div><b>AI 연환산매출</b>$37B (+123%)</div>
+      <div><b>컨센서스</b>Strong Buy · 평균 ~$561</div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 01 한눈에 ============ -->
+<section class="slide reveal" data-no="01 / OVERVIEW">
+  <div class="eyebrow">Executive Snapshot</div>
+  <h2>실적은 멀쩡한데 주가는 빠진, 이상한 종목</h2>
+  <p class="lead" style="margin-bottom:30px">MSFT의 역설: Azure는 +40% 성장, AI 매출 +123%, 컨센서스는 'Strong Buy'인데 주가는 2026년 −12%대로 빠졌다. 시장은 펀더멘털이 아니라 <strong>$190B capex의 회수 가능성</strong>과 <strong>FCF 압박</strong>을 의심하는 중이다.</p>
+  <div class="grid3" style="margin-bottom:18px">
+    <div class="card accentt"><div class="kpi teal">+40%</div><div class="kpi-label">Azure 매출 성장률(FY26 Q3, 고정환율) · 컨센 상회 <span class="src">(CNBC)</span></div></div>
+    <div class="card accent"><div class="kpi neu">$627B</div><div class="kpi-label">잔여 이행의무(RPO) · 미래 매출 백로그</div></div>
+    <div class="card accent"><div class="kpi down">$190B</div><div class="kpi-label">2026 연 capex 계획(+61% YoY) · FCF 압박의 진원</div></div>
+  </div>
+  <div class="grid2">
+    <div class="card"><h3 style="color:var(--green)">강세 한 줄</h3><p style="font-size:15px">Fortune 500의 80%+가 Azure AI 사용. "수요가 공급을 초과"하는 supply-constrained 상태. M365 Copilot 2,000만+ 유료석. 현금창출·해자·점유율 모두 검증됨.</p></div>
+    <div class="card"><h3 style="color:var(--red)">약세 한 줄</h3><p style="font-size:15px">$190B capex로 FCF·마진 압박(총마진 67.6%, 2022년来 최저). OpenAI 독점 종료, 메모리값 급등 $25B 충격, 집단소송 제기, AI ROI 회의론.</p></div>
+  </div>
+  <div class="footnote"><span class="src">출처: Microsoft IR(FY26 Q3 콜), CNBC(4/29), TradingKey, stockanalysis · 기준 2026.06.24 — 수치 변동 가능. FY26 Q4 실적은 7월 말 예정</span></div>
+</section>
+
+<!-- ============ 02 역행주 차트 ============ -->
+<section class="slide reveal" data-no="02 / THE DIVERGENCE">
+  <div class="eyebrow">주가 — Mag7에서 뒤처진 한 해</div>
+  <h2>거인이 비틀거린 2026</h2>
+  <p class="lead" style="margin-bottom:20px">52주 고점 $555에서 $365까지. 실적이 나쁘지 않은데도 주가가 빠진 건 "AI가 소프트웨어를 잡아먹는다"는 공포와 capex ROI 의심이 겹친 결과다.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="chartwrap">
+      <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:6px">MSFT 주가 궤적 (최근 52주 직관화)</div>
+      <svg viewBox="0 0 520 300" role="img" aria-label="MSFT 주가 궤적">
+        <line class="gl" x1="50" y1="50" x2="500" y2="50"/>
+        <line class="gl" x1="50" y1="110" x2="500" y2="110"/>
+        <line class="gl" x1="50" y1="170" x2="500" y2="170"/>
+        <line class="axis" x1="50" y1="240" x2="500" y2="240"/>
+        <text class="alab" x="8" y="54">$560</text>
+        <text class="alab" x="8" y="174">$430</text>
+        <text class="alab" x="8" y="244">$355</text>
+        <defs><linearGradient id="mg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#3a8dde" stop-opacity=".3"/><stop offset="1" stop-color="#3a8dde" stop-opacity="0"/></linearGradient></defs>
+        <path d="M50,150 L110,120 L150,70 L200,95 L250,130 L300,115 L350,165 L400,205 L450,225 L500,232 L500,240 L50,240 Z" fill="url(#mg)"/>
+        <path d="M50,150 L110,120 L150,70 L200,95 L250,130 L300,115 L350,165 L400,205 L450,225 L500,232" fill="none" stroke="#3a8dde" stroke-width="2.2"/>
+        <circle cx="150" cy="70" r="4" fill="#6fb6ff"/><text class="alab" x="150" y="60" text-anchor="middle" fill="#6fb6ff">고점 $555</text>
+        <circle cx="500" cy="232" r="4" fill="#ff5071"/><text class="alab" x="476" y="252" fill="#ff5071">$365</text>
+      </svg>
+      <div class="legend"><span><i class="dot" style="background:#ff5071"></i> "최악의 분기 성과(2008년来)" 구간 포함</span></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <h3>왜 빠졌나</h3>
+        <ul class="clean red">
+          <li><strong>AI가 SW를 잠식?</strong> 생성형 AI가 기존 소프트웨어 매출을 잠식할 거란 구조적 공포.</li>
+          <li><strong>capex 쇼크:</strong> $190B(컨센 $154.6B 대비 대폭 상회) + 메모리값 $25B 충격으로 FCF 우려.</li>
+          <li><strong>OpenAI 독점 종료:</strong> 6년 독점 매출쉐어 폐지, 어느 클라우드든 OpenAI 모델 제공 가능해짐.</li>
+          <li><strong>집단소송:</strong> 6월 다수 로펌이 증권 집단소송 제기 발표.</li>
+        </ul>
+      </div>
+      <div class="card accentt" style="border-color:rgba(47,212,196,.25)">
+        <h3 style="color:var(--teal)">역발상 (Contrarian)</h3>
+        <p style="font-size:14px">바로 이 약세가 밸류 매력을 만든다. 일부 애널리스트는 현재가가 컨센 평균 대비 <strong>+50% 괴리</strong>(평균 ~$561)라며 "Mag7 중 드문 바겐"으로 평가. 의심이 가장 클 때가 진입 구간일 수 있다는 시각.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: Robinhood(6/24 $365.43, 52주 $356–555), CNBC(4/29 "2008년来 최악 분기"), stockanalysis($561 평균목표) · 차트는 추세 직관화용 도식</span></div>
+</section>
+
+<!-- ============ 03 펀더멘털 ============ -->
+<section class="slide reveal" data-no="03 / FUNDAMENTALS">
+  <div class="eyebrow">재무 — 클라우드 엔진은 여전히 돈다</div>
+  <h2>Azure는 "공급이 수요를 못 따라가는" 사업</h2>
+  <p class="lead" style="margin-bottom:20px">경영진이 가장 자주 쓴 표현은 "demand exceeds supply." 가장 빨리 크는 제품에서 캐파가 부족하다는 건, $190B 베팅이 투기가 아니라 수요 신호라는 강세 논거다.</p>
+  <div class="grid2" style="align-items:start">
+    <div class="chartwrap">
+      <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:6px">Azure 매출 성장률 추이 (YoY, 고정환율)</div>
+      <svg viewBox="0 0 520 290" role="img" aria-label="Azure 성장률">
+        <line class="gl" x1="50" y1="50" x2="500" y2="50"/>
+        <line class="gl" x1="50" y1="110" x2="500" y2="110"/>
+        <line class="gl" x1="50" y1="170" x2="500" y2="170"/>
+        <line class="axis" x1="50" y1="230" x2="500" y2="230"/>
+        <text class="alab" x="14" y="54">45%</text>
+        <text class="alab" x="14" y="174">25%</text>
+        <text class="alab" x="20" y="234">0</text>
+        <!-- bars ~31, 34, 37, 40 -->
+        <rect x="90"  y="116" width="60" height="114" fill="#2a5b8a" rx="3"/>
+        <rect x="190" y="98"  width="60" height="132" fill="#327bc0" rx="3"/>
+        <rect x="290" y="86"  width="60" height="144" fill="#3a8dde" rx="3"/>
+        <rect x="390" y="68"  width="60" height="162" fill="url(#ag)" rx="3"/>
+        <defs><linearGradient id="ag" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6fb6ff"/><stop offset="1" stop-color="#3a8dde"/></linearGradient></defs>
+        <text class="alab" x="120" y="248" text-anchor="middle">FY25 Q4</text>
+        <text class="alab" x="220" y="248" text-anchor="middle">Q1</text>
+        <text class="alab" x="320" y="248" text-anchor="middle">Q2</text>
+        <text class="alab" x="420" y="248" text-anchor="middle" fill="#6fb6ff">Q3 +40%</text>
+        <text class="alab" x="120" y="110" text-anchor="middle">31%</text>
+        <text class="alab" x="420" y="60" text-anchor="middle" fill="#6fb6ff" font-weight="600">40%</text>
+      </svg>
+      <div class="legend"><span><i class="dot" style="background:#3a8dde"></i> 가속 추세 · Q4 가이던스 39~40%</span></div>
+    </div>
+    <div>
+      <div class="card" style="margin-bottom:14px">
+        <h3>FY26 Q3 핵심 숫자</h3>
+        <table>
+          <tr><th>항목</th><th class="mono">값</th><th class="mono">YoY</th></tr>
+          <tr><td>총매출</td><td class="mono">$70.9B</td><td class="mono up" style="color:var(--green)">+18%</td></tr>
+          <tr><td>Azure 성장</td><td class="mono">+40%</td><td class="mono teal" style="color:var(--teal)">가속</td></tr>
+          <tr><td>AI 연환산매출</td><td class="mono">$37B</td><td class="mono up" style="color:var(--green)">+123%</td></tr>
+          <tr><td>상업 RPO</td><td class="mono">$627B</td><td class="mono">백로그</td></tr>
+          <tr><td>총마진</td><td class="mono">67.6%</td><td class="mono down" style="color:var(--red)">'22来 최저</td></tr>
+          <tr><td>분기 capex</td><td class="mono">$31.9B</td><td class="mono down" style="color:var(--red)">+49%</td></tr>
+        </table>
+      </div>
+      <div class="card accent">
+        <h3 style="color:var(--azure2)">세 부문 구조</h3>
+        <p style="font-size:14px"><strong>Intelligent Cloud</strong>(Azure·서버·GitHub) — 성장 엔진. <strong>Productivity</strong>(M365·Copilot·LinkedIn·Dynamics) — 현금소. <strong>More Personal Computing</strong>(Windows·게임·검색) — 안정 기반. AI는 세 부문에 모두 침투.</p>
+      </div>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: Microsoft FY26 Q3 IR 콜·보도자료, CNBC(4/29) · 매출 $70.9B는 Q3 FY26 기준치(보도별 부문합산 차이 있음). 차트는 추세 직관화용</span></div>
+</section>
+
+<!-- ============ 04 capex 딜레마 ============ -->
+<section class="slide reveal" data-no="04 / THE BET">
+  <div class="eyebrow">$190B 딜레마 — 강세·약세가 같은 숫자</div>
+  <h2>이 한 줄이 상방과 하방을 동시에 정의한다</h2>
+  <p class="lead" style="margin-bottom:24px">Microsoft 투자 판단의 90%는 결국 capex 한 줄로 수렴한다. 같은 $190B가 강세론자에겐 "수요 신호", 약세론자에겐 "FCF 파괴"다.</p>
+  <div class="grid2">
+    <div class="card" style="border-color:rgba(62,224,143,.25)">
+      <h3 style="color:var(--green)">강세: capex는 수요의 증거</h3>
+      <ul class="clean">
+        <li><strong>supply-constrained:</strong> 최고성장 제품(Azure AI)에서 캐파 부족 — 투기가 아닌 실수요.</li>
+        <li><strong>15년+ 자산:</strong> capex 상당분이 장기 데이터센터 — 15년 이상 수익화 기반.</li>
+        <li><strong>RPO $627B:</strong> 이미 계약된 미래 매출이 투자를 뒷받침.</li>
+        <li><strong>커밋 폭증:</strong> 상업 부킹 +112%(OpenAI Azure 약정 등).</li>
+      </ul>
+    </div>
+    <div class="card" style="border-color:rgba(255,80,113,.25)">
+      <h3 style="color:var(--red)">약세: capex는 FCF 파괴자</h3>
+      <ul class="clean red">
+        <li><strong>+61% YoY:</strong> $190B는 컨센($154.6B) 대폭 상회 — FCF·자본배분 위축.</li>
+        <li><strong>메모리 충격:</strong> 부품가 상승 $25B 추가 부담, 총마진 67.6%로 압축.</li>
+        <li><strong>감가상각 폭탄:</strong> 데이터센터 감가가 향후 수년 이익을 잠식.</li>
+        <li><strong>ROI 불확실:</strong> "AI 투자가 기대수익을 못 낼 것"이란 시장 공포가 핵심.</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card accent" style="margin-top:18px;background:linear-gradient(160deg,var(--panel2),var(--deep))">
+    <p style="font-size:15px"><strong>판단의 핵심:</strong> SPCX·DELL과 결정적으로 다른 점 — MSFT는 <strong>이 capex를 감당할 현금흐름이 이미 있다</strong>. FCF는 분기 $25B대를 유지하며 배당·자사주까지 병행. 문제는 "감당 가능성"이 아니라 "회수 시점·수익률"이다. 즉 MSFT의 리스크는 생존이 아니라 <strong>기대수익률(IRR)</strong>의 문제다.</p>
+  </div>
+  <div class="footnote"><span class="src">출처: Microsoft FY26 Q1~Q3 IR 콜(FCF $25.7B, 부킹 +112%, capex $190B/+61%, 메모리 $25B), CNBC · 강세/약세는 동일 사실의 양면 해석</span></div>
+</section>
+
+<!-- ============ 05 트럼프 포트폴리오 연계 ============ -->
+<section class="slide reveal" data-no="05 / PORTFOLIO LINK">
+  <div class="eyebrow gold">트럼프 포트폴리오 연계 — DELL과는 결이 다르다</div>
+  <h2>"픽"이 아니라 "보유" — 그러나 정부 계약은 실재</h2>
+  <p class="lead" style="margin-bottom:20px">MSFT는 트럼프 1분기 공시에 <strong>포함</strong>됐지만, Dell처럼 공개 추천("사라")을 받은 종목은 아니다. 대신 더 미묘한 연결고리가 있다 — 매수 후 발표된 <strong>기밀 전산망 배치 계약</strong>.</p>
+
+  <div class="chartwrap">
+    <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:12px">DELL vs MSFT — 정치 연계 강도 비교</div>
+    <svg viewBox="0 0 1000 200" role="img" aria-label="정치 연계 비교">
+      <line class="axis" x1="40" y1="100" x2="960" y2="100"/>
+      <!-- DELL track -->
+      <text class="alab" x="40" y="50" fill="#e3b24a" font-size="12">DELL</text>
+      <circle cx="180" cy="60" r="9" fill="rgba(227,178,74,.25)" stroke="#e3b24a" stroke-width="1.8"/><text class="alab" x="180" y="40" text-anchor="middle">매수</text>
+      <circle cx="400" cy="60" r="9" fill="rgba(227,178,74,.25)" stroke="#e3b24a" stroke-width="1.8"/><text class="alab" x="400" y="40" text-anchor="middle" fill="#e3b24a">공개추천 "사라"</text>
+      <circle cx="640" cy="60" r="12" fill="rgba(62,224,143,.2)" stroke="#3ee08f" stroke-width="1.8"/><text class="alab" x="640" y="40" text-anchor="middle">펜타곤 $9.7B</text>
+      <line x1="180" y1="60" x2="640" y2="60" stroke="#e3b24a" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <!-- MSFT track -->
+      <text class="alab" x="40" y="150" fill="#3a8dde" font-size="12">MSFT</text>
+      <circle cx="180" cy="140" r="9" fill="rgba(58,141,222,.25)" stroke="#3a8dde" stroke-width="1.8"/><text class="alab" x="180" y="170" text-anchor="middle">매수(추천 없음)</text>
+      <circle cx="500" cy="140" r="11" fill="rgba(58,141,222,.2)" stroke="#3a8dde" stroke-width="1.8"/><text class="alab" x="500" y="170" text-anchor="middle" fill="#6fb6ff">기밀 전산망 배치 계약</text>
+      <line x1="180" y1="140" x2="500" y2="140" stroke="#3a8dde" stroke-width="1.4" stroke-dasharray="4 3"/>
+      <text class="alab" x="820" y="145" fill="#566074">→ 연계 강도: 간접·구조적</text>
+    </svg>
+  </div>
+
+  <div class="grid2" style="margin-top:18px;align-items:start">
+    <div class="card accentg">
+      <h3 style="color:var(--gold)">공시·계약 사실</h3>
+      <ul class="clean gold">
+        <li>트럼프 1분기 공시(2026.05.14)에 <strong>MSFT 매수</strong> 포함 — Amazon과 함께.</li>
+        <li>매수 <strong>수개월 뒤</strong> 펜타곤이 두 회사 기술을 <strong>기밀 전산망에 배치</strong>하는 계약 발표(보도).</li>
+        <li>최근 Dell의 $1.44B 공군 계약도 <strong>MSFT 엔터프라이즈 라이선스 갱신</strong>과 연동(블랭킷 PA) — 두 회사가 정부 조달에서 교차.</li>
+      </ul>
+    </div>
+    <div class="card">
+      <h3 style="color:var(--azure2)">투자자 함의 — 차분하게</h3>
+      <p style="font-size:14.5px">MSFT는 워낙 거대해(시총 $2.7조) 트럼프 보유분이나 단일 정부 계약이 주가를 좌우하지 못한다. Dell이 "정치 프리미엄이 주가의 큰 축"이라면, MSFT는 <strong>정치 연계가 곁가지</strong>다. 다만 동일 클러스터(정부 AI·국방 조달) 일원으로서 정책 방향성에는 함께 노출된다.</p>
+    </div>
+  </div>
+  <div class="footnote"><span class="src">출처: CNBC(2026.05.15), Detroit News(MSFT·AMZN 기밀망 계약 언급), TipRanks(Dell 공군 계약-MSFT 라이선스 연동) · 트럼프 측은 이해상충 부인, 자산은 신탁/제3자 운용 주장. 위법 단정 아님</span></div>
+</section>
+
+<!-- ============ 06 리스크 ============ -->
+<section class="slide reveal" data-no="06 / RISKS">
+  <div class="eyebrow">리스크 — 거인에게도 균열은 있다</div>
+  <h2>생존이 아니라 멀티플의 문제</h2>
+  <div class="grid3" style="margin-top:8px">
+    <div class="card accent">
+      <h3 style="color:var(--azure2)">사업·경쟁</h3>
+      <ul class="clean">
+        <li>OpenAI 독점 종료 — Azure 차별성 약화 가능</li>
+        <li>"AI가 SW 잠식" 구조 공포 (M365·검색)</li>
+        <li>핵심 임원 연쇄 은퇴(Office·게임 수장)</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <h3 style="color:var(--azure2)">재무</h3>
+      <ul class="clean">
+        <li>$190B capex → FCF·마진 압박</li>
+        <li>메모리 크런치 $25B 충격</li>
+        <li>감가상각 누적, 2027 인력 감축 예고</li>
+      </ul>
+    </div>
+    <div class="card accent">
+      <h3 style="color:var(--azure2)">법률·거시</h3>
+      <ul class="clean">
+        <li>증권 집단소송(6월 다수 로펌)</li>
+        <li>금리(Warsh FOMC 매파) — 고PER 역풍</li>
+        <li>이란發 공급망·에너지·전력 비용</li>
+      </ul>
+    </div>
+  </div>
+  <div class="card" style="margin-top:18px;background:linear-gradient(160deg,var(--panel2),var(--deep))">
+    <p style="font-size:14.5px"><strong>관점:</strong> 이 리스크들은 대부분 <strong>"성장 둔화·마진 압박"이지 "존립 위협"이 아니다.</strong> MSFT는 연 $1,000억+ 순이익을 내는 회사다. 따라서 베어 시나리오도 "주가 정체·디레이팅"이지 SPCX식 "구조적 적자"가 아니다. 리스크의 성격이 근본적으로 다르다.</p>
+  </div>
+  <div class="footnote"><span class="src">출처: CNBC, CNN/TipRanks(집단소송·OpenAI 조건변경·임원 은퇴), TradingKey(Warsh FOMC) · FY25 순이익 약 $1,018억(stockanalysis)</span></div>
+</section>
+
+<!-- ============ 07 컨센서스 ============ -->
+<section class="slide reveal" data-no="07 / CONSENSUS">
+  <div class="eyebrow">컨센서스 — 세 종목 중 가장 일치된 'Strong Buy'</div>
+  <h2>의심받는 주가, 그러나 애널은 강세</h2>
+  <p class="lead" style="margin-bottom:22px">SPCX($62~310, 5배 분산)·DELL($213~700)과 달리, MSFT는 56명 애널이 'Strong Buy'로 비교적 결집. 주가 약세와 컨센서스 강세의 괴리가 이 종목의 핵심 특징.</p>
+
+  <div class="chartwrap" style="margin-bottom:18px">
+    <div class="mono" style="font-size:11px;color:var(--faint);letter-spacing:.1em;margin-bottom:14px">12개월 목표주가 · 현재가 $365 기준 (괴리 큼)</div>
+    <svg viewBox="0 0 1000 120" role="img" aria-label="MSFT 목표주가">
+      <line class="axis" x1="40" y1="80" x2="960" y2="80"/>
+      <g class="alab" text-anchor="middle">
+        <text x="40" y="102">$300</text>
+        <text x="300" y="102">$400</text>
+        <text x="560" y="102">$500</text>
+        <text x="820" y="102">$600</text>
+      </g>
+      <defs><linearGradient id="spec" x1="0" x2="1"><stop offset="0" stop-color="#ff5071"/><stop offset=".5" stop-color="#ffc24b"/><stop offset="1" stop-color="#3ee08f"/></linearGradient></defs>
+      <!-- map: x = 40 + (price-300)/(650-300)*920 ; 300->40,400->303,500->565,600->828,650->960 -->
+      <rect x="40" y="74" width="920" height="6" rx="3" fill="url(#spec)" opacity=".32"/>
+      <!-- current 365 -->
+      <line x1="211" y1="34" x2="211" y2="80" stroke="#fff" stroke-width="2"/>
+      <text x="211" y="26" text-anchor="middle" class="mono" font-size="12" fill="#fff" font-weight="600">현재 $365</text>
+      <!-- avg 561 -->
+      <circle cx="726" cy="77" r="8" fill="#3ee08f"/><text class="alab" x="726" y="58" text-anchor="middle" fill="#3ee08f">평균 $561</text>
+      <!-- another avg cluster ~520 -->
+      <circle cx="618" cy="77" r="6" fill="#ffc24b"/><text class="alab" x="600" y="58" text-anchor="middle" fill="#ffc24b">보수 ~$520</text>
+    </svg>
+    <div class="legend"><span style="color:var(--faint)">목표가 출처·시점차 존재. 56명 평균 약 $561 = 현재가 대비 약 +50% 괴리</span></div>
+  </div>
+
+  <div class="grid3">
+    <div class="card"><div class="kpi up">Strong Buy</div><div class="kpi-label">56명 애널 종합 등급 · 세 종목 중 최다·최일치</div></div>
+    <div class="card"><div class="kpi neu">~+50%</div><div class="kpi-label">평균 목표가($561) vs 현재가 괴리 — 시장 의심의 크기</div></div>
+    <div class="card"><div class="kpi teal">$2.7조</div><div class="kpi-label">시총 · S&P500·Nasdaq 핵심 비중, 패시브 기반 수요</div></div>
+  </div>
+  <div class="footnote"><span class="src">출처: stockanalysis(56명, 평균 $561, Strong Buy), MarketBeat · 목표가는 일부 4~6월 시점차 혼재. 평균치는 주가 하락 전 산정분 포함 가능 — 보수적 해석 권장</span></div>
+</section>
+
+<!-- ============ 08 세 종목 비교 ============ -->
+<section class="slide reveal" data-no="08 / THREE-WAY">
+  <div class="eyebrow gold">세 종목 한눈 비교 — SPCX · DELL · MSFT</div>
+  <h2>같은 AI 테마, 전혀 다른 세 가지 베팅</h2>
+  <p class="lead" style="margin-bottom:20px">세 발표 자료를 관통하는 결론: AI 익스포저라도 <strong>리스크의 성격이 완전히 다르다</strong>. 무엇을 사느냐가 아니라 어떤 리스크를 사느냐의 문제.</p>
+  <div class="card" style="padding:14px 18px;overflow-x:auto">
+    <table>
+      <tr>
+        <th>구분</th>
+        <th style="color:#ff5a3c">SPCX</th>
+        <th style="color:#3a8dde">DELL</th>
+        <th style="color:#2fd4c4">MSFT</th>
+      </tr>
+      <tr><td>핵심 성격</td><td>내러티브 > 가격</td><td>실적 + 정치 프리미엄</td><td>검증된 거인의 역행</td></tr>
+      <tr><td>2026 주가</td><td class="mono">고점比 −31%</td><td class="mono up" style="color:var(--green)">YTD +236%</td><td class="mono down" style="color:var(--red)">YTD −12%대</td></tr>
+      <tr><td>수익성</td><td class="mono down" style="color:var(--red)">적자 −$4.9B</td><td class="mono up" style="color:var(--green)">흑자·박마진</td><td class="mono up" style="color:var(--green)">순익 $1,018억</td></tr>
+      <tr><td>밸류</td><td class="mono">PSR 141× (PER불가)</td><td class="mono">PER ~33×</td><td class="mono">대형주 프리미엄</td></tr>
+      <tr><td>정치 연계</td><td>Musk 오너리스크</td><td class="gold" style="color:var(--gold)">"트럼프 픽"(강)</td><td>포트폴리오 보유(약)</td></tr>
+      <tr><td>리스크 성격</td><td class="down" style="color:var(--red)">생존·수급</td><td>마진·정치변동성</td><td>멀티플·ROI</td></tr>
+      <tr><td>매력도(주관)</td><td class="mono">4 / 10</td><td class="mono">6.5 / 10</td><td class="mono teal" style="color:var(--teal)">7 / 10</td></tr>
+    </table>
+  </div>
+  <div class="footnote"><span class="src">매력도는 작성자 주관 종합이며 투자 권유 아님 · 각 수치 출처는 해당 종목 발표자료 참조</span></div>
+</section>
+
+<!-- ============ 09 종합 판단 ============ -->
+<section class="slide reveal" data-no="09 / VERDICT">
+  <div class="eyebrow">종합 판단 & 모니터링</div>
+  <h2 style="margin-bottom:24px">투자 매력도</h2>
+  <div style="display:flex;align-items:baseline;gap:24px;flex-wrap:wrap;margin-bottom:8px">
+    <div class="big-num" style="background:linear-gradient(120deg,#6fb6ff,#2fd4c4);-webkit-background-clip:text;background-clip:text;color:transparent">7<span style="font-size:.4em;color:var(--faint);-webkit-text-fill-color:var(--faint)">/10</span></div>
+    <p class="verdict" style="max-width:640px">세 종목 중 가장 높다 — <span style="color:var(--teal)">리스크가 "생존"이 아니라 "기대수익률"</span>이기 때문. 약세장이 만든 밸류 매력 + 검증된 현금창출.</p>
+  </div>
+
+  <div class="grid3" style="margin:28px 0 0">
+    <div class="card"><h3 style="color:var(--green)">진입 전략</h3>
+      <ul class="clean">
+        <li>현재가가 컨센 평균($561) 대비 큰 괴리 — <strong>밸류 관점 매력</strong>.</li>
+        <li>단 capex ROI 검증 전이라 <strong>분할·장기 관점</strong>이 적합.</li>
+        <li>7월 말 Q4 실적이 1차 분기점 — Azure·capex 가이던스 확인 후 비중 조절.</li>
+      </ul>
+    </div>
+    <div class="card"><h3 style="color:var(--azure2)">모니터링 포인트</h3>
+      <ul class="clean">
+        <li>Azure 성장률 (39~40% 가이던스 방어?)</li>
+        <li>FCF·총마진 추이 (감가 vs 매출)</li>
+        <li>AI 매출($37B) 가속 지속 여부</li>
+        <li>OpenAI 관계 재편 영향</li>
+      </ul>
+    </div>
+    <div class="card accentg"><h3 style="color:var(--gold)">정책·외부 트래커</h3>
+      <ul class="clean gold">
+        <li>정부·국방 클라우드 조달</li>
+        <li>집단소송 진행 경과</li>
+        <li>금리(Warsh FOMC)·전력비용</li>
+        <li>NVDA·DELL·ORCL 동조</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px;background:linear-gradient(160deg,#141a26,#0a0e16);border-color:rgba(47,212,196,.22)">
+    <p style="font-size:15px;color:var(--mute)"><strong style="color:var(--ink)">균형 코멘트.</strong> MSFT는 세 종목 중 가장 "지루하게 견고하다." SPCX의 흥분도, DELL의 정치 드라마도 없지만, 바로 그래서 <strong>리스크가 가장 이해 가능</strong>하다. 핵심 질문은 단 하나 — "$190B가 합당한 IRR을 낼까." 이 믿음이 있다면 현재 약세는 기회고, 의심된다면 기다림이 정답이다. <strong style="color:var(--teal)">정치 프리미엄이 거의 없다는 점이 오히려 MSFT의 안정성</strong>이다.</p>
+  </div>
+
+  <div class="footnote">
+    <p class="disclaimer">⚠️ <strong>고지.</strong> 본 자료는 정보 제공용이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 트럼프 포트폴리오 관련 내용은 미 정부윤리청(OGE) 공시(2026.05.14)와 언론 보도에 근거한 사실 정리이며, 어떠한 위법도 단정하지 않습니다. 트럼프 측은 이해상충이 없으며 자산은 제3자/자녀 운용이라 밝혔습니다. 일부 목표가·수치는 2026년 4~6월 시점차가 혼재하며, 주가 하락 전 산정된 목표가가 포함될 수 있어 보수적 해석을 권합니다. 모든 수치는 빠르게 변동될 수 있고, 사실과 추측을 구분해 표기했습니다. 투자 판단과 책임은 전적으로 본인에게 있습니다.</p>
+    <p class="src" style="margin-top:12px">데이터 출처: Microsoft IR(FY26 Q1–Q3 콜·보도자료) · CNBC · Robinhood · stockanalysis · TradingKey · MarketBeat · CNN/TipRanks · Detroit News · Washington Examiner · U.S. OGE (2026.04–06)</p>
+  </div>
+</section>
+
+<script>
+const prog=document.getElementById('prog');
+addEventListener('scroll',()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%';});
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+// mesh / cloud nodes
+const c=document.getElementById('mesh');
+if(c){
+  const x=c.getContext('2d');let w,h,nodes,rm=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  function size(){w=c.width=c.offsetWidth;h=c.height=c.offsetHeight;
+    const n=Math.min(46,Math.floor(w/36));
+    nodes=Array.from({length:n},()=>({x:Math.random()*w,y:Math.random()*h,vx:(Math.random()-.5)*.16,vy:(Math.random()-.5)*.16,r:Math.random()*1.6+.4}));}
+  function draw(){x.clearRect(0,0,w,h);
+    for(let i=0;i<nodes.length;i++){const a=nodes[i];a.x+=a.vx;a.y+=a.vy;
+      if(a.x<0||a.x>w)a.vx*=-1;if(a.y<0||a.y>h)a.vy*=-1;
+      for(let j=i+1;j<nodes.length;j++){const b=nodes[j];const dx=a.x-b.x,dy=a.y-b.y;const d=Math.hypot(dx,dy);
+        if(d<150){x.strokeStyle='rgba(58,141,222,'+(1-d/150)*.16+')';x.lineWidth=1;x.beginPath();x.moveTo(a.x,a.y);x.lineTo(b.x,b.y);x.stroke();}}
+      x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fillStyle='rgba(111,182,255,.5)';x.fill();}
+    requestAnimationFrame(draw);}
+  size();addEventListener('resize',size);
+  if(!rm)draw();else{nodes.forEach(a=>{x.beginPath();x.arc(a.x,a.y,a.r,0,7);x.fillStyle='rgba(111,182,255,.4)';x.fill();});}
+}
+</script>
+</body>
+</html>
