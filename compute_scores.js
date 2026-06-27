@@ -17,11 +17,13 @@ let noData = [];
 let sanitized = [];
 const RE = /id="deck-data"[^>]*>([\s\S]*?)<\/script>/;
 
-// 물리적으로 불가능한 deck-data 값은 null로(점수엔진이 중립 처리). 한 칸의 오류가
-// 점수를 오염시키지 않게 방어. (근본 수정은 codex 큐 — flags 출력 참조)
+// 물리적으로 불가능한 값만 null로(점수엔진이 중립 처리). 한 칸의 오류가 점수를
+// 오염시키지 않게 방어. ★ 성장률은 가드 안 함 — 사이클 업종은 +346%(MU 2026 Q3) 같은
+// 극단 성장이 '진짜'이고, saturation 곡선이 어차피 점수를 10으로 캡하므로 안전.
+// 비율(마진/멀티플)만 정의상 한계를 벗어나면 차단.
 const BOUNDS = {
-  fcfMargin: [-60, 60], epsGrowthYoY: [-400, 400],
-  revenueGrowthYoY: [-100, 150], peRatio: [-1e9, 2000], psRatio: [0, 200]
+  fcfMargin: [-100, 100],   // 비율: |100%| 초과는 물리적으로 불가능
+  peRatio: [-1e9, 5000], psRatio: [0, 300]
 };
 function sanitize(d) {
   const hit = [];
