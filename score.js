@@ -18,17 +18,24 @@
   // ---- CONFIG : 여기만 고치면 점수 체계가 바뀐다 -----------------------------
   var CONFIG = {
     // 컴포넌트 가중치 (합 = 1.0). 가점 컴포넌트만.
-    // v0.3: 백테스트(2016~25, 79종목)의 컴포넌트별 12M IC 근거로 재조정 —
-    //   growth IC 0.129(최강) / valuation 0.060(약하나 유의) / profitability −0.019(예측력 없음).
-    //   → 성장↑·수익성↓. 밸류는 사용자 '저평가' 우선순위로 0.30 유지.
-    //   상대비 40/05/30 → 백테스트 종합 IC ≈ 0.14 (현행 0.11 대비 개선). 과적합 회피로 극단화 안 함.
+    // v0.4: 백테스트를 S&P500 전체(353종목)로 확장하니 v0.3(나스닥 79개)와 결과가 뒤집힘 —
+    //   넓은 시장에선 valuation IC 0.068(최강) > growth 0.039(약) > profitability −0.018(없음).
+    //   v0.3의 성장 0.40은 나스닥 성장주 강세장 과적합이었음. → 밸류 중심으로 전환.
+    //   상대비 20/05/40(growth/prof/val) → 패널 IC ≈ 0.071 (밸류중심 최적군).
     weights: {
-      growth: 0.40,        // 성장성 (매출 + EPS YoY) — 백테스트 최강 예측력
-      profitability: 0.05, // 수익성 (FCF 마진) — IC≈0, 거의 제거(레짐 한정 감안해 완전 0은 아님)
-      valuation: 0.30,     // 밸류에이션 (섹터 상대 PER/PSR)
-      consensus: 0.15,     // 애널리스트 컨센서스 + 목표가 여력
-      catalyst: 0.10       // 촉매 (overlays.json, 기본 5 중립)
+      growth: 0.20,        // 성장성 (매출 + EPS YoY) — 넓은 시장에선 예측력 약함
+      profitability: 0.05, // 수익성 (FCF 마진) — IC≈0, 거의 제거
+      valuation: 0.40,     // 밸류에이션 (섹터 상대 PER/PSR) — 넓은 시장 최강 예측력
+      consensus: 0.20,     // 애널리스트 컨센서스 + 목표가 여력
+      catalyst: 0.15       // 촉매 (overlays.json, 기본 5 중립)
     },
+
+    // 사이클 업종은 매출 정점(고성장)에서 사면 평균회귀로 망함(백테스트: 사이클섹터 >100%성장
+    // 구간 이후 12M +10% vs 역성장 구간 +30%). 정점 성장에 페널티(사이클섹터 내부 IC 0.095→0.102).
+    cyclicalSectors: ['반도체', '에너지', '소재', '산업재'],
+    cyclicalPeakGrowth: 80,   // 이 매출성장률(%) 초과부터 페널티 시작
+    cyclicalPeakMax: 150,     // 여기서 페널티 포화
+    cyclicalPenaltyMax: 2.0,  // 최대 감점
 
     // 섹터별 '정상' 멀티플 기준 (이 값보다 싸면 밸류 가점). 없으면 default.
     sectorBaseline: {
@@ -123,6 +130,16 @@
     return 0;
   }
 
+  // 사이클 정점 감점: 사이클 업종이 매출 폭증(정점) 중이면 평균회귀 위험. 백테스트 검증.
+  function cyclicalPenalty(m) {
+    if (!isNum(m.revenueGrowthYoY)) return 0;
+    if (CONFIG.cyclicalSectors.indexOf(m.sector) < 0) return 0;
+    if (m.revenueGrowthYoY <= CONFIG.cyclicalPeakGrowth) return 0;
+    var frac = (m.revenueGrowthYoY - CONFIG.cyclicalPeakGrowth) /
+               (CONFIG.cyclicalPeakMax - CONFIG.cyclicalPeakGrowth);
+    return clamp(frac, 0, 1) * CONFIG.cyclicalPenaltyMax;
+  }
+
   // ---- 메인 -------------------------------------------------------------------
   // metrics: 한 종목의 입력값. overlay: { catalyst:0~10, riskPenalty:0~2, note }
   function computeScore(metrics, overlay) {
@@ -146,8 +163,9 @@
 
     var riskPen = isNum(overlay.riskPenalty) ? clamp(overlay.riskPenalty, 0, 3) : 0;
     var heatPen = overheatPenalty(metrics);
+    var cycPen = cyclicalPenalty(metrics);
 
-    var total = clamp(weighted - riskPen - heatPen, CONFIG.clampMin, CONFIG.clampMax);
+    var total = clamp(weighted - riskPen - heatPen - cycPen, CONFIG.clampMin, CONFIG.clampMax);
 
     return {
       total: Math.round(total * 10) / 10,
@@ -158,7 +176,7 @@
         consensus: round1(c.consensus),
         catalyst: round1(c.catalyst)
       },
-      penalties: { risk: round1(riskPen), overheat: round1(heatPen) },
+      penalties: { risk: round1(riskPen), overheat: round1(heatPen), cyclical: round1(cycPen) },
       note: overlay.note || ''
     };
   }
