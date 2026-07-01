@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>NVDA 중장기 전망 · Nasdaq 100 Top 20 분석</title>
+<title>NVDA 중장기 전망 · Nasdaq 100 분석</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
@@ -62,6 +62,12 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
 .barrow{display:grid;grid-template-columns:120px 1fr 74px;gap:10px;align-items:center;margin:10px 0}
 .barname,.barval{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}.barval{text-align:right;color:var(--ink)}.bartrack{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden}.barfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+.tgtrow{display:grid;grid-template-columns:78px 1fr 58px 62px;gap:13px;align-items:center;margin:14px 0}
+.tgtname{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}
+.tgttrack{height:16px;background:var(--panel2);border-radius:99px;overflow:hidden}
+.tgtfill{height:100%;border-radius:99px;min-width:3px}
+.tgtval{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);text-align:right}
+.tgtdelta{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;font-weight:600}
 ul.clean{list-style:none}ul.clean li{position:relative;padding-left:18px;margin:0 0 10px;color:var(--mute);font-weight:300;font-size:15px}ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}ul.clean.red li::before{background:var(--red)}ul.clean.gold li::before{background:var(--gold)}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left}th{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);font-weight:500}td{color:var(--mute);font-weight:300}td.mono,th.mono{font-family:'IBM Plex Mono',monospace}tr:last-child td{border-bottom:none}
 .footnote{margin-top:22px;padding-top:14px;border-top:1px dashed var(--line)}.src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);line-height:1.65}
@@ -79,80 +85,79 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
 <section class="slide" id="cover" data-no="00 / NVDA">
   <canvas id="field"></canvas>
   <div class="cover-inner">
-    <div class="live"><span class="pulse"></span> NASDAQ 100 TOP 20 · FIBER THEME</div>
-    <div class="eyebrow gold">미국주식 중장기 전망 · 데이터 기준 2026-06-26</div>
+    <div class="live"><span class="pulse"></span> NASDAQ 100 · S&amp;P 500 · 반도체</div>
+    <div class="eyebrow gold">미국주식 중장기 전망 · 데이터 기준 2026-06-28</div>
     <h1>NVDA</h1>
     <div class="ticker-row">
-      <span class="price-now">$196</span>
-      <span class="chg up">▲ YTD 3.8%</span>
-      <span class="src">Jun 25, 2026, 4:00 PM EDT</span>
+      <span class="price-now">$193</span>
+      <span class="chg up">▲ YTD 1.95%</span>
+      <span class="src">Jun 26, 2026, 4:00 PM EDT</span>
     </div>
-    <p class="cover-sub">NVIDIA Corporation는 AI 데이터센터의 사실상 표준 플랫폼로 요약된다. 핵심 질문은 현재 밸류에이션이 최근 성장률과 애널리스트 목표가가 말하는 업사이드를 충분히 보상하는가다.</p>
+    <p class="cover-sub">NVDA: AI 데이터센터 GPU, 네트워킹, CUDA 소프트웨어를 한 스택으로 묶는 인프라 표준입니다. Q1 2027 · Apr '26 Apr 26, 2026 기준 매출 YoY 85.23%, EPS YoY 214.47%이며, 핵심 관찰 포인트는 Blackwell 계열 공급과 클라우드 capex 지속성입니다.</p>
     <div class="cover-meta">
-      <div><b>시가총액</b>$4.74T</div>
+      <div><b>시가총액</b>$4.66T</div>
       <div><b>최근분기</b>$81.6B / YoY 85.23%</div>
-      <div><b>핵심지표</b>EPS 2.39 / surprise 5.5%</div>
-      <div><b>컨센서스</b>Strong Buy · 평균 $299</div>
+      <div><b>핵심지표</b>EPS 2.39</div>
+      <div><b>컨센서스</b>Strong Buy · 평균 $298.93</div>
     </div>
   </div>
 </section>
 
 <section class="slide reveal" data-no="01 / SNAPSHOT">
   <div class="eyebrow">Executive Snapshot</div>
-  <h2>NVIDIA Corporation: 매력도 8.0/10</h2>
-  <p class="lead">AI 가속기의 표준 플랫폼 — 데이터센터 수요와 CUDA 해자가 동시에 작동. 숫자로 보면 최근 분기 매출 성장률은 <strong>85.23%</strong>, EPS 성장률은 <strong>214.47%</strong>, 평균 목표가 기준 업사이드는 <strong>52.7%</strong>다.</p>
+  <h2>NVIDIA Corporation: 매력도 6.4/10</h2>
+  <p class="lead">NVDA: AI 데이터센터 GPU, 네트워킹, CUDA 소프트웨어를 한 스택으로 묶는 인프라 표준입니다. 숫자로 보면 최근 분기 매출 성장률 <strong>85.23%</strong>, EPS 성장률 <strong>214.47%</strong>, 평균 목표가 업사이드 <strong>55.3%</strong>입니다.</p>
   <div class="grid3">
-    <div class="card accent"><div class="kpi up">3.8%</div><div class="kpi-label">2026 YTD 주가 성과 · Yahoo Finance 조정종가 기준 내부 계산</div></div>
-    <div class="card accent"><div class="kpi neu">$4.74T</div><div class="kpi-label">Nasdaq 100 내 시가총액 순위 #1 · Alphabet 중복 share class 제외 전 순위</div></div>
-    <div class="card accent"><div class="kpi up">52.7%</div><div class="kpi-label">애널리스트 평균 목표가 대비 여력 · 컨센서스 Strong Buy</div></div>
+    <div class="card accent"><div class="kpi up">1.95%</div><div class="kpi-label">2026 YTD 주가 성과 · Yahoo Finance 조정종가 기준 내부 계산</div></div>
+    <div class="card accent"><div class="kpi neu">$4.66T</div><div class="kpi-label">S&amp;P 500 구성 종목</div></div>
+    <div class="card accent"><div class="kpi up">55.3%</div><div class="kpi-label">애널리스트 평균 목표가 대비 여력 · 컨센서스 Strong Buy</div></div>
   </div>
   <div class="grid2" style="margin-top:16px">
-    <div class="card"><span class="tag bull">BULL</span><p>데이터센터 AI 학습·추론 수요가 매출 성장을 견인하고, CUDA 생태계가 전환비용을 높인다.</p></div>
-    <div class="card"><span class="tag bear">BEAR</span><p>대형 클라우드 고객의 자체 ASIC 전환과 AMD·Broadcom 계열 경쟁이 ASP를 압박할 수 있다.</p></div>
+    <div class="card"><span class="tag bull">BULL</span><p>강세 시나리오는 Blackwell 계열 공급과 클라우드 capex 지속성에 달려 있습니다. 최신 매출 YoY는 85.23%입니다.</p></div>
+    <div class="card"><span class="tag bear">BEAR</span><p>대형 고객의 자체 ASIC 전환과 AI 투자 속도 둔화가 가장 큰 리스크입니다.</p></div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. YTD는 2026-01-02 종가 대비 2026-06-25 종가로 계산.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반.</span></div>
 </section>
 
 <section class="slide reveal" data-no="02 / MARKET MAP">
   <div class="eyebrow">가격과 위치</div>
   <h2>현재가는 52주 박스 안에서 어디에 있나</h2>
-  <p class="lead">주가 성과는 종목별로 극단적으로 갈렸다. 이 슬라이드는 현재가, 52주 범위, YTD, 시가총액을 한 화면에 묶어 과열과 소외를 동시에 본다.</p>
+  <p class="lead">현재가·52주 범위·YTD·시가총액을 한눈에 모아 지금 주가가 비싼지 싼지 가늠합니다.</p>
   <div class="grid2">
     <div class="card accent">
       <h3>시장 메타</h3>
       <table>
         <tr><th>항목</th><th class="mono">값</th></tr>
-        <tr><td>현재가</td><td class="mono">$196</td></tr>
+        <tr><td>현재가</td><td class="mono">$193</td></tr>
         <tr><td>일일 변동</td><td class="mono">-1.64%</td></tr>
-        <tr><td>52주 레인지</td><td class="mono">149.26 - 236.54</td></tr>
+        <tr><td>52주 레인지</td><td class="mono">151.49 - 236.54</td></tr>
         <tr><td>TTM 매출</td><td class="mono">253.49B (+70.7%)</td></tr>
         <tr><td>TTM EPS</td><td class="mono">6.53 (+110.6%)</td></tr>
       </table>
     </div>
     <div class="card">
       <h3>핵심 해석</h3>
-      <div class="barrow"><div class="barname">YTD</div><div class="bartrack"><div class="barfill" style="width:4.0%"></div></div><div class="barval">3.8%</div></div>
+      <div class="barrow"><div class="barname">YTD</div><div class="bartrack"><div class="barfill" style="width:1.9%"></div></div><div class="barval">1.95%</div></div>
       <div class="barrow"><div class="barname">매출 YoY</div><div class="bartrack"><div class="barfill" style="width:85.2%"></div></div><div class="barval">85.23%</div></div>
       <div class="barrow"><div class="barname">EPS YoY</div><div class="bartrack"><div class="barfill" style="width:100.0%"></div></div><div class="barval">214.47%</div></div>
-      <div class="barrow"><div class="barname">목표가 여력</div><div class="bartrack"><div class="barfill" style="width:52.7%"></div></div><div class="barval">52.7%</div></div>
+      <div class="barrow"><div class="barname">목표가 여력</div><div class="bartrack"><div class="barfill" style="width:55.3%"></div></div><div class="barval">55.3%</div></div>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반. </span></div>
 </section>
 
 <section class="slide reveal" data-no="03 / FUNDAMENTALS">
   <div class="eyebrow">재무와 최근 실적</div>
   <h2>최근 분기: 성장률과 현금흐름의 질</h2>
-  <p class="lead">최근 분기 표는 StockAnalysis의 분기 손익계산서·현금흐름 데이터를 사용했다. EPS surprise는 Yahoo Finance의 최근 발표 EPS와 컨센서스 비교다.</p>
+  <p class="lead">최근 분기 손익계산서·현금흐름으로 성장률과 현금흐름의 질을 봅니다. EPS surprise는 발표 EPS와 컨센서스를 비교한 값입니다.</p>
   <div class="grid2">
     <div class="chartwrap">
       <div class="src" style="margin-bottom:8px">분기 매출 막대 / EPS 라인</div>
-      
-      <svg viewBox="0 0 560 280" role="img" aria-label="NVDA quarterly revenue and EPS chart">
+      <svg viewBox="0 0 560 280" role="img" aria-label="quarterly revenue and EPS chart">
         <line class="gl" x1="52" y1="64" x2="532" y2="64"/><line class="gl" x1="52" y1="142" x2="532" y2="142"/><line class="axis" x1="52" y1="220" x2="532" y2="220"/>
         <text class="alab" x="20" y="68">EPS</text><text class="alab" x="12" y="224">REV</text>
         <rect x="78" y="135.8" width="48" height="84.2" rx="3" fill="#00d9c0" opacity="0.46"/><text class="alab" x="102" y="127.8" text-anchor="middle">$44.1B</text><rect x="170" y="130.7" width="48" height="89.3" rx="3" fill="#00d9c0" opacity="0.56"/><text class="alab" x="194" y="122.7" text-anchor="middle">$46.7B</text><rect x="262" y="111.0" width="48" height="109.0" rx="3" fill="#00d9c0" opacity="0.66"/><text class="alab" x="286" y="103.0" text-anchor="middle">$57.0B</text><rect x="354" y="89.8" width="48" height="130.2" rx="3" fill="#00d9c0" opacity="0.76"/><text class="alab" x="378" y="81.8" text-anchor="middle">$68.1B</text><rect x="446" y="64.0" width="48" height="156.0" rx="3" fill="#00d9c0" opacity="0.86"/><text class="alab" x="470" y="56.0" text-anchor="middle">$81.6B</text>
-        <polyline points="102.0,162.0 194.0,143.5 286.0,130.9 378.0,104.3 470.0,68.0" fill="none" stroke="#7b6cff" stroke-width="2.4"/><circle cx="102.0" cy="162.0" r="4" fill="#7b6cff"/><circle cx="194.0" cy="143.5" r="4" fill="#7b6cff"/><circle cx="286.0" cy="130.9" r="4" fill="#7b6cff"/><circle cx="378.0" cy="104.3" r="4" fill="#7b6cff"/><circle cx="470.0" cy="68.0" r="4" fill="#7b6cff"/>
+        <polyline points="102.0,171.7 194.0,151.3 286.0,137.3 378.0,108.1 470.0,68.0" fill="none" stroke="#7b6cff" stroke-width="2.4"/><circle cx="102.0" cy="171.7" r="4" fill="#7b6cff"/><circle cx="194.0" cy="151.3" r="4" fill="#7b6cff"/><circle cx="286.0" cy="137.3" r="4" fill="#7b6cff"/><circle cx="378.0" cy="108.1" r="4" fill="#7b6cff"/><circle cx="470.0" cy="68.0" r="4" fill="#7b6cff"/>
         <text class="alab" x="102" y="246" text-anchor="middle">Q1
 2026</text><text class="alab" x="194" y="246" text-anchor="middle">Q2
 2026</text><text class="alab" x="286" y="246" text-anchor="middle">Q3
@@ -160,28 +165,26 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
 2026</text><text class="alab" x="470" y="246" text-anchor="middle">Q1
 2027</text>
       </svg>
-    
       <div class="legend"><span><i class="dot" style="background:#00d9c0"></i>Revenue</span><span><i class="dot" style="background:#7b6cff"></i>EPS diluted</span></div>
     </div>
     <div class="card accent">
-      <h3>Q1 2027 · Apr &#x27;26 Apr 26, 2026</h3>
+      <h3>Q1 2027 · Apr '26 Apr 26, 2026</h3>
       <table>
         <tr><th>항목</th><th class="mono">값</th><th class="mono">YoY/상태</th></tr>
         <tr><td>매출</td><td class="mono">$81.6B</td><td class="mono">85.23%</td></tr>
         <tr><td>EPS diluted</td><td class="mono">2.39</td><td class="mono">214.47%</td></tr>
         <tr><td>Gross margin</td><td class="mono">74.93%</td><td class="mono">수익성</td></tr>
-        <tr><td>FCF</td><td class="mono">$48.6B</td><td class="mono">85.54%</td></tr>
-        <tr><td>EPS surprise</td><td class="mono">EPS 1.87 vs 1.77 / surprise 5.5%</td><td class="mono">2026-05-20</td></tr>
+        <tr><td>FCF</td><td class="mono">$48.59B</td><td class="mono">85.54%</td></tr>
       </table>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. EPS surprise는 Yahoo Finance earnings dates의 reported EPS와 estimate 비교.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; EPS surprise는 Yahoo Finance earnings dates의 reported EPS와 estimate 비교.</span></div>
 </section>
 
 <section class="slide reveal" data-no="04 / QUALITY">
   <div class="eyebrow">이익의 질과 성장 동력</div>
   <h2>무엇이 숫자를 밀어 올리는가</h2>
-  <p class="lead">성장 동력은 회사 IR의 사업 설명과 최근 재무 데이터에서 반복적으로 확인되는 요인을 분리했다. 추정·해석은 아래 문장에 명시적으로 반영했다.</p>
+  <p class="lead">회사 IR 설명과 최근 재무에서 반복 확인되는 성장 동력을 추렸습니다. 추정·해석은 문장에 그대로 드러냈습니다.</p>
   <div class="grid3">
     <div class="card accent"><div class="kpi neu">74.93%</div><div class="kpi-label">최근 분기 gross margin</div></div>
     <div class="card accent"><div class="kpi neu">59.53%</div><div class="kpi-label">최근 분기 FCF margin</div></div>
@@ -190,115 +193,122 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
   <div class="grid2" style="margin-top:16px">
     <div class="card">
       <h3 style="color:var(--green)">Bull drivers</h3>
-      <ul class="clean "><li>데이터센터 AI 학습·추론 수요가 매출 성장을 견인하고, CUDA 생태계가 전환비용을 높인다.</li><li>네트워킹·시스템 레벨 제품까지 번들화되며 단품 GPU보다 큰 지갑 점유율을 확보한다.</li><li>높은 gross margin과 FCF는 고성장 국면에서도 주주환원·R&amp;D 여력을 만든다.</li></ul>
+      <ul class="clean "><li>강세 시나리오는 Blackwell 계열 공급과 클라우드 capex 지속성에 달려 있습니다. 최신 매출 YoY는 85.23%입니다.</li><li>gross margin 74.93%와 FCF margin 59.53%를 함께 보면 성장 투자 이후에도 수익성이 유지되는지 판단할 수 있습니다.</li><li>컨센서스는 Strong Buy이고 평균 목표가 대비 상승여력은 55.26%라서, 숫자보다 다음 가이던스의 질이 더 중요합니다.</li></ul>
     </div>
     <div class="card">
       <h3>주요 사업축</h3>
-      <ul class="clean "><li>Data Center GPU: 성장 축</li><li>Networking / Ethernet: 수익성/락인 축</li><li>CUDA + AI software: 옵션/방어 축</li></ul>
+      <ul class="clean "><li>제품 로드맵: 성장 축</li><li>AI·데이터센터 수요: 수요 축</li><li>공급망·고객 집중도: 리스크 축</li></ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 사업축은 회사 IR/사업 설명 기반 요약, 정량 수치는 StockAnalysis 분기 재무제표 기반.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; 사업축은 회사 IR/사업 설명 기반 요약, 정량 수치는 StockAnalysis 분기 재무제표 기반.</span></div>
 </section>
 
 <section class="slide reveal" data-no="05 / ECOSYSTEM">
   <div class="eyebrow gold">정책·규제·생태계</div>
   <h2>숫자 밖에서 가격을 움직이는 변수</h2>
-  <p class="lead">정치적 위법성 같은 단정은 하지 않는다. 여기서는 공개 IR·시장 데이터·정책 환경에서 투자자가 모니터링해야 할 사실 기반 변수만 분리한다.</p>
+  <p class="lead">위법성을 단정하지 않습니다. 공개 IR·시장·정책 환경에서 투자자가 지켜봐야 할 사실 기반 변수만 추립니다.</p>
   <div class="grid2">
     <div class="chartwrap">
-      <svg viewBox="0 0 720 360" role="img" aria-label="NVDA ecosystem map">
+      <svg viewBox="0 0 720 360" role="img" aria-label="ecosystem map">
         <line x1="360" y1="178" x2="180" y2="90" stroke="#00d9c0" stroke-width="1.4" opacity=".65"/>
         <line x1="360" y1="178" x2="540" y2="90" stroke="#7b6cff" stroke-width="1.4" opacity=".65"/>
         <line x1="360" y1="178" x2="178" y2="270" stroke="#7b6cff" stroke-width="1.4" opacity=".55"/>
         <line x1="360" y1="178" x2="542" y2="270" stroke="#00d9c0" stroke-width="1.4" opacity=".55"/>
         <circle cx="360" cy="178" r="62" fill="#00d9c0" opacity=".16"/><circle cx="360" cy="178" r="48" fill="var(--panel2)" stroke="#00d9c0" stroke-width="2"/>
-        <text class="nodebig" x="360" y="168" text-anchor="middle"><tspan x="360" dy="4">NVDA</tspan></text><text class="alab" x="360" y="194" text-anchor="middle"><tspan x="360" dy="4">AI 데이터센터의 사실상 표준 플랫폼</tspan></text>
-        <g><circle cx="180" cy="90" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="180" y="90" text-anchor="middle"><tspan x="180" dy="4">Data Center GPU</tspan></text></g>
-        <g><circle cx="540" cy="90" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="540" y="90" text-anchor="middle"><tspan x="540" dy="-5">Networking /</tspan><tspan x="540" dy="14">Ethernet</tspan></text></g>
-        <g><circle cx="178" cy="270" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="178" y="270" text-anchor="middle"><tspan x="178" dy="4">CUDA + AI software</tspan></text></g>
-        <g><circle cx="542" cy="270" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="542" y="270" text-anchor="middle"><tspan x="542" dy="4">정책 / 규제</tspan></text></g>
+        <text class="nodebig" x="360" y="168" text-anchor="middle"><tspan x="360" dy="4">NVDA</tspan></text><text class="alab" x="360" y="194" text-anchor="middle"><tspan x="360" dy="4">AI 데이터센터 GPU, 네트워킹, CUDA 소프트웨어를 한 스택으로 묶는 인프라 표준</tspan></text>
+        <g><circle cx="180" cy="90" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="180" y="90" text-anchor="middle"><tspan x="180" dy="-5">제품 /</tspan><tspan x="180" dy="14">로드맵</tspan></text></g>
+        <g><circle cx="540" cy="90" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="540" y="90" text-anchor="middle"><tspan x="540" dy="-5">AI /</tspan><tspan x="540" dy="14">/</tspan></text></g>
+        <g><circle cx="178" cy="270" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="178" y="270" text-anchor="middle"><tspan x="178" dy="-5">공급망 /</tspan><tspan x="178" dy="14">/</tspan></text></g>
+        <g><circle cx="542" cy="270" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="542" y="270" text-anchor="middle"><tspan x="542" dy="-5">정책 /</tspan><tspan x="542" dy="14">거시</tspan></text></g>
       </svg>
     </div>
     <div class="card gold">
       <h3 style="color:var(--gold)">정책/규제 체크포인트</h3>
-      <ul class="clean gold"><li>대중 AI 반도체 수출통제와 미국 안보 프레임이 핵심 정책 변수다.</li><li>전력·데이터센터 인허가 병목은 고객 capex 타이밍을 흔들 수 있다.</li><li>국가 AI 인프라 투자 확대는 장기 수요의 방어막이 될 수 있다.</li></ul>
+      <ul class="clean gold"><li>대중 수출통제와 공급망 재편이 매출 믹스와 고객 주문을 흔들 수 있습니다.</li><li>AI 데이터센터 capex 속도가 단기 주문 흐름을 좌우합니다.</li><li>대형 고객의 자체 ASIC 전환과 AI 투자 속도 둔화가 가장 큰 리스크와 연결되는 규제·거시 변수를 분기마다 확인해야 합니다.</li></ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 정책 항목은 공개 보도·규제 환경에 대한 리스크 분류이며 위법 단정이 아님.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; 정책 항목은 공개 보도·규제 환경에 대한 리스크 분류이며 위법 단정이 아님.</span></div>
 </section>
-
 
 <section class="slide reveal second-pass" data-no="05B / SECOND PASS">
   <div class="eyebrow gold">2차 검증 · 종목 특색 분석</div>
-  <h2>NVDA: CUDA와 네트워킹을 묶은 AI 인프라 표준</h2>
-  <p class="lead">단순 재무 수치만으로는 설명이 부족한 종목별 고유 변수다. 아래 내용은 공개 뉴스/공시/회사 설명을 기준으로 사실과 해석을 분리해 정리했다.</p>
+  <h2>NVDA: AI 데이터센터 GPU, 네트워킹, CUDA 소프트웨어...</h2>
+  <p class="lead">재무 숫자만으로는 잡히지 않는 종목 고유 변수입니다. 공개 뉴스·공시·회사 설명을 근거로 사실과 해석을 나눠 정리했습니다.</p>
   <div class="grid2" style="align-items:start">
     <div class="card gold">
       <span class="tag gold">IDIOSYNCRATIC</span>
       <h3>왜 이 종목은 따로 봐야 하나</h3>
-      <p>GPU 단품보다 시스템·네트워킹·소프트웨어 락인이 더 큰 해자다.</p>
+      <p>NVDA의 핵심은 AI 데이터센터 GPU, 네트워킹, CUDA 소프트웨어를 한 스택으로 묶는 인프라 표준입니다. 그래서 단순 매출 성장률만으로 보기 어렵습니다. 강세 쪽에서는 Blackwell 계열 공급과 클라우드 capex 지속성을, 약세 쪽에서는 대형 고객의 자체 ASIC 전환과 AI 투자 속도 둔화가 가장 큰 리스크라는 점을 확인해야 합니다.</p>
       <h3 style="margin-top:16px">모니터링 포인트</h3>
-      <p>중국 수출통제, 클라우드 고객의 자체 ASIC 전환, Blackwell 계열 공급 병목을 같이 봐야 한다.</p>
+      <ul class="clean"><li>실제 고객 채택과 매출 전환 측면에서 Blackwell 계열 공급과 클라우드 capex 지속성을 확인해야 합니다.</li><li>마진과 FCF 전환율이 투자 확대 이후에도 유지되는지 추적해야 합니다.</li><li>이 약세 요인이 뉴스와 애널리스트 추정치에 반영되는지 봐야 합니다.</li></ul>
       <h3 style="margin-top:16px;color:var(--red)">반대 논리</h3>
-      <p>AI capex 둔화가 오면 실적보다 멀티플 압축이 먼저 올 수 있다.</p>
+      <p>이 약세 요인이 현실화되면 실적보다 밸류에이션 조정이 먼저 나타날 수 있습니다.</p>
     </div>
     <div class="card accent">
       <span class="tag warn">RECENT CHECK</span>
       <h3>최근 뉴스 흐름</h3>
       <ul class="clean">
-        <li><strong>Nvidia Stock Keeps Sliding as &#x27;Hot Money&#x27; Heads Elsewhere</strong><br><span class="src">2 hours ago - Barrons</span><br>Nvidia stock is heading for its worst weekly decline since April last year.</li><li><strong>Micron Beats Nvidia on Gross Margin; What’s Next for MU Stock?</strong><br><span class="src">10 hours ago - TipRanks</span><br>Micron Technology ($MU) stock popped 16% on Thursday in reaction to its market-crushing fiscal third-quarter earnings. This brings MU stock’s year-to-date rally to more t</li><li><strong>Nvidia Wants Banks to Hunt Fraud Rings, Not Just Bad Charges</strong><br><span class="src">12 hours ago - PYMNTS</span><br>Banks have spent decades building fraud systems that see one transaction at a time. A charge either looks suspicious or it doesn&#x27;t.</li>
+        <li><strong>Nvidia or Micron: Goldman Sachs Chooses the Top AI Stock to Buy</strong><br><span class="src">11 hours ago - TipRanks</span><br>이 보도는 Blackwell 계열 공급과 클라우드 capex 지속성가 시장 기대에 어떻게 반영되는지 확인하게 만드는 이슈입니다.</li><li><strong>Nvidia Stock (NVDA) Enters a Correction as Investors Look to Other Chipmakers</strong><br><span class="src">1 day ago - TipRanks</span><br>이 뉴스는 대형 고객의 자체 ASIC 전환과 AI 투자 속도 둔화가 가장 큰 리스크와 연결해 단기 심리 변화를 점검해야 하는 항목입니다.</li><li><strong>The Magnificent 7 Are Facing Magnificent Worries</strong><br><span class="src">1 day ago - Barrons</span><br>최근 뉴스 흐름은 실적 숫자뿐 아니라 가이던스와 밸류에이션 반응을 함께 봐야 함을 보여줍니다.</li>
       </ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">2차 검증 출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis NVDA overview/news</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis NVDA forecast</a>. 기준일 2026-06-26; 뉴스 헤드라인은 StockAnalysis가 집계한 최근 공개 기사 기반이며, 정치·규제 이슈는 위법 단정이 아닌 투자 변수로 분류.</span></div>
+  <div class="footnote"><span class="src">2차 검증 출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>. 2026-06-28 기준; 뉴스 헤드라인은 최근 공개 기사 기반이며, 정치·규제 이슈는 위법 단정이 아닌 투자 변수로 분류.</span></div>
 </section>
 
 <section class="slide reveal" data-no="06 / RISKS">
   <div class="eyebrow">Bear Case</div>
   <h2>가장 먼저 확인해야 할 세 가지 리스크</h2>
-  <p class="lead">강한 종목일수록 리스크는 주가가 비쌀 때 갑자기 커진다. 아래 세 항목은 사업·재무·규제/거시로 분리한 핵심 약세 논리다.</p>
+  <p class="lead">강한 종목일수록 리스크는 주가가 비쌀 때 갑자기 커집니다. 사업·재무·규제/거시로 나눈 핵심 약세 논리입니다.</p>
   <div class="grid3">
-    <div class="card"><span class="tag bear">BUSINESS</span><p>대형 클라우드 고객의 자체 ASIC 전환과 AMD·Broadcom 계열 경쟁이 ASP를 압박할 수 있다.</p></div>
-    <div class="card"><span class="tag warn">FINANCIAL</span><p>중국 수출통제·우회수요 단속은 매출 믹스와 재고 리스크를 키운다.</p></div>
-    <div class="card"><span class="tag gold">POLICY/MACRO</span><p>AI capex 사이클 둔화 시 높은 기대치가 멀티플 압축으로 바로 연결된다.</p></div>
+    <div class="card"><span class="tag bear">BUSINESS</span><p>대형 고객의 자체 ASIC 전환과 AI 투자 속도 둔화가 가장 큰 리스크입니다.</p></div>
+    <div class="card"><span class="tag warn">FINANCIAL</span><p>현재 PER 29.49, PSR 18.4 및 목표가 상승여력 55.26%를 함께 보면 안전마진이 충분한지 따로 확인해야 합니다.</p></div>
+    <div class="card"><span class="tag gold">POLICY/MACRO</span><p>대중 수출통제와 공급망 재편이 매출 믹스와 고객 주문을 흔들 수 있습니다.</p></div>
   </div>
   <div class="card" style="margin-top:16px">
     <h3 style="color:var(--red)">핵심 경고</h3>
-    <p>현재 밸류에이션은 <span class="mono">P/E 29.98</span>, <span class="mono">P/S 18.7</span>, <span class="mono">EV/EBITDA 28.4</span>다. 성장률이 높아도 기대치가 이미 가격에 반영된 종목은 실적보다 가이던스의 작은 변화에 더 크게 반응할 수 있다.</p>
+    <p>현재 밸류에이션은 <span class="mono">PER 29.49</span>, <span class="mono">PSR 18.4</span>, <span class="mono">EV/EBITDA 27.93</span>입니다. 이 약세 요인이 확인되면 좋은 매출 성장률이 있어도 주가는 가이던스와 멀티플 조정에 더 민감하게 반응할 수 있습니다.</p>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 밸류에이션 멀티플은 StockAnalysis statistics 기준.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; 밸류에이션 멀티플은 StockAnalysis statistics 기준.</span></div>
 </section>
 
 <section class="slide reveal" data-no="07 / VALUATION">
-  <div class="eyebrow">밸류에이션 & 컨센서스</div>
+  <div class="eyebrow">밸류에이션 &amp; 컨센서스</div>
   <h2>평균 목표가가 말하는 기대수익률</h2>
-  <p class="lead">컨센서스는 투자 결론이 아니라 시장 기대치의 위치를 알려주는 좌표다. 최근 상향·하향 코멘트와 peer 대비 멀티플을 함께 봐야 한다.</p>
-  <div class="chartwrap">
-    
-      <svg viewBox="0 0 700 150" role="img" aria-label="NVDA analyst target spectrum">
-        <line class="axis" x1="70" y1="78" x2="630" y2="78"/>
-        <rect x="70.0" y="70" width="560.0" height="16" rx="8" fill="#00d9c0" opacity=".22"/>
-        <circle cx="70.0" cy="78" r="7" fill="var(--red)"/><text class="alab" x="70.0" y="112" text-anchor="middle">LOW $180</text>
-        <circle cx="278.1" cy="78" r="9" fill="#7b6cff"/><text class="alab" x="278.1" y="46" text-anchor="middle">AVG $299</text>
-        <circle cx="259.0" cy="78" r="6" fill="#00d9c0"/><text class="alab" x="259.0" y="132" text-anchor="middle">MED $288</text>
-        <circle cx="630.0" cy="78" r="7" fill="var(--green)"/><text class="alab" x="630.0" y="112" text-anchor="middle">HIGH $500</text>
-        <line x1="97.5" y1="42" x2="97.5" y2="112" stroke="var(--ink)" stroke-width="2"/>
-        <text class="alab" x="97.5" y="30" text-anchor="middle" fill="var(--ink)">현재 $196</text>
-      </svg>
-    
-    <div class="legend"><span><i class="dot" style="background:#7b6cff"></i>평균 목표가</span><span><i class="dot" style="background:var(--ink)"></i>현재가</span><span>강력매수 49 · 매수 10 · 보유 2 · 매도 0 · 강력매도 1</span></div>
+  <p class="lead">애널리스트 목표가는 정답이 아니라 시장 기대의 위치입니다. 현재가와의 간격으로 기대수익률을 읽습니다.</p>
+  <div class="card">
+    <div class="grid3" style="gap:14px">
+      <div class="card accent"><div class="kpi up">$299</div><div class="kpi-label">평균 목표가 · <span style="color:var(--green)">+55.3% 업사이드</span></div></div>
+      <div class="card"><div class="kpi" style="font-size:30px">$180–$500</div><div class="kpi-label">목표가 범위 (최저–최고)</div></div>
+      <div class="card"><div class="kpi neu">$193</div><div class="kpi-label">현재가</div></div>
+    </div>
+    <div style="margin-top:18px"><svg viewBox="0 0 700 104" role="img" aria-label="목표가 범위">
+        <text class="alab" text-anchor="start"><tspan x="70" y="22">LOW</tspan><tspan x="70" y="37">$180</tspan></text>
+        <text class="alab" text-anchor="middle"><tspan x="278.1" y="22">평균</tspan><tspan x="278.1" y="37">$299</tspan></text>
+        <text class="alab" text-anchor="end"><tspan x="630" y="22">HIGH</tspan><tspan x="630" y="37">$500</tspan></text>
+        <line x1="70" y1="58" x2="630" y2="58" stroke="#aab2c0" stroke-width="2"/>
+        <line x1="70" y1="53" x2="70" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="278.1" y1="53" x2="278.1" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="91.9" y1="53" x2="91.9" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="630" y1="53" x2="630" y2="63" stroke="#aab2c0" stroke-width="2"/>
+        <text class="alab" text-anchor="middle"><tspan x="91.9" y="78">현재</tspan><tspan x="91.9" y="93">$193</tspan></text>
+      </svg></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>애널리스트 컨센서스</h3>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">강력매수</div><div class="tgttrack"><div class="tgtfill" style="width:100.0%;background:var(--green)"></div></div><div class="tgtval">49</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">매수</div><div class="tgttrack"><div class="tgtfill" style="width:20.4%;background:#7ef0b3"></div></div><div class="tgtval">10</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">보유</div><div class="tgttrack"><div class="tgtfill" style="width:4.1%;background:var(--amber)"></div></div><div class="tgtval">2</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">매도</div><div class="tgttrack"><div class="tgtfill" style="width:0.0%;background:#ff8095"></div></div><div class="tgtval">0</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">강력매도</div><div class="tgttrack"><div class="tgtfill" style="width:2.0%;background:var(--red)"></div></div><div class="tgtval">1</div></div>
   </div>
   <div class="grid2" style="margin-top:16px">
     <div class="card">
       <h3>최근 애널리스트 액션</h3>
-      <table><tr><th>기관</th><th>등급</th><th>액션</th><th class="mono">목표가</th><th class="mono">일자</th></tr><tr><td>Bernstein</td><td>Buy Maintains $315</td><td>Maintains</td><td class="mono">$315</td><td class="mono">Jun 23, 2026</td></tr><tr><td>Oppenheimer</td><td>Buy Maintains $265</td><td>Maintains</td><td class="mono">$265</td><td class="mono">Jun 12, 2026</td></tr><tr><td>Bank of America Securities</td><td>Buy Maintains $350</td><td>Maintains</td><td class="mono">$350</td><td class="mono">Jun 11, 2026</td></tr><tr><td>DBS</td><td>Buy Maintains $250</td><td>Maintains</td><td class="mono">$250</td><td class="mono">Jun 5, 2026</td></tr></table>
+      <table><tr><th>기관</th><th>등급</th><th>액션</th><th class="mono">목표가</th><th class="mono">일자</th></tr><tr><td>Bernstein</td><td>Buy Maintains $315</td><td>Maintains</td><td class="mono">$315</td><td class="mono">Jun 23, 2026</td></tr><tr><td>Oppenheimer</td><td>Buy Maintains $265</td><td>Maintains</td><td class="mono">$265</td><td class="mono">Jun 12, 2026</td></tr><tr><td>Bank of America Securities</td><td>Buy Maintains $350</td><td>Maintains</td><td class="mono">$350</td><td class="mono">Jun 11, 2026</td></tr><tr><td>DBS</td><td>Buy Maintains $250</td><td>Maintains</td><td class="mono">$250</td><td class="mono">Jun 5, 2026</td></tr><tr><td>Mizuho Securities</td><td>Buy Reiterates n/a</td><td>Reiterates</td><td class="mono">n/a</td><td class="mono">Jun 4, 2026</td></tr></table>
     </div>
     <div class="card">
       <h3>동종/연관 종목 비교</h3>
-      <table><tr><th>티커</th><th>시총</th><th class="mono">P/E</th><th class="mono">P/S</th><th class="mono">YTD</th></tr><tr><td class="mono">NVDA</td><td>$4.74T</td><td class="mono">29.98</td><td class="mono">18.7</td><td class="mono">3.8%</td></tr><tr><td class="mono">AVGO</td><td>$1.80T</td><td class="mono">63.06</td><td class="mono">23.89</td><td class="mono">9.4%</td></tr><tr><td class="mono">AMD</td><td>$868.4B</td><td class="mono">177.59</td><td class="mono">23.19</td><td class="mono">138%</td></tr><tr><td class="mono">MU</td><td>$1.37T</td><td class="mono">27.39</td><td class="mono">15.18</td><td class="mono">285%</td></tr><tr><td class="mono">INTC</td><td>$667.8B</td><td class="mono">—</td><td class="mono">12.42</td><td class="mono">237%</td></tr></table>
+      <table><tr><th>티커</th><th>시총</th><th class="mono">PER</th><th class="mono">PSR</th><th class="mono">YTD</th></tr><tr><td class="mono">NVDA</td><td>$4.66T</td><td class="mono">29.49</td><td class="mono">18.4</td><td class="mono">1.95%</td></tr><tr><td class="mono">AVGO</td><td>$1.74T</td><td class="mono">60.75</td><td class="mono">23.01</td><td class="mono">5.01%</td></tr><tr><td class="mono">MU</td><td>$1.28T</td><td class="mono">25.55</td><td class="mono">14.17</td><td class="mono">258.99%</td></tr><tr><td class="mono">AMD</td><td>$850.5B</td><td class="mono">173.93</td><td class="mono">22.71</td><td class="mono">133.4%</td></tr><tr><td class="mono">INTC</td><td>$644.9B</td><td class="mono">—</td><td class="mono">12</td><td class="mono">225.85%</td></tr><tr><td class="mono">AMAT</td><td>$497.7B</td><td class="mono">58.95</td><td class="mono">17.15</td><td class="mono">133.14%</td></tr></table>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 애널리스트 목표가는 S&P Global 기반 StockAnalysis forecast 집계.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; 애널리스트 목표가는 S&amp;P Global 기반 StockAnalysis forecast 집계.</span></div>
 </section>
 
 <section class="slide reveal" data-no="08 / VERDICT">
@@ -306,22 +316,22 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
   <h2>진입은 숫자보다 기대치의 온도를 보고 결정</h2>
   <div class="grid2" style="align-items:center">
     <div>
-      <div class="big-num" style="color:var(--accent)">8.0</div>
+      <div class="big-num" style="color:var(--accent)">6.4</div>
       <div class="src">투자 매력도 / 10 · 정량지표 + 질적 리스크를 반영한 주관 점수</div>
     </div>
     <div>
-      <p class="verdict">AI 가속기의 표준 플랫폼 — 데이터센터 수요와 CUDA 해자가 동시에 작동</p>
-      <p style="margin-top:14px">Base case는 평균 목표가 <span class="mono">$299</span>, bear case는 <span class="mono">$180</span>, bull case는 <span class="mono">$500</span>로 둔다. 이는 애널리스트 목표가 범위를 그대로 사용한 시나리오이며, 내부 DCF가 아니다.</p>
+      <p class="verdict">NVDA: AI 데이터센터 GPU, 네트워킹, CUDA 소프트웨어를 한 스택으로 묶는 인프라 표준입니다.</p>
+      <p style="margin-top:14px">Base case는 평균 목표가 <span class="mono">$298.93</span>, bear case는 <span class="mono">$180</span>, bull case는 <span class="mono">$500</span>로 둡니다. 애널리스트 목표가 범위를 그대로 쓴 시나리오이며, 내부 DCF가 아닙니다.</p>
     </div>
   </div>
   <div class="grid3" style="margin-top:22px">
-    <div class="card accent"><h3>진입전략</h3><p>추격매수보다 실적 발표 전후 변동성, 52주 범위 하단 접근, 목표가 대비 안전마진 회복 구간을 우선 확인한다.</p></div>
-    <div class="card accent"><h3>모니터링</h3><p>다음 실적일, 분기 매출 성장률, EPS surprise, gross/FCF margin, 가이던스 톤 변화를 우선 추적한다.</p></div>
-    <div class="card accent"><h3>캘린더</h3><p>최근 발표일 2026-05-20; StockAnalysis earnings date와 회사 IR 이벤트 캘린더를 다음 업데이트 기준으로 둔다.</p></div>
+    <div class="card accent"><h3>진입전략</h3><p>NVDA: Blackwell 계열 공급과 클라우드 capex 지속성 확인 전에는 추격보다 실적 발표 전후 변동성, 52주 범위 내 위치, 목표가 대비 안전마진을 보고 분할 접근하는 편이 낫습니다.</p></div>
+    <div class="card accent"><h3>모니터링</h3><p>Blackwell 계열 공급과 클라우드 capex 지속성 관련 지표가 다음 실적에서 확인되는지 봐야 합니다., 매출 YoY 85.23%, gross margin 74.93%, FCF margin 59.53%의 방향성이 같은지 추적해야 합니다., 대형 고객의 자체 ASIC 전환과 AI 투자 속도 둔화가 가장 큰 리스크가 뉴스와 컨센서스에 반영되는지 확인해야 합니다.</p></div>
+    <div class="card accent"><h3>캘린더</h3><p>다음 실적 이벤트에서는 매출 성장률, 마진, FCF 전환율, 애널리스트 목표가 변화가 핵심 확인 항목입니다.</p></div>
   </div>
   <div class="footnote">
     <p class="disclaimer">본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 모든 수치는 기준일 이후 변동될 수 있습니다. 정치·정책 내용은 공개 공시·보도·규제 환경 기반의 사실 정리이며 위법성을 단정하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
-    <p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://investor.nvidia.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </p>
+    <p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/nvda/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/nvda/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/nvda/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/nvda/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/NVDA/history/">Yahoo Finance history</a>, <a href="https://www.nvidia.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001045810">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반. </p>
   </div>
 </section>
 
@@ -374,6 +384,27 @@ function draw(){
 }
 addEventListener('resize', resize, {passive:true});
 resize(); draw();
+</script>
+<script type="application/json" id="deck-data">
+{
+  "ticker": "NVDA",
+  "name": "NVIDIA Corporation",
+  "sector": "반도체",
+  "marketCap": 4660,
+  "price": 192.53,
+  "revenueGrowthYoY": 85.23,
+  "epsGrowthYoY": 214.47,
+  "fcfMargin": 85.54,
+  "peRatio": 29.49,
+  "psRatio": 18.4,
+  "targetUpside": 55.26,
+  "consensus": "Strong Buy",
+  "ytd": 1.95,
+  "valuationValid": true,
+  "specialNote": "NVDA: AI 데이터센터 GPU, 네트워킹, CUDA 소프트웨어를 한 스택으로 묶는 인프라 표준입니다.",
+  "asOf": "2026-06-28",
+  "confidence": "med"
+}
 </script>
 </body>
 </html>

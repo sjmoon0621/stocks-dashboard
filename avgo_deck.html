@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AVGO 중장기 전망 · Nasdaq 100 Top 20 분석</title>
+<title>AVGO 중장기 전망 · Nasdaq 100 분석</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
@@ -62,6 +62,12 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
 .barrow{display:grid;grid-template-columns:120px 1fr 74px;gap:10px;align-items:center;margin:10px 0}
 .barname,.barval{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}.barval{text-align:right;color:var(--ink)}.bartrack{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden}.barfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+.tgtrow{display:grid;grid-template-columns:78px 1fr 58px 62px;gap:13px;align-items:center;margin:14px 0}
+.tgtname{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}
+.tgttrack{height:16px;background:var(--panel2);border-radius:99px;overflow:hidden}
+.tgtfill{height:100%;border-radius:99px;min-width:3px}
+.tgtval{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);text-align:right}
+.tgtdelta{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;font-weight:600}
 ul.clean{list-style:none}ul.clean li{position:relative;padding-left:18px;margin:0 0 10px;color:var(--mute);font-weight:300;font-size:15px}ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}ul.clean.red li::before{background:var(--red)}ul.clean.gold li::before{background:var(--gold)}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left}th{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);font-weight:500}td{color:var(--mute);font-weight:300}td.mono,th.mono{font-family:'IBM Plex Mono',monospace}tr:last-child td{border-bottom:none}
 .footnote{margin-top:22px;padding-top:14px;border-top:1px dashed var(--line)}.src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);line-height:1.65}
@@ -79,80 +85,79 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
 <section class="slide" id="cover" data-no="00 / AVGO">
   <canvas id="field"></canvas>
   <div class="cover-inner">
-    <div class="live"><span class="pulse"></span> NASDAQ 100 TOP 20 · FIBER THEME</div>
-    <div class="eyebrow gold">미국주식 중장기 전망 · 데이터 기준 2026-06-26</div>
+    <div class="live"><span class="pulse"></span> NASDAQ 100 · S&amp;P 500 · 반도체</div>
+    <div class="eyebrow gold">미국주식 중장기 전망 · 데이터 기준 2026-06-28</div>
     <h1>AVGO</h1>
     <div class="ticker-row">
-      <span class="price-now">$379</span>
-      <span class="chg up">▲ YTD 9.4%</span>
-      <span class="src">Jun 25, 2026, 4:00 PM EDT</span>
+      <span class="price-now">$365</span>
+      <span class="chg up">▲ YTD 5.01%</span>
+      <span class="src">Jun 26, 2026, 4:00 PM EDT</span>
     </div>
-    <p class="cover-sub">Broadcom Inc.는 AI 데이터센터의 네트워크와 커스텀 실리콘 레이어로 요약된다. 핵심 질문은 현재 밸류에이션이 최근 성장률과 애널리스트 목표가가 말하는 업사이드를 충분히 보상하는가다.</p>
+    <p class="cover-sub">AVGO: AI 네트워킹 ASIC, VMware 소프트웨어, 반도체 IP를 결합한 인프라 수익화 기업입니다. Q2 2026 · May '26 May 3, 2026 기준 매출 YoY 47.87%, EPS YoY 85.44%이며, 핵심 관찰 포인트는 AI 가속기 고객 맞춤칩과 VMware 통합 시너지입니다.</p>
     <div class="cover-meta">
-      <div><b>시가총액</b>$1.80T</div>
+      <div><b>시가총액</b>$1.74T</div>
       <div><b>최근분기</b>$22.2B / YoY 47.87%</div>
-      <div><b>핵심지표</b>EPS 1.91 / surprise 1.7%</div>
-      <div><b>컨센서스</b>Strong Buy · 평균 $524</div>
+      <div><b>핵심지표</b>EPS 1.91</div>
+      <div><b>컨센서스</b>Strong Buy · 평균 $523.73</div>
     </div>
   </div>
 </section>
 
 <section class="slide reveal" data-no="01 / SNAPSHOT">
   <div class="eyebrow">Executive Snapshot</div>
-  <h2>Broadcom Inc.: 매력도 7.6/10</h2>
-  <p class="lead">AI 네트워킹·커스텀 ASIC·VMware 현금흐름의 조합. 숫자로 보면 최근 분기 매출 성장률은 <strong>47.87%</strong>, EPS 성장률은 <strong>85.44%</strong>, 평균 목표가 기준 업사이드는 <strong>38.2%</strong>다.</p>
+  <h2>Broadcom Inc.: 매력도 5.8/10</h2>
+  <p class="lead">AVGO: AI 네트워킹 ASIC, VMware 소프트웨어, 반도체 IP를 결합한 인프라 수익화 기업입니다. 숫자로 보면 최근 분기 매출 성장률 <strong>47.87%</strong>, EPS 성장률 <strong>85.44%</strong>, 평균 목표가 업사이드 <strong>43.5%</strong>입니다.</p>
   <div class="grid3">
-    <div class="card accent"><div class="kpi up">9.4%</div><div class="kpi-label">2026 YTD 주가 성과 · Yahoo Finance 조정종가 기준 내부 계산</div></div>
-    <div class="card accent"><div class="kpi neu">$1.80T</div><div class="kpi-label">Nasdaq 100 내 시가총액 순위 #7 · Alphabet 중복 share class 제외 전 순위</div></div>
-    <div class="card accent"><div class="kpi up">38.2%</div><div class="kpi-label">애널리스트 평균 목표가 대비 여력 · 컨센서스 Strong Buy</div></div>
+    <div class="card accent"><div class="kpi up">5.01%</div><div class="kpi-label">2026 YTD 주가 성과 · Yahoo Finance 조정종가 기준 내부 계산</div></div>
+    <div class="card accent"><div class="kpi neu">$1.74T</div><div class="kpi-label">S&amp;P 500 구성 종목</div></div>
+    <div class="card accent"><div class="kpi up">43.5%</div><div class="kpi-label">애널리스트 평균 목표가 대비 여력 · 컨센서스 Strong Buy</div></div>
   </div>
   <div class="grid2" style="margin-top:16px">
-    <div class="card"><span class="tag bull">BULL</span><p>AI 클러스터 확장은 이더넷 스위칭·광통신·커스텀 ASIC 수요를 동시에 만든다.</p></div>
-    <div class="card"><span class="tag bear">BEAR</span><p>대형 클라우드 고객 집중도가 높아 수주 타이밍이 실적 변동을 키울 수 있다.</p></div>
+    <div class="card"><span class="tag bull">BULL</span><p>강세 시나리오는 AI 가속기 고객 맞춤칩과 VMware 통합 시너지에 달려 있습니다. 최신 매출 YoY는 47.87%입니다.</p></div>
+    <div class="card"><span class="tag bear">BEAR</span><p>고객 집중도와 인수 후 비용 구조, 높은 기대치가 리스크입니다.</p></div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. YTD는 2026-01-02 종가 대비 2026-06-25 종가로 계산.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반.</span></div>
 </section>
 
 <section class="slide reveal" data-no="02 / MARKET MAP">
   <div class="eyebrow">가격과 위치</div>
   <h2>현재가는 52주 박스 안에서 어디에 있나</h2>
-  <p class="lead">주가 성과는 종목별로 극단적으로 갈렸다. 이 슬라이드는 현재가, 52주 범위, YTD, 시가총액을 한 화면에 묶어 과열과 소외를 동시에 본다.</p>
+  <p class="lead">현재가·52주 범위·YTD·시가총액을 한눈에 모아 지금 주가가 비싼지 싼지 가늠합니다.</p>
   <div class="grid2">
     <div class="card accent">
       <h3>시장 메타</h3>
       <table>
         <tr><th>항목</th><th class="mono">값</th></tr>
-        <tr><td>현재가</td><td class="mono">$379</td></tr>
-        <tr><td>일일 변동</td><td class="mono">-0.83%</td></tr>
-        <tr><td>52주 레인지</td><td class="mono">262.66 - 495.00</td></tr>
+        <tr><td>현재가</td><td class="mono">$365</td></tr>
+        <tr><td>일일 변동</td><td class="mono">-3.67%</td></tr>
+        <tr><td>52주 레인지</td><td class="mono">262.66 - 495</td></tr>
         <tr><td>TTM 매출</td><td class="mono">75.47B (+32.3%)</td></tr>
         <tr><td>TTM EPS</td><td class="mono">6.01 (+124.6%)</td></tr>
       </table>
     </div>
     <div class="card">
       <h3>핵심 해석</h3>
-      <div class="barrow"><div class="barname">YTD</div><div class="bartrack"><div class="barfill" style="width:4.0%"></div></div><div class="barval">9.4%</div></div>
+      <div class="barrow"><div class="barname">YTD</div><div class="bartrack"><div class="barfill" style="width:5.0%"></div></div><div class="barval">5.01%</div></div>
       <div class="barrow"><div class="barname">매출 YoY</div><div class="bartrack"><div class="barfill" style="width:47.9%"></div></div><div class="barval">47.87%</div></div>
-      <div class="barrow"><div class="barname">EPS YoY</div><div class="bartrack"><div class="barfill" style="width:42.7%"></div></div><div class="barval">85.44%</div></div>
-      <div class="barrow"><div class="barname">목표가 여력</div><div class="bartrack"><div class="barfill" style="width:38.2%"></div></div><div class="barval">38.2%</div></div>
+      <div class="barrow"><div class="barname">EPS YoY</div><div class="bartrack"><div class="barfill" style="width:85.4%"></div></div><div class="barval">85.44%</div></div>
+      <div class="barrow"><div class="barname">목표가 여력</div><div class="bartrack"><div class="barfill" style="width:43.5%"></div></div><div class="barval">43.5%</div></div>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반. </span></div>
 </section>
 
 <section class="slide reveal" data-no="03 / FUNDAMENTALS">
   <div class="eyebrow">재무와 최근 실적</div>
   <h2>최근 분기: 성장률과 현금흐름의 질</h2>
-  <p class="lead">최근 분기 표는 StockAnalysis의 분기 손익계산서·현금흐름 데이터를 사용했다. EPS surprise는 Yahoo Finance의 최근 발표 EPS와 컨센서스 비교다.</p>
+  <p class="lead">최근 분기 손익계산서·현금흐름으로 성장률과 현금흐름의 질을 봅니다. EPS surprise는 발표 EPS와 컨센서스를 비교한 값입니다.</p>
   <div class="grid2">
     <div class="chartwrap">
       <div class="src" style="margin-bottom:8px">분기 매출 막대 / EPS 라인</div>
-      
-      <svg viewBox="0 0 560 280" role="img" aria-label="AVGO quarterly revenue and EPS chart">
+      <svg viewBox="0 0 560 280" role="img" aria-label="quarterly revenue and EPS chart">
         <line class="gl" x1="52" y1="64" x2="532" y2="64"/><line class="gl" x1="52" y1="142" x2="532" y2="142"/><line class="axis" x1="52" y1="220" x2="532" y2="220"/>
         <text class="alab" x="20" y="68">EPS</text><text class="alab" x="12" y="224">REV</text>
-        <rect x="78" y="114.5" width="48" height="105.5" rx="3" fill="#00d9c0" opacity="0.46"/><text class="alab" x="102" y="106.5" text-anchor="middle">$15.0B</text><rect x="170" y="107.8" width="48" height="112.2" rx="3" fill="#00d9c0" opacity="0.56"/><text class="alab" x="194" y="99.8" text-anchor="middle">$16.0B</text><rect x="262" y="93.3" width="48" height="126.7" rx="3" fill="#00d9c0" opacity="0.66"/><text class="alab" x="286" y="85.3" text-anchor="middle">$18.0B</text><rect x="354" y="84.2" width="48" height="135.8" rx="3" fill="#00d9c0" opacity="0.76"/><text class="alab" x="378" y="76.2" text-anchor="middle">$19.3B</text><rect x="446" y="64.0" width="48" height="156.0" rx="3" fill="#00d9c0" opacity="0.86"/><text class="alab" x="470" y="56.0" text-anchor="middle">$22.2B</text>
-        <polyline points="102.0,146.0 194.0,162.0 286.0,83.1 378.0,104.4 470.0,68.0" fill="none" stroke="#7b6cff" stroke-width="2.4"/><circle cx="102.0" cy="146.0" r="4" fill="#7b6cff"/><circle cx="194.0" cy="162.0" r="4" fill="#7b6cff"/><circle cx="286.0" cy="83.1" r="4" fill="#7b6cff"/><circle cx="378.0" cy="104.4" r="4" fill="#7b6cff"/><circle cx="470.0" cy="68.0" r="4" fill="#7b6cff"/>
+        <rect x="78" y="114.5" width="48" height="105.5" rx="3" fill="#00d9c0" opacity="0.46"/><text class="alab" x="102" y="106.5" text-anchor="middle">$15.0B</text><rect x="170" y="107.9" width="48" height="112.1" rx="3" fill="#00d9c0" opacity="0.56"/><text class="alab" x="194" y="99.9" text-anchor="middle">$15.9B</text><rect x="262" y="93.3" width="48" height="126.7" rx="3" fill="#00d9c0" opacity="0.66"/><text class="alab" x="286" y="85.3" text-anchor="middle">$18.0B</text><rect x="354" y="84.2" width="48" height="135.8" rx="3" fill="#00d9c0" opacity="0.76"/><text class="alab" x="378" y="76.2" text-anchor="middle">$19.3B</text><rect x="446" y="64.0" width="48" height="156.0" rx="3" fill="#00d9c0" opacity="0.86"/><text class="alab" x="470" y="56.0" text-anchor="middle">$22.2B</text>
+        <polyline points="102.0,138.0 194.0,152.4 286.0,81.5 378.0,100.6 470.0,68.0" fill="none" stroke="#7b6cff" stroke-width="2.4"/><circle cx="102.0" cy="138.0" r="4" fill="#7b6cff"/><circle cx="194.0" cy="152.4" r="4" fill="#7b6cff"/><circle cx="286.0" cy="81.5" r="4" fill="#7b6cff"/><circle cx="378.0" cy="100.6" r="4" fill="#7b6cff"/><circle cx="470.0" cy="68.0" r="4" fill="#7b6cff"/>
         <text class="alab" x="102" y="246" text-anchor="middle">Q2
 2025</text><text class="alab" x="194" y="246" text-anchor="middle">Q3
 2025</text><text class="alab" x="286" y="246" text-anchor="middle">Q4
@@ -160,28 +165,26 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
 2026</text><text class="alab" x="470" y="246" text-anchor="middle">Q2
 2026</text>
       </svg>
-    
       <div class="legend"><span><i class="dot" style="background:#00d9c0"></i>Revenue</span><span><i class="dot" style="background:#7b6cff"></i>EPS diluted</span></div>
     </div>
     <div class="card accent">
-      <h3>Q2 2026 · May &#x27;26 May 3, 2026</h3>
+      <h3>Q2 2026 · May '26 May 3, 2026</h3>
       <table>
         <tr><th>항목</th><th class="mono">값</th><th class="mono">YoY/상태</th></tr>
         <tr><td>매출</td><td class="mono">$22.2B</td><td class="mono">47.87%</td></tr>
         <tr><td>EPS diluted</td><td class="mono">1.91</td><td class="mono">85.44%</td></tr>
         <tr><td>Gross margin</td><td class="mono">69.48%</td><td class="mono">수익성</td></tr>
-        <tr><td>FCF</td><td class="mono">$10.3B</td><td class="mono">60.07%</td></tr>
-        <tr><td>EPS surprise</td><td class="mono">EPS 2.44 vs 2.40 / surprise 1.7%</td><td class="mono">2026-06-03</td></tr>
+        <tr><td>FCF</td><td class="mono">$10.26B</td><td class="mono">60.07%</td></tr>
       </table>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. EPS surprise는 Yahoo Finance earnings dates의 reported EPS와 estimate 비교.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; EPS surprise는 Yahoo Finance earnings dates의 reported EPS와 estimate 비교.</span></div>
 </section>
 
 <section class="slide reveal" data-no="04 / QUALITY">
   <div class="eyebrow">이익의 질과 성장 동력</div>
   <h2>무엇이 숫자를 밀어 올리는가</h2>
-  <p class="lead">성장 동력은 회사 IR의 사업 설명과 최근 재무 데이터에서 반복적으로 확인되는 요인을 분리했다. 추정·해석은 아래 문장에 명시적으로 반영했다.</p>
+  <p class="lead">회사 IR 설명과 최근 재무에서 반복 확인되는 성장 동력을 추렸습니다. 추정·해석은 문장에 그대로 드러냈습니다.</p>
   <div class="grid3">
     <div class="card accent"><div class="kpi neu">69.48%</div><div class="kpi-label">최근 분기 gross margin</div></div>
     <div class="card accent"><div class="kpi neu">46.25%</div><div class="kpi-label">최근 분기 FCF margin</div></div>
@@ -190,115 +193,122 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
   <div class="grid2" style="margin-top:16px">
     <div class="card">
       <h3 style="color:var(--green)">Bull drivers</h3>
-      <ul class="clean "><li>AI 클러스터 확장은 이더넷 스위칭·광통신·커스텀 ASIC 수요를 동시에 만든다.</li><li>VMware 인수 후 소프트웨어 현금흐름이 반도체 사이클 변동성을 완충한다.</li><li>대형 고객 맞춤형 설계는 일반 칩보다 깊은 고객 락인을 만든다.</li></ul>
+      <ul class="clean "><li>강세 시나리오는 AI 가속기 고객 맞춤칩과 VMware 통합 시너지에 달려 있습니다. 최신 매출 YoY는 47.87%입니다.</li><li>gross margin 69.48%와 FCF margin 46.25%를 함께 보면 성장 투자 이후에도 수익성이 유지되는지 판단할 수 있습니다.</li><li>컨센서스는 Strong Buy이고 평균 목표가 대비 상승여력은 43.48%라서, 숫자보다 다음 가이던스의 질이 더 중요합니다.</li></ul>
     </div>
     <div class="card">
       <h3>주요 사업축</h3>
-      <ul class="clean "><li>AI networking: 성장 축</li><li>Custom ASIC: 수익성/락인 축</li><li>VMware software: 옵션/방어 축</li></ul>
+      <ul class="clean "><li>제품 로드맵: 성장 축</li><li>AI·데이터센터 수요: 수요 축</li><li>공급망·고객 집중도: 리스크 축</li></ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 사업축은 회사 IR/사업 설명 기반 요약, 정량 수치는 StockAnalysis 분기 재무제표 기반.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; 사업축은 회사 IR/사업 설명 기반 요약, 정량 수치는 StockAnalysis 분기 재무제표 기반.</span></div>
 </section>
 
 <section class="slide reveal" data-no="05 / ECOSYSTEM">
   <div class="eyebrow gold">정책·규제·생태계</div>
   <h2>숫자 밖에서 가격을 움직이는 변수</h2>
-  <p class="lead">정치적 위법성 같은 단정은 하지 않는다. 여기서는 공개 IR·시장 데이터·정책 환경에서 투자자가 모니터링해야 할 사실 기반 변수만 분리한다.</p>
+  <p class="lead">위법성을 단정하지 않습니다. 공개 IR·시장·정책 환경에서 투자자가 지켜봐야 할 사실 기반 변수만 추립니다.</p>
   <div class="grid2">
     <div class="chartwrap">
-      <svg viewBox="0 0 720 360" role="img" aria-label="AVGO ecosystem map">
+      <svg viewBox="0 0 720 360" role="img" aria-label="ecosystem map">
         <line x1="360" y1="178" x2="180" y2="90" stroke="#00d9c0" stroke-width="1.4" opacity=".65"/>
         <line x1="360" y1="178" x2="540" y2="90" stroke="#7b6cff" stroke-width="1.4" opacity=".65"/>
         <line x1="360" y1="178" x2="178" y2="270" stroke="#7b6cff" stroke-width="1.4" opacity=".55"/>
         <line x1="360" y1="178" x2="542" y2="270" stroke="#00d9c0" stroke-width="1.4" opacity=".55"/>
         <circle cx="360" cy="178" r="62" fill="#00d9c0" opacity=".16"/><circle cx="360" cy="178" r="48" fill="var(--panel2)" stroke="#00d9c0" stroke-width="2"/>
-        <text class="nodebig" x="360" y="168" text-anchor="middle"><tspan x="360" dy="4">AVGO</tspan></text><text class="alab" x="360" y="194" text-anchor="middle"><tspan x="360" dy="-5">AI 데이터센터의 네트워크와 커스텀 실리콘</tspan><tspan x="360" dy="14">레이어</tspan></text>
-        <g><circle cx="180" cy="90" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="180" y="90" text-anchor="middle"><tspan x="180" dy="4">AI networking</tspan></text></g>
-        <g><circle cx="540" cy="90" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="540" y="90" text-anchor="middle"><tspan x="540" dy="4">Custom ASIC</tspan></text></g>
-        <g><circle cx="178" cy="270" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="178" y="270" text-anchor="middle"><tspan x="178" dy="4">VMware software</tspan></text></g>
-        <g><circle cx="542" cy="270" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="542" y="270" text-anchor="middle"><tspan x="542" dy="4">정책 / 규제</tspan></text></g>
+        <text class="nodebig" x="360" y="168" text-anchor="middle"><tspan x="360" dy="4">AVGO</tspan></text><text class="alab" x="360" y="194" text-anchor="middle"><tspan x="360" dy="4">AI 네트워킹 ASIC, VMware 소프트웨어, 반도체 IP를 결합한 인프라 수익화 기업</tspan></text>
+        <g><circle cx="180" cy="90" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="180" y="90" text-anchor="middle"><tspan x="180" dy="-5">제품 /</tspan><tspan x="180" dy="14">로드맵</tspan></text></g>
+        <g><circle cx="540" cy="90" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="540" y="90" text-anchor="middle"><tspan x="540" dy="-5">AI /</tspan><tspan x="540" dy="14">/</tspan></text></g>
+        <g><circle cx="178" cy="270" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="178" y="270" text-anchor="middle"><tspan x="178" dy="-5">공급망 /</tspan><tspan x="178" dy="14">/</tspan></text></g>
+        <g><circle cx="542" cy="270" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="542" y="270" text-anchor="middle"><tspan x="542" dy="-5">정책 /</tspan><tspan x="542" dy="14">거시</tspan></text></g>
       </svg>
     </div>
     <div class="card gold">
       <h3 style="color:var(--gold)">정책/규제 체크포인트</h3>
-      <ul class="clean gold"><li>반도체 수출통제와 클라우드 인프라 보안정책이 수요·공급 모두에 영향을 준다.</li><li>VMware 라이선스 정책은 기업 IT 고객과 규제기관의 감시 대상이다.</li><li>미국 내 AI 인프라 투자는 네트워킹 장비 수요에 우호적이다.</li></ul>
+      <ul class="clean gold"><li>대중 수출통제와 공급망 재편이 매출 믹스와 고객 주문을 흔들 수 있습니다.</li><li>AI 데이터센터 capex 속도가 단기 주문 흐름을 좌우합니다.</li><li>고객 집중도와 인수 후 비용 구조, 높은 기대치가 리스크와 연결되는 규제·거시 변수를 분기마다 확인해야 합니다.</li></ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 정책 항목은 공개 보도·규제 환경에 대한 리스크 분류이며 위법 단정이 아님.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; 정책 항목은 공개 보도·규제 환경에 대한 리스크 분류이며 위법 단정이 아님.</span></div>
 </section>
-
 
 <section class="slide reveal second-pass" data-no="05B / SECOND PASS">
   <div class="eyebrow gold">2차 검증 · 종목 특색 분석</div>
-  <h2>AVGO: AI 네트워킹 + 커스텀 ASIC + VMware 현금흐름</h2>
-  <p class="lead">단순 재무 수치만으로는 설명이 부족한 종목별 고유 변수다. 아래 내용은 공개 뉴스/공시/회사 설명을 기준으로 사실과 해석을 분리해 정리했다.</p>
+  <h2>AVGO: AI 네트워킹 ASIC, VMware 소프트웨어, 반도체 IP...</h2>
+  <p class="lead">재무 숫자만으로는 잡히지 않는 종목 고유 변수입니다. 공개 뉴스·공시·회사 설명을 근거로 사실과 해석을 나눠 정리했습니다.</p>
   <div class="grid2" style="align-items:start">
     <div class="card gold">
       <span class="tag gold">IDIOSYNCRATIC</span>
       <h3>왜 이 종목은 따로 봐야 하나</h3>
-      <p>Broadcom은 AI 클러스터의 연결 계층과 엔터프라이즈 소프트웨어 현금흐름을 함께 가진다.</p>
+      <p>AVGO의 핵심은 AI 네트워킹 ASIC, VMware 소프트웨어, 반도체 IP를 결합한 인프라 수익화 기업입니다. 그래서 단순 매출 성장률만으로 보기 어렵습니다. 강세 쪽에서는 AI 가속기 고객 맞춤칩과 VMware 통합 시너지를, 약세 쪽에서는 고객 집중도와 인수 후 비용 구조, 높은 기대치가 리스크라는 점을 확인해야 합니다.</p>
       <h3 style="margin-top:16px">모니터링 포인트</h3>
-      <p>하이퍼스케일러 ASIC 수주, VMware 갱신·가격 반발, AI 이더넷 점유율을 본다.</p>
+      <ul class="clean"><li>실제 고객 채택과 매출 전환 측면에서 AI 가속기 고객 맞춤칩과 VMware 통합 시너지를 확인해야 합니다.</li><li>마진과 FCF 전환율이 투자 확대 이후에도 유지되는지 추적해야 합니다.</li><li>이 약세 요인이 뉴스와 애널리스트 추정치에 반영되는지 봐야 합니다.</li></ul>
       <h3 style="margin-top:16px;color:var(--red)">반대 논리</h3>
-      <p>대형 고객 집중과 VMware 고객 반발은 높은 멀티플의 약점이다.</p>
+      <p>이 약세 요인이 현실화되면 실적보다 밸류에이션 조정이 먼저 나타날 수 있습니다.</p>
     </div>
     <div class="card accent">
       <span class="tag warn">RECENT CHECK</span>
       <h3>최근 뉴스 흐름</h3>
       <ul class="clean">
-        <li><strong>Broadcom (AVGO) Has More Upside as AI Demand Keeps Growing</strong><br><span class="src">2 minutes ago - TipRanks</span><br>Broadcom ($AVGO) seems to have strong upside potential. This is supported by demand for artificial intelligence (AI), as the leader in semiconductors and infrastructure s</li><li><strong>OpenAI and Broadcom Unveil Custom A.I. Chip Design</strong><br><span class="src">1 day ago - NYTimes</span><br>The maker of ChatGPT plans to use enough chips to consume 10 gigawatts of electricity, an amount that could power millions of households.</li><li><strong>OpenAI Unveils First Custom AI Chip With Broadcom | Bloomberg Tech 6/24/2026</strong><br><span class="src">1 day ago - Bloomberg Technology</span><br>Bloomberg&#x27;s Ed Ludlow takes a look at OpenAI&#x27;s first custom AI chip, called Jalapeno, developed in partnership with Broadcom. Plus, SK Hynix is planning to raise $29 bill</li>
+        <li><strong>AI's most explosive hardware trades are hitting a wall. Why optical and memory stocks are falling.</strong><br><span class="src">1 day ago - Market Watch</span><br>이 보도는 AI 가속기 고객 맞춤칩과 VMware 통합 시너지가 시장 기대에 어떻게 반영되는지 확인하게 만드는 이슈입니다.</li><li><strong>Why everyone from OpenAI to SpaceX is building their own chips (and turning up the heat on Nvidia)</strong><br><span class="src">1 day ago - TechCrunch</span><br>이 뉴스는 고객 집중도와 인수 후 비용 구조, 높은 기대치가 리스크와 연결해 단기 심리 변화를 점검해야 하는 항목입니다.</li><li><strong>Broadcom (AVGO) Has More Upside as AI Demand Keeps Growing</strong><br><span class="src">1 day ago - TipRanks</span><br>최근 뉴스 흐름은 실적 숫자뿐 아니라 가이던스와 밸류에이션 반응을 함께 봐야 함을 보여줍니다.</li>
       </ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">2차 검증 출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis AVGO overview/news</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis AVGO forecast</a>. 기준일 2026-06-26; 뉴스 헤드라인은 StockAnalysis가 집계한 최근 공개 기사 기반이며, 정치·규제 이슈는 위법 단정이 아닌 투자 변수로 분류.</span></div>
+  <div class="footnote"><span class="src">2차 검증 출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>. 2026-06-28 기준; 뉴스 헤드라인은 최근 공개 기사 기반이며, 정치·규제 이슈는 위법 단정이 아닌 투자 변수로 분류.</span></div>
 </section>
 
 <section class="slide reveal" data-no="06 / RISKS">
   <div class="eyebrow">Bear Case</div>
   <h2>가장 먼저 확인해야 할 세 가지 리스크</h2>
-  <p class="lead">강한 종목일수록 리스크는 주가가 비쌀 때 갑자기 커진다. 아래 세 항목은 사업·재무·규제/거시로 분리한 핵심 약세 논리다.</p>
+  <p class="lead">강한 종목일수록 리스크는 주가가 비쌀 때 갑자기 커집니다. 사업·재무·규제/거시로 나눈 핵심 약세 논리입니다.</p>
   <div class="grid3">
-    <div class="card"><span class="tag bear">BUSINESS</span><p>대형 클라우드 고객 집중도가 높아 수주 타이밍이 실적 변동을 키울 수 있다.</p></div>
-    <div class="card"><span class="tag warn">FINANCIAL</span><p>VMware 가격·갱신 정책은 고객 반발과 규제 관심을 부를 수 있다.</p></div>
-    <div class="card"><span class="tag gold">POLICY/MACRO</span><p>높아진 멀티플은 AI 수요 둔화 시 방어력이 낮다.</p></div>
+    <div class="card"><span class="tag bear">BUSINESS</span><p>고객 집중도와 인수 후 비용 구조, 높은 기대치가 리스크입니다.</p></div>
+    <div class="card"><span class="tag warn">FINANCIAL</span><p>현재 PER 60.75, PSR 23.01 및 목표가 상승여력 43.48%를 함께 보면 안전마진이 충분한지 따로 확인해야 합니다.</p></div>
+    <div class="card"><span class="tag gold">POLICY/MACRO</span><p>대중 수출통제와 공급망 재편이 매출 믹스와 고객 주문을 흔들 수 있습니다.</p></div>
   </div>
   <div class="card" style="margin-top:16px">
     <h3 style="color:var(--red)">핵심 경고</h3>
-    <p>현재 밸류에이션은 <span class="mono">P/E 63.06</span>, <span class="mono">P/S 23.89</span>, <span class="mono">EV/EBITDA 43.91</span>다. 성장률이 높아도 기대치가 이미 가격에 반영된 종목은 실적보다 가이던스의 작은 변화에 더 크게 반응할 수 있다.</p>
+    <p>현재 밸류에이션은 <span class="mono">PER 60.75</span>, <span class="mono">PSR 23.01</span>, <span class="mono">EV/EBITDA 42.34</span>입니다. 이 약세 요인이 확인되면 좋은 매출 성장률이 있어도 주가는 가이던스와 멀티플 조정에 더 민감하게 반응할 수 있습니다.</p>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 밸류에이션 멀티플은 StockAnalysis statistics 기준.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; 밸류에이션 멀티플은 StockAnalysis statistics 기준.</span></div>
 </section>
 
 <section class="slide reveal" data-no="07 / VALUATION">
-  <div class="eyebrow">밸류에이션 & 컨센서스</div>
+  <div class="eyebrow">밸류에이션 &amp; 컨센서스</div>
   <h2>평균 목표가가 말하는 기대수익률</h2>
-  <p class="lead">컨센서스는 투자 결론이 아니라 시장 기대치의 위치를 알려주는 좌표다. 최근 상향·하향 코멘트와 peer 대비 멀티플을 함께 봐야 한다.</p>
-  <div class="chartwrap">
-    
-      <svg viewBox="0 0 700 150" role="img" aria-label="AVGO analyst target spectrum">
-        <line class="axis" x1="70" y1="78" x2="630" y2="78"/>
-        <rect x="70.0" y="70" width="560.0" height="16" rx="8" fill="#00d9c0" opacity=".22"/>
-        <circle cx="70.0" cy="78" r="7" fill="var(--red)"/><text class="alab" x="70.0" y="112" text-anchor="middle">LOW $216</text>
-        <circle cx="467.3" cy="78" r="9" fill="#7b6cff"/><text class="alab" x="467.3" y="46" text-anchor="middle">AVG $524</text>
-        <circle cx="468.8" cy="78" r="6" fill="#00d9c0"/><text class="alab" x="468.8" y="132" text-anchor="middle">MED $525</text>
-        <circle cx="630.0" cy="78" r="7" fill="var(--green)"/><text class="alab" x="630.0" y="112" text-anchor="middle">HIGH $650</text>
-        <line x1="280.3" y1="42" x2="280.3" y2="112" stroke="var(--ink)" stroke-width="2"/>
-        <text class="alab" x="280.3" y="30" text-anchor="middle" fill="var(--ink)">현재 $379</text>
-      </svg>
-    
-    <div class="legend"><span><i class="dot" style="background:#7b6cff"></i>평균 목표가</span><span><i class="dot" style="background:var(--ink)"></i>현재가</span><span>강력매수 36 · 매수 8 · 보유 4 · 매도 0 · 강력매도 0</span></div>
+  <p class="lead">애널리스트 목표가는 정답이 아니라 시장 기대의 위치입니다. 현재가와의 간격으로 기대수익률을 읽습니다.</p>
+  <div class="card">
+    <div class="grid3" style="gap:14px">
+      <div class="card accent"><div class="kpi up">$524</div><div class="kpi-label">평균 목표가 · <span style="color:var(--green)">+43.5% 업사이드</span></div></div>
+      <div class="card"><div class="kpi" style="font-size:30px">$215.88–$650</div><div class="kpi-label">목표가 범위 (최저–최고)</div></div>
+      <div class="card"><div class="kpi neu">$365</div><div class="kpi-label">현재가</div></div>
+    </div>
+    <div style="margin-top:18px"><svg viewBox="0 0 700 104" role="img" aria-label="목표가 범위">
+        <text class="alab" text-anchor="start"><tspan x="70" y="22">LOW</tspan><tspan x="70" y="37">$215.88</tspan></text>
+        <text class="alab" text-anchor="middle"><tspan x="467.1" y="22">평균</tspan><tspan x="467.1" y="37">$524</tspan></text>
+        <text class="alab" text-anchor="end"><tspan x="630" y="22">HIGH</tspan><tspan x="630" y="37">$650</tspan></text>
+        <line x1="70" y1="58" x2="630" y2="58" stroke="#aab2c0" stroke-width="2"/>
+        <line x1="70" y1="53" x2="70" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="467.1" y1="53" x2="467.1" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="262.4" y1="53" x2="262.4" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="630" y1="53" x2="630" y2="63" stroke="#aab2c0" stroke-width="2"/>
+        <text class="alab" text-anchor="middle"><tspan x="262.4" y="78">현재</tspan><tspan x="262.4" y="93">$365</tspan></text>
+      </svg></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>애널리스트 컨센서스</h3>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">강력매수</div><div class="tgttrack"><div class="tgtfill" style="width:100.0%;background:var(--green)"></div></div><div class="tgtval">36</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">매수</div><div class="tgttrack"><div class="tgtfill" style="width:22.2%;background:#7ef0b3"></div></div><div class="tgtval">8</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">보유</div><div class="tgttrack"><div class="tgtfill" style="width:11.1%;background:var(--amber)"></div></div><div class="tgtval">4</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">매도</div><div class="tgttrack"><div class="tgtfill" style="width:0.0%;background:#ff8095"></div></div><div class="tgtval">0</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">강력매도</div><div class="tgttrack"><div class="tgtfill" style="width:0.0%;background:var(--red)"></div></div><div class="tgtval">0</div></div>
   </div>
   <div class="grid2" style="margin-top:16px">
     <div class="card">
       <h3>최근 애널리스트 액션</h3>
-      <table><tr><th>기관</th><th>등급</th><th>액션</th><th class="mono">목표가</th><th class="mono">일자</th></tr><tr><td>William Blair</td><td>Buy Reiterates n/a</td><td>Reiterates</td><td class="mono">—</td><td class="mono">Jun 24, 2026</td></tr><tr><td>J.P. Morgan</td><td>Buy Maintains $500 → $580</td><td>Maintains</td><td class="mono">$500 → $580</td><td class="mono">Jun 17, 2026</td></tr><tr><td>UBS</td><td>Buy Maintains $485</td><td>Maintains</td><td class="mono">$485</td><td class="mono">Jun 12, 2026</td></tr><tr><td>Oppenheimer</td><td>Buy Maintains $535</td><td>Maintains</td><td class="mono">$535</td><td class="mono">Jun 12, 2026</td></tr></table>
+      <table><tr><th>기관</th><th>등급</th><th>액션</th><th class="mono">목표가</th><th class="mono">일자</th></tr><tr><td>William Blair</td><td>Buy Reiterates n/a</td><td>Reiterates</td><td class="mono">n/a</td><td class="mono">Jun 24, 2026</td></tr><tr><td>J.P. Morgan</td><td>Buy Maintains $500 → $580</td><td>Maintains</td><td class="mono">$500 → $580</td><td class="mono">Jun 17, 2026</td></tr><tr><td>UBS</td><td>Buy Maintains $485</td><td>Maintains</td><td class="mono">$485</td><td class="mono">Jun 12, 2026</td></tr><tr><td>Oppenheimer</td><td>Buy Maintains $535</td><td>Maintains</td><td class="mono">$535</td><td class="mono">Jun 12, 2026</td></tr><tr><td>Citi</td><td>Buy Maintains n/a</td><td>Maintains</td><td class="mono">n/a</td><td class="mono">Jun 8, 2026</td></tr></table>
     </div>
     <div class="card">
       <h3>동종/연관 종목 비교</h3>
-      <table><tr><th>티커</th><th>시총</th><th class="mono">P/E</th><th class="mono">P/S</th><th class="mono">YTD</th></tr><tr><td class="mono">AVGO</td><td>$1.80T</td><td class="mono">63.06</td><td class="mono">23.89</td><td class="mono">9.4%</td></tr><tr><td class="mono">NVDA</td><td>$4.74T</td><td class="mono">29.98</td><td class="mono">18.7</td><td class="mono">3.8%</td></tr><tr><td class="mono">AMD</td><td>$868.4B</td><td class="mono">177.59</td><td class="mono">23.19</td><td class="mono">138%</td></tr><tr><td class="mono">MU</td><td>$1.37T</td><td class="mono">27.39</td><td class="mono">15.18</td><td class="mono">285%</td></tr><tr><td class="mono">INTC</td><td>$667.8B</td><td class="mono">—</td><td class="mono">12.42</td><td class="mono">237%</td></tr></table>
+      <table><tr><th>티커</th><th>시총</th><th class="mono">PER</th><th class="mono">PSR</th><th class="mono">YTD</th></tr><tr><td class="mono">NVDA</td><td>$4.66T</td><td class="mono">29.49</td><td class="mono">18.4</td><td class="mono">1.95%</td></tr><tr><td class="mono">AVGO</td><td>$1.74T</td><td class="mono">60.75</td><td class="mono">23.01</td><td class="mono">5.01%</td></tr><tr><td class="mono">MU</td><td>$1.28T</td><td class="mono">25.55</td><td class="mono">14.17</td><td class="mono">258.99%</td></tr><tr><td class="mono">AMD</td><td>$850.5B</td><td class="mono">173.93</td><td class="mono">22.71</td><td class="mono">133.4%</td></tr><tr><td class="mono">INTC</td><td>$644.9B</td><td class="mono">—</td><td class="mono">12</td><td class="mono">225.85%</td></tr><tr><td class="mono">AMAT</td><td>$497.7B</td><td class="mono">58.95</td><td class="mono">17.15</td><td class="mono">133.14%</td></tr></table>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 애널리스트 목표가는 S&P Global 기반 StockAnalysis forecast 집계.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; 애널리스트 목표가는 S&amp;P Global 기반 StockAnalysis forecast 집계.</span></div>
 </section>
 
 <section class="slide reveal" data-no="08 / VERDICT">
@@ -306,22 +316,22 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
   <h2>진입은 숫자보다 기대치의 온도를 보고 결정</h2>
   <div class="grid2" style="align-items:center">
     <div>
-      <div class="big-num" style="color:var(--accent)">7.6</div>
+      <div class="big-num" style="color:var(--accent)">5.8</div>
       <div class="src">투자 매력도 / 10 · 정량지표 + 질적 리스크를 반영한 주관 점수</div>
     </div>
     <div>
-      <p class="verdict">AI 네트워킹·커스텀 ASIC·VMware 현금흐름의 조합</p>
-      <p style="margin-top:14px">Base case는 평균 목표가 <span class="mono">$524</span>, bear case는 <span class="mono">$216</span>, bull case는 <span class="mono">$650</span>로 둔다. 이는 애널리스트 목표가 범위를 그대로 사용한 시나리오이며, 내부 DCF가 아니다.</p>
+      <p class="verdict">AVGO: AI 네트워킹 ASIC, VMware 소프트웨어, 반도체 IP를 결합한 인프라 수익화 기업입니다.</p>
+      <p style="margin-top:14px">Base case는 평균 목표가 <span class="mono">$523.73</span>, bear case는 <span class="mono">$215.88</span>, bull case는 <span class="mono">$650</span>로 둡니다. 애널리스트 목표가 범위를 그대로 쓴 시나리오이며, 내부 DCF가 아닙니다.</p>
     </div>
   </div>
   <div class="grid3" style="margin-top:22px">
-    <div class="card accent"><h3>진입전략</h3><p>추격매수보다 실적 발표 전후 변동성, 52주 범위 하단 접근, 목표가 대비 안전마진 회복 구간을 우선 확인한다.</p></div>
-    <div class="card accent"><h3>모니터링</h3><p>다음 실적일, 분기 매출 성장률, EPS surprise, gross/FCF margin, 가이던스 톤 변화를 우선 추적한다.</p></div>
-    <div class="card accent"><h3>캘린더</h3><p>최근 발표일 2026-06-03; StockAnalysis earnings date와 회사 IR 이벤트 캘린더를 다음 업데이트 기준으로 둔다.</p></div>
+    <div class="card accent"><h3>진입전략</h3><p>AVGO: AI 가속기 고객 맞춤칩과 VMware 통합 시너지 확인 전에는 추격보다 실적 발표 전후 변동성, 52주 범위 내 위치, 목표가 대비 안전마진을 보고 분할 접근하는 편이 낫습니다.</p></div>
+    <div class="card accent"><h3>모니터링</h3><p>AI 가속기 고객 맞춤칩과 VMware 통합 시너지 관련 지표가 다음 실적에서 확인되는지 봐야 합니다., 매출 YoY 47.87%, gross margin 69.48%, FCF margin 46.25%의 방향성이 같은지 추적해야 합니다., 고객 집중도와 인수 후 비용 구조, 높은 기대치가 리스크가 뉴스와 컨센서스에 반영되는지 확인해야 합니다.</p></div>
+    <div class="card accent"><h3>캘린더</h3><p>다음 실적 이벤트에서는 매출 성장률, 마진, FCF 전환율, 애널리스트 목표가 변화가 핵심 확인 항목입니다.</p></div>
   </div>
   <div class="footnote">
     <p class="disclaimer">본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 모든 수치는 기준일 이후 변동될 수 있습니다. 정치·정책 내용은 공개 공시·보도·규제 환경 기반의 사실 정리이며 위법성을 단정하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
-    <p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://investors.broadcom.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </p>
+    <p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/avgo/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/avgo/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/avgo/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/avgo/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/AVGO/history/">Yahoo Finance history</a>, <a href="https://www.broadcom.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001730168">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반. </p>
   </div>
 </section>
 
@@ -374,6 +384,27 @@ function draw(){
 }
 addEventListener('resize', resize, {passive:true});
 resize(); draw();
+</script>
+<script type="application/json" id="deck-data">
+{
+  "ticker": "AVGO",
+  "name": "Broadcom Inc.",
+  "sector": "반도체",
+  "marketCap": 1740,
+  "price": 365.02,
+  "revenueGrowthYoY": 47.87,
+  "epsGrowthYoY": 85.44,
+  "fcfMargin": 60.07,
+  "peRatio": 60.75,
+  "psRatio": 23.01,
+  "targetUpside": 43.48,
+  "consensus": "Strong Buy",
+  "ytd": 5.01,
+  "valuationValid": true,
+  "specialNote": "AVGO: AI 네트워킹 ASIC, VMware 소프트웨어, 반도체 IP를 결합한 인프라 수익화 기업입니다.",
+  "asOf": "2026-06-28",
+  "confidence": "med"
+}
 </script>
 </body>
 </html>

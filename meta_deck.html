@@ -3,14 +3,14 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>META 중장기 전망 · Nasdaq 100 Top 20 분석</title>
+<title>META 중장기 전망 · Nasdaq 100 분석</title>
 
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
 :root{
   --void:#05060a; --deep:#0b0e17; --panel:#11151f; --panel2:#161b27;
   --line:#222a3a; --ink:#e8ecf4; --mute:#8a93a8; --faint:#5a6378;
-  --accent:#3a8dde; --accent2:#2fd4c4; --gold:#e3b24a;
+  --accent:#00d9c0; --accent2:#7b6cff; --gold:#e3b24a;
   --green:#3ee08f; --red:#ff5071; --amber:#ffc24b; --grid:rgba(255,255,255,.06);
 }
 *{box-sizing:border-box;margin:0;padding:0}
@@ -62,6 +62,12 @@ svg{display:block;width:100%;height:auto;overflow:visible}
 .dot{width:10px;height:10px;border-radius:3px;display:inline-block;margin-right:6px}
 .barrow{display:grid;grid-template-columns:120px 1fr 74px;gap:10px;align-items:center;margin:10px 0}
 .barname,.barval{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}.barval{text-align:right;color:var(--ink)}.bartrack{height:8px;background:var(--panel2);border-radius:99px;overflow:hidden}.barfill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:99px}
+.tgtrow{display:grid;grid-template-columns:78px 1fr 58px 62px;gap:13px;align-items:center;margin:14px 0}
+.tgtname{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--mute)}
+.tgttrack{height:16px;background:var(--panel2);border-radius:99px;overflow:hidden}
+.tgtfill{height:100%;border-radius:99px;min-width:3px}
+.tgtval{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--ink);text-align:right}
+.tgtdelta{font-family:'IBM Plex Mono',monospace;font-size:12.5px;text-align:right;font-weight:600}
 ul.clean{list-style:none}ul.clean li{position:relative;padding-left:18px;margin:0 0 10px;color:var(--mute);font-weight:300;font-size:15px}ul.clean li::before{content:"";position:absolute;left:0;top:9px;width:7px;height:7px;border-radius:2px;background:var(--accent)}ul.clean.red li::before{background:var(--red)}ul.clean.gold li::before{background:var(--gold)}
 table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px;border-bottom:1px solid var(--line);text-align:left}th{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--faint);font-weight:500}td{color:var(--mute);font-weight:300}td.mono,th.mono{font-family:'IBM Plex Mono',monospace}tr:last-child td{border-bottom:none}
 .footnote{margin-top:22px;padding-top:14px;border-top:1px dashed var(--line)}.src{font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:var(--faint);line-height:1.65}
@@ -79,51 +85,51 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
 <section class="slide" id="cover" data-no="00 / META">
   <canvas id="field"></canvas>
   <div class="cover-inner">
-    <div class="live"><span class="pulse"></span> NASDAQ 100 TOP 20 · AZURE THEME</div>
-    <div class="eyebrow gold">미국주식 중장기 전망 · 데이터 기준 2026-06-26</div>
+    <div class="live"><span class="pulse"></span> NASDAQ 100 · S&amp;P 500 · 소프트웨어</div>
+    <div class="eyebrow gold">미국주식 중장기 전망 · 데이터 기준 2026-06-28</div>
     <h1>META</h1>
     <div class="ticker-row">
-      <span class="price-now">$543</span>
-      <span class="chg down">▼ YTD -16.4%</span>
-      <span class="src">Jun 25, 2026, 4:00 PM EDT</span>
+      <span class="price-now">$550</span>
+      <span class="chg down">▼ YTD -15.4%</span>
+      <span class="src">Jun 26, 2026, 4:00 PM EDT</span>
     </div>
-    <p class="cover-sub">Meta Platforms, Inc.는 광고 현금흐름으로 AI 인프라를 사들이는 소셜 플랫폼로 요약된다. 핵심 질문은 현재 밸류에이션이 최근 성장률과 애널리스트 목표가가 말하는 업사이드를 충분히 보상하는가다.</p>
+    <p class="cover-sub">META: Facebook, Instagram, WhatsApp 광고 현금흐름으로 AI 추천·메시징·메타버스 옵션을 투자하는 플랫폼입니다. Q1 2026 · Mar '26 Mar 31, 2026 기준 매출 YoY 33.08%, EPS YoY 62.36%이며, 핵심 관찰 포인트는 AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제입니다.</p>
     <div class="cover-meta">
-      <div><b>시가총액</b>$1.38T</div>
+      <div><b>시가총액</b>$1.40T</div>
       <div><b>최근분기</b>$56.3B / YoY 33.08%</div>
-      <div><b>핵심지표</b>EPS 10.44 / surprise 56.8%</div>
-      <div><b>컨센서스</b>Strong Buy · 평균 $827</div>
+      <div><b>핵심지표</b>EPS 10.44</div>
+      <div><b>컨센서스</b>Strong Buy · 평균 $827.32</div>
     </div>
   </div>
 </section>
 
 <section class="slide reveal" data-no="01 / SNAPSHOT">
   <div class="eyebrow">Executive Snapshot</div>
-  <h2>Meta Platforms, Inc.: 매력도 7.5/10</h2>
-  <p class="lead">AI 추천·광고 효율·Llama 생태계가 수익성을 재가속. 숫자로 보면 최근 분기 매출 성장률은 <strong>33.08%</strong>, EPS 성장률은 <strong>62.36%</strong>, 평균 목표가 기준 업사이드는 <strong>52.4%</strong>다.</p>
+  <h2>Meta Platforms, Inc.: 매력도 7.9/10</h2>
+  <p class="lead">META: Facebook, Instagram, WhatsApp 광고 현금흐름으로 AI 추천·메시징·메타버스 옵션을 투자하는 플랫폼입니다. 숫자로 보면 최근 분기 매출 성장률 <strong>33.08%</strong>, EPS 성장률 <strong>62.36%</strong>, 평균 목표가 업사이드 <strong>50.4%</strong>입니다.</p>
   <div class="grid3">
-    <div class="card accent"><div class="kpi down">-16.4%</div><div class="kpi-label">2026 YTD 주가 성과 · Yahoo Finance 조정종가 기준 내부 계산</div></div>
-    <div class="card accent"><div class="kpi neu">$1.38T</div><div class="kpi-label">Nasdaq 100 내 시가총액 순위 #9 · Alphabet 중복 share class 제외 전 순위</div></div>
-    <div class="card accent"><div class="kpi up">52.4%</div><div class="kpi-label">애널리스트 평균 목표가 대비 여력 · 컨센서스 Strong Buy</div></div>
+    <div class="card accent"><div class="kpi down">-15.4%</div><div class="kpi-label">2026 YTD 주가 성과 · Yahoo Finance 조정종가 기준 내부 계산</div></div>
+    <div class="card accent"><div class="kpi neu">$1.40T</div><div class="kpi-label">S&amp;P 500 구성 종목</div></div>
+    <div class="card accent"><div class="kpi up">50.4%</div><div class="kpi-label">애널리스트 평균 목표가 대비 여력 · 컨센서스 Strong Buy</div></div>
   </div>
   <div class="grid2" style="margin-top:16px">
-    <div class="card"><span class="tag bull">BULL</span><p>AI 추천과 광고 타기팅 개선이 Reels·Instagram 수익화를 끌어올린다.</p></div>
-    <div class="card"><span class="tag bear">BEAR</span><p>Reality Labs와 AI capex가 커지면 투자 회수기간에 대한 의심이 커진다.</p></div>
+    <div class="card"><span class="tag bull">BULL</span><p>강세 시나리오는 AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제에 달려 있습니다. 최신 매출 YoY는 33.08%입니다.</p></div>
+    <div class="card"><span class="tag bear">BEAR</span><p>개인정보 규제와 AI capex 부담, 청소년 보호 이슈가 리스크입니다.</p></div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. YTD는 2026-01-02 종가 대비 2026-06-25 종가로 계산.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반.</span></div>
 </section>
 
 <section class="slide reveal" data-no="02 / MARKET MAP">
   <div class="eyebrow">가격과 위치</div>
   <h2>현재가는 52주 박스 안에서 어디에 있나</h2>
-  <p class="lead">주가 성과는 종목별로 극단적으로 갈렸다. 이 슬라이드는 현재가, 52주 범위, YTD, 시가총액을 한 화면에 묶어 과열과 소외를 동시에 본다.</p>
+  <p class="lead">현재가·52주 범위·YTD·시가총액을 한눈에 모아 지금 주가가 비싼지 싼지 가늠합니다.</p>
   <div class="grid2">
     <div class="card accent">
       <h3>시장 메타</h3>
       <table>
         <tr><th>항목</th><th class="mono">값</th></tr>
-        <tr><td>현재가</td><td class="mono">$543</td></tr>
-        <tr><td>일일 변동</td><td class="mono">-2.65%</td></tr>
+        <tr><td>현재가</td><td class="mono">$550</td></tr>
+        <tr><td>일일 변동</td><td class="mono">1.36%</td></tr>
         <tr><td>52주 레인지</td><td class="mono">520.26 - 796.25</td></tr>
         <tr><td>TTM 매출</td><td class="mono">214.96B (+26.2%)</td></tr>
         <tr><td>TTM EPS</td><td class="mono">27.49 (+7.4%)</td></tr>
@@ -131,28 +137,27 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
     </div>
     <div class="card">
       <h3>핵심 해석</h3>
-      <div class="barrow"><div class="barname">YTD</div><div class="bartrack"><div class="barfill" style="width:5.5%"></div></div><div class="barval">-16.4%</div></div>
+      <div class="barrow"><div class="barname">YTD</div><div class="bartrack"><div class="barfill" style="width:0.0%"></div></div><div class="barval">-15.4%</div></div>
       <div class="barrow"><div class="barname">매출 YoY</div><div class="bartrack"><div class="barfill" style="width:33.1%"></div></div><div class="barval">33.08%</div></div>
-      <div class="barrow"><div class="barname">EPS YoY</div><div class="bartrack"><div class="barfill" style="width:31.2%"></div></div><div class="barval">62.36%</div></div>
-      <div class="barrow"><div class="barname">목표가 여력</div><div class="bartrack"><div class="barfill" style="width:52.4%"></div></div><div class="barval">52.4%</div></div>
+      <div class="barrow"><div class="barname">EPS YoY</div><div class="bartrack"><div class="barfill" style="width:62.4%"></div></div><div class="barval">62.36%</div></div>
+      <div class="barrow"><div class="barname">목표가 여력</div><div class="bartrack"><div class="barfill" style="width:50.4%"></div></div><div class="barval">50.4%</div></div>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반. </span></div>
 </section>
 
 <section class="slide reveal" data-no="03 / FUNDAMENTALS">
   <div class="eyebrow">재무와 최근 실적</div>
   <h2>최근 분기: 성장률과 현금흐름의 질</h2>
-  <p class="lead">최근 분기 표는 StockAnalysis의 분기 손익계산서·현금흐름 데이터를 사용했다. EPS surprise는 Yahoo Finance의 최근 발표 EPS와 컨센서스 비교다.</p>
+  <p class="lead">최근 분기 손익계산서·현금흐름으로 성장률과 현금흐름의 질을 봅니다. EPS surprise는 발표 EPS와 컨센서스를 비교한 값입니다.</p>
   <div class="grid2">
     <div class="chartwrap">
       <div class="src" style="margin-bottom:8px">분기 매출 막대 / EPS 라인</div>
-      
-      <svg viewBox="0 0 560 280" role="img" aria-label="META quarterly revenue and EPS chart">
+      <svg viewBox="0 0 560 280" role="img" aria-label="quarterly revenue and EPS chart">
         <line class="gl" x1="52" y1="64" x2="532" y2="64"/><line class="gl" x1="52" y1="142" x2="532" y2="142"/><line class="axis" x1="52" y1="220" x2="532" y2="220"/>
         <text class="alab" x="20" y="68">EPS</text><text class="alab" x="12" y="224">REV</text>
-        <rect x="78" y="109.8" width="48" height="110.2" rx="3" fill="#3a8dde" opacity="0.46"/><text class="alab" x="102" y="101.8" text-anchor="middle">$42.3B</text><rect x="170" y="96.2" width="48" height="123.8" rx="3" fill="#3a8dde" opacity="0.56"/><text class="alab" x="194" y="88.2" text-anchor="middle">$47.5B</text><rect x="262" y="86.5" width="48" height="133.5" rx="3" fill="#3a8dde" opacity="0.66"/><text class="alab" x="286" y="78.5" text-anchor="middle">$51.2B</text><rect x="354" y="64.0" width="48" height="156.0" rx="3" fill="#3a8dde" opacity="0.76"/><text class="alab" x="378" y="56.0" text-anchor="middle">$59.9B</text><rect x="446" y="73.3" width="48" height="146.7" rx="3" fill="#3a8dde" opacity="0.86"/><text class="alab" x="470" y="65.3" text-anchor="middle">$56.3B</text>
-        <polyline points="102.0,108.1 194.0,101.0 286.0,162.0 378.0,83.6 470.0,68.0" fill="none" stroke="#2fd4c4" stroke-width="2.4"/><circle cx="102.0" cy="108.1" r="4" fill="#2fd4c4"/><circle cx="194.0" cy="101.0" r="4" fill="#2fd4c4"/><circle cx="286.0" cy="162.0" r="4" fill="#2fd4c4"/><circle cx="378.0" cy="83.6" r="4" fill="#2fd4c4"/><circle cx="470.0" cy="68.0" r="4" fill="#2fd4c4"/>
+        <rect x="78" y="109.8" width="48" height="110.2" rx="3" fill="#00d9c0" opacity="0.46"/><text class="alab" x="102" y="101.8" text-anchor="middle">$42.3B</text><rect x="170" y="96.2" width="48" height="123.8" rx="3" fill="#00d9c0" opacity="0.56"/><text class="alab" x="194" y="88.2" text-anchor="middle">$47.5B</text><rect x="262" y="86.5" width="48" height="133.5" rx="3" fill="#00d9c0" opacity="0.66"/><text class="alab" x="286" y="78.5" text-anchor="middle">$51.2B</text><rect x="354" y="64.0" width="48" height="156.0" rx="3" fill="#00d9c0" opacity="0.76"/><text class="alab" x="378" y="56.0" text-anchor="middle">$59.9B</text><rect x="446" y="73.3" width="48" height="146.7" rx="3" fill="#00d9c0" opacity="0.86"/><text class="alab" x="470" y="65.3" text-anchor="middle">$56.3B</text>
+        <polyline points="102.0,126.4 194.0,116.0 286.0,204.7 378.0,90.7 470.0,68.0" fill="none" stroke="#7b6cff" stroke-width="2.4"/><circle cx="102.0" cy="126.4" r="4" fill="#7b6cff"/><circle cx="194.0" cy="116.0" r="4" fill="#7b6cff"/><circle cx="286.0" cy="204.7" r="4" fill="#7b6cff"/><circle cx="378.0" cy="90.7" r="4" fill="#7b6cff"/><circle cx="470.0" cy="68.0" r="4" fill="#7b6cff"/>
         <text class="alab" x="102" y="246" text-anchor="middle">Q1
 2025</text><text class="alab" x="194" y="246" text-anchor="middle">Q2
 2025</text><text class="alab" x="286" y="246" text-anchor="middle">Q3
@@ -160,28 +165,26 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
 2025</text><text class="alab" x="470" y="246" text-anchor="middle">Q1
 2026</text>
       </svg>
-    
-      <div class="legend"><span><i class="dot" style="background:#3a8dde"></i>Revenue</span><span><i class="dot" style="background:#2fd4c4"></i>EPS diluted</span></div>
+      <div class="legend"><span><i class="dot" style="background:#00d9c0"></i>Revenue</span><span><i class="dot" style="background:#7b6cff"></i>EPS diluted</span></div>
     </div>
     <div class="card accent">
-      <h3>Q1 2026 · Mar &#x27;26 Mar 31, 2026</h3>
+      <h3>Q1 2026 · Mar '26 Mar 31, 2026</h3>
       <table>
         <tr><th>항목</th><th class="mono">값</th><th class="mono">YoY/상태</th></tr>
         <tr><td>매출</td><td class="mono">$56.3B</td><td class="mono">33.08%</td></tr>
         <tr><td>EPS diluted</td><td class="mono">10.44</td><td class="mono">62.36%</td></tr>
         <tr><td>Gross margin</td><td class="mono">81.85%</td><td class="mono">수익성</td></tr>
-        <tr><td>FCF</td><td class="mono">$13.2B</td><td class="mono">19.34%</td></tr>
-        <tr><td>EPS surprise</td><td class="mono">EPS 10.44 vs 6.66 / surprise 56.8%</td><td class="mono">2026-04-29</td></tr>
+        <tr><td>FCF</td><td class="mono">$13.23B</td><td class="mono">19.34%</td></tr>
       </table>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. EPS surprise는 Yahoo Finance earnings dates의 reported EPS와 estimate 비교.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; EPS surprise는 Yahoo Finance earnings dates의 reported EPS와 estimate 비교.</span></div>
 </section>
 
 <section class="slide reveal" data-no="04 / QUALITY">
   <div class="eyebrow">이익의 질과 성장 동력</div>
   <h2>무엇이 숫자를 밀어 올리는가</h2>
-  <p class="lead">성장 동력은 회사 IR의 사업 설명과 최근 재무 데이터에서 반복적으로 확인되는 요인을 분리했다. 추정·해석은 아래 문장에 명시적으로 반영했다.</p>
+  <p class="lead">회사 IR 설명과 최근 재무에서 반복 확인되는 성장 동력을 추렸습니다. 추정·해석은 문장에 그대로 드러냈습니다.</p>
   <div class="grid3">
     <div class="card accent"><div class="kpi neu">81.85%</div><div class="kpi-label">최근 분기 gross margin</div></div>
     <div class="card accent"><div class="kpi neu">23.49%</div><div class="kpi-label">최근 분기 FCF margin</div></div>
@@ -190,115 +193,122 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
   <div class="grid2" style="margin-top:16px">
     <div class="card">
       <h3 style="color:var(--green)">Bull drivers</h3>
-      <ul class="clean "><li>AI 추천과 광고 타기팅 개선이 Reels·Instagram 수익화를 끌어올린다.</li><li>Llama 오픈 생태계는 개발자 영향력과 인프라 협상력을 키운다.</li><li>Family of Apps의 높은 마진은 대규모 capex를 흡수할 현금흐름을 만든다.</li></ul>
+      <ul class="clean "><li>강세 시나리오는 AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제에 달려 있습니다. 최신 매출 YoY는 33.08%입니다.</li><li>gross margin 81.85%와 FCF margin 23.49%를 함께 보면 성장 투자 이후에도 수익성이 유지되는지 판단할 수 있습니다.</li><li>컨센서스는 Strong Buy이고 평균 목표가 대비 상승여력은 50.35%라서, 숫자보다 다음 가이던스의 질이 더 중요합니다.</li></ul>
     </div>
     <div class="card">
       <h3>주요 사업축</h3>
-      <ul class="clean "><li>Family of Apps: 성장 축</li><li>Ads AI: 수익성/락인 축</li><li>Reality Labs / Llama: 옵션/방어 축</li></ul>
+      <ul class="clean "><li>구독·클라우드 매출: 반복 매출 축</li><li>AI 기능 수익화: 성장 옵션</li><li>엔터프라이즈 락인: 방어 축</li></ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 사업축은 회사 IR/사업 설명 기반 요약, 정량 수치는 StockAnalysis 분기 재무제표 기반.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; 사업축은 회사 IR/사업 설명 기반 요약, 정량 수치는 StockAnalysis 분기 재무제표 기반.</span></div>
 </section>
 
 <section class="slide reveal" data-no="05 / ECOSYSTEM">
   <div class="eyebrow gold">정책·규제·생태계</div>
   <h2>숫자 밖에서 가격을 움직이는 변수</h2>
-  <p class="lead">정치적 위법성 같은 단정은 하지 않는다. 여기서는 공개 IR·시장 데이터·정책 환경에서 투자자가 모니터링해야 할 사실 기반 변수만 분리한다.</p>
+  <p class="lead">위법성을 단정하지 않습니다. 공개 IR·시장·정책 환경에서 투자자가 지켜봐야 할 사실 기반 변수만 추립니다.</p>
   <div class="grid2">
     <div class="chartwrap">
-      <svg viewBox="0 0 720 360" role="img" aria-label="META ecosystem map">
-        <line x1="360" y1="178" x2="180" y2="90" stroke="#3a8dde" stroke-width="1.4" opacity=".65"/>
-        <line x1="360" y1="178" x2="540" y2="90" stroke="#2fd4c4" stroke-width="1.4" opacity=".65"/>
-        <line x1="360" y1="178" x2="178" y2="270" stroke="#2fd4c4" stroke-width="1.4" opacity=".55"/>
-        <line x1="360" y1="178" x2="542" y2="270" stroke="#3a8dde" stroke-width="1.4" opacity=".55"/>
-        <circle cx="360" cy="178" r="62" fill="#3a8dde" opacity=".16"/><circle cx="360" cy="178" r="48" fill="var(--panel2)" stroke="#3a8dde" stroke-width="2"/>
-        <text class="nodebig" x="360" y="168" text-anchor="middle"><tspan x="360" dy="4">META</tspan></text><text class="alab" x="360" y="194" text-anchor="middle"><tspan x="360" dy="-5">광고 현금흐름으로 AI 인프라를 사들이는</tspan><tspan x="360" dy="14">소셜 플랫폼</tspan></text>
-        <g><circle cx="180" cy="90" r="46" fill="var(--panel)" stroke="#3a8dde" stroke-width="1.5"/><text class="nodesm" x="180" y="90" text-anchor="middle"><tspan x="180" dy="4">Family of Apps</tspan></text></g>
-        <g><circle cx="540" cy="90" r="46" fill="var(--panel)" stroke="#2fd4c4" stroke-width="1.5"/><text class="nodesm" x="540" y="90" text-anchor="middle"><tspan x="540" dy="4">Ads AI</tspan></text></g>
-        <g><circle cx="178" cy="270" r="46" fill="var(--panel)" stroke="#2fd4c4" stroke-width="1.5"/><text class="nodesm" x="178" y="270" text-anchor="middle"><tspan x="178" dy="-5">Reality Labs /</tspan><tspan x="178" dy="14">Llama</tspan></text></g>
-        <g><circle cx="542" cy="270" r="46" fill="var(--panel)" stroke="#3a8dde" stroke-width="1.5"/><text class="nodesm" x="542" y="270" text-anchor="middle"><tspan x="542" dy="4">정책 / 규제</tspan></text></g>
+      <svg viewBox="0 0 720 360" role="img" aria-label="ecosystem map">
+        <line x1="360" y1="178" x2="180" y2="90" stroke="#00d9c0" stroke-width="1.4" opacity=".65"/>
+        <line x1="360" y1="178" x2="540" y2="90" stroke="#7b6cff" stroke-width="1.4" opacity=".65"/>
+        <line x1="360" y1="178" x2="178" y2="270" stroke="#7b6cff" stroke-width="1.4" opacity=".55"/>
+        <line x1="360" y1="178" x2="542" y2="270" stroke="#00d9c0" stroke-width="1.4" opacity=".55"/>
+        <circle cx="360" cy="178" r="62" fill="#00d9c0" opacity=".16"/><circle cx="360" cy="178" r="48" fill="var(--panel2)" stroke="#00d9c0" stroke-width="2"/>
+        <text class="nodebig" x="360" y="168" text-anchor="middle"><tspan x="360" dy="4">META</tspan></text><text class="alab" x="360" y="194" text-anchor="middle"><tspan x="360" dy="4">Facebook, Instagram, WhatsApp 광고 현금흐름으로 AI 추천·메시징·메타버스 옵션을</tspan></text>
+        <g><circle cx="180" cy="90" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="180" y="90" text-anchor="middle"><tspan x="180" dy="-5">구독 /</tspan><tspan x="180" dy="14">/</tspan></text></g>
+        <g><circle cx="540" cy="90" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="540" y="90" text-anchor="middle"><tspan x="540" dy="-5">AI /</tspan><tspan x="540" dy="14">기능 수익화</tspan></text></g>
+        <g><circle cx="178" cy="270" r="46" fill="var(--panel)" stroke="#7b6cff" stroke-width="1.5"/><text class="nodesm" x="178" y="270" text-anchor="middle"><tspan x="178" dy="-5">엔터프라이즈 /</tspan><tspan x="178" dy="14">락인</tspan></text></g>
+        <g><circle cx="542" cy="270" r="46" fill="var(--panel)" stroke="#00d9c0" stroke-width="1.5"/><text class="nodesm" x="542" y="270" text-anchor="middle"><tspan x="542" dy="-5">정책 /</tspan><tspan x="542" dy="14">거시</tspan></text></g>
       </svg>
     </div>
     <div class="card gold">
       <h3 style="color:var(--gold)">정책/규제 체크포인트</h3>
-      <ul class="clean gold"><li>개인정보, 청소년 보호, 플랫폼 책임 규제가 핵심 정책 변수다.</li><li>오픈소스 AI 모델의 안전성 논쟁은 Llama 배포 전략과 연결된다.</li><li>선거·콘텐츠 조정 압박은 브랜드 리스크와 운영비를 높인다.</li></ul>
+      <ul class="clean gold"><li>AI와 개인정보 규제는 제품 설계와 고객 도입 속도에 영향을 줍니다.</li><li>기업 IT 예산과 클라우드 최적화 사이클을 함께 확인해야 합니다.</li><li>개인정보 규제와 AI capex 부담, 청소년 보호 이슈가 리스크와 연결되는 규제·거시 변수를 분기마다 확인해야 합니다.</li></ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 정책 항목은 공개 보도·규제 환경에 대한 리스크 분류이며 위법 단정이 아님.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; 정책 항목은 공개 보도·규제 환경에 대한 리스크 분류이며 위법 단정이 아님.</span></div>
 </section>
-
 
 <section class="slide reveal second-pass" data-no="05B / SECOND PASS">
   <div class="eyebrow gold">2차 검증 · 종목 특색 분석</div>
-  <h2>META: AI 추천엔진이 광고 효율을 다시 끌어올리는 플랫폼</h2>
-  <p class="lead">단순 재무 수치만으로는 설명이 부족한 종목별 고유 변수다. 아래 내용은 공개 뉴스/공시/회사 설명을 기준으로 사실과 해석을 분리해 정리했다.</p>
+  <h2>META: Facebook, Instagram, WhatsApp 광고 현금흐름...</h2>
+  <p class="lead">재무 숫자만으로는 잡히지 않는 종목 고유 변수입니다. 공개 뉴스·공시·회사 설명을 근거로 사실과 해석을 나눠 정리했습니다.</p>
   <div class="grid2" style="align-items:start">
     <div class="card gold">
       <span class="tag gold">IDIOSYNCRATIC</span>
       <h3>왜 이 종목은 따로 봐야 하나</h3>
-      <p>Reels·Instagram·광고 타기팅 개선은 Family of Apps의 현금창출력을 강화한다.</p>
+      <p>META의 핵심은 Facebook, Instagram, WhatsApp 광고 현금흐름으로 AI 추천·메시징·메타버스 옵션을 투자하는 플랫폼입니다. 그래서 단순 매출 성장률만으로 보기 어렵습니다. 강세 쪽에서는 AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제를, 약세 쪽에서는 개인정보 규제와 AI capex 부담, 청소년 보호 이슈가 리스크라는 점을 확인해야 합니다.</p>
       <h3 style="margin-top:16px">모니터링 포인트</h3>
-      <p>AI capex, Reality Labs 손실, EU/청소년/개인정보 규제, Llama 전략을 본다.</p>
+      <ul class="clean"><li>실제 고객 채택과 매출 전환 측면에서 AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제를 확인해야 합니다.</li><li>마진과 FCF 전환율이 투자 확대 이후에도 유지되는지 추적해야 합니다.</li><li>이 약세 요인이 뉴스와 애널리스트 추정치에 반영되는지 봐야 합니다.</li></ul>
       <h3 style="margin-top:16px;color:var(--red)">반대 논리</h3>
-      <p>광고 경기 둔화와 규제 강화가 동시에 오면 capex 부담이 부각된다.</p>
+      <p>이 약세 요인이 현실화되면 실적보다 밸류에이션 조정이 먼저 나타날 수 있습니다.</p>
     </div>
     <div class="card accent">
       <span class="tag warn">RECENT CHECK</span>
       <h3>최근 뉴스 흐름</h3>
       <ul class="clean">
-        <li><strong>Smartglasses Are Inevitable. But What—or Who—Are They For?</strong><br><span class="src">1 hour ago - WSJ</span><br>Smartglasses are a new consumer-tech arms race for the last and best real estate on our bodies. So what are we supposed to do with them?</li><li><strong>TikTok, YouTube deactivate 4.7 million child accounts in Indonesia following government curbs, minister says</strong><br><span class="src">6 hours ago - Reuters</span><br>Social media companies TikTok and YouTube have deactivated a total of around 4.7 million accounts belonging ​to children under the age of 16 in Indonesia, ‌the country&#x27;s </li><li><strong>Australia considers tougher enforcement of social media ban for teens</strong><br><span class="src">10 hours ago - Reuters</span><br>Australia&#x27;s prime minister ​said on Friday he was keen to make sure the country&#x27;s social media ban ‌for children was as strong as possible, as a new study found that the </li>
+        <li><strong>Australia toughens kids' social media ban, doubles potential penalties for tech firms</strong><br><span class="src">9 hours ago - Reuters</span><br>이 보도는 AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제가 시장 기대에 어떻게 반영되는지 확인하게 만드는 이슈입니다.</li><li><strong>Zuckerberg asks Meta to explore working with Polymarket and Kalshi, NYT reports</strong><br><span class="src">1 day ago - Reuters</span><br>이 뉴스는 개인정보 규제와 AI capex 부담, 청소년 보호 이슈가 리스크와 연결해 단기 심리 변화를 점검해야 하는 항목입니다.</li><li><strong>Mark Zuckerberg Urges Meta to Explore Working With Polymarket and Kalshi</strong><br><span class="src">1 day ago - NYTimes</span><br>최근 뉴스 흐름은 실적 숫자뿐 아니라 가이던스와 밸류에이션 반응을 함께 봐야 함을 보여줍니다.</li>
       </ul>
     </div>
   </div>
-  <div class="footnote"><span class="src">2차 검증 출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis META overview/news</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis META forecast</a>. 기준일 2026-06-26; 뉴스 헤드라인은 StockAnalysis가 집계한 최근 공개 기사 기반이며, 정치·규제 이슈는 위법 단정이 아닌 투자 변수로 분류.</span></div>
+  <div class="footnote"><span class="src">2차 검증 출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>. 2026-06-28 기준; 뉴스 헤드라인은 최근 공개 기사 기반이며, 정치·규제 이슈는 위법 단정이 아닌 투자 변수로 분류.</span></div>
 </section>
 
 <section class="slide reveal" data-no="06 / RISKS">
   <div class="eyebrow">Bear Case</div>
   <h2>가장 먼저 확인해야 할 세 가지 리스크</h2>
-  <p class="lead">강한 종목일수록 리스크는 주가가 비쌀 때 갑자기 커진다. 아래 세 항목은 사업·재무·규제/거시로 분리한 핵심 약세 논리다.</p>
+  <p class="lead">강한 종목일수록 리스크는 주가가 비쌀 때 갑자기 커집니다. 사업·재무·규제/거시로 나눈 핵심 약세 논리입니다.</p>
   <div class="grid3">
-    <div class="card"><span class="tag bear">BUSINESS</span><p>Reality Labs와 AI capex가 커지면 투자 회수기간에 대한 의심이 커진다.</p></div>
-    <div class="card"><span class="tag warn">FINANCIAL</span><p>개인정보·청소년 보호·EU DMA 규제는 광고 효율을 제한할 수 있다.</p></div>
-    <div class="card"><span class="tag gold">POLICY/MACRO</span><p>광고 경기 둔화는 매출 성장률을 빠르게 식힌다.</p></div>
+    <div class="card"><span class="tag bear">BUSINESS</span><p>개인정보 규제와 AI capex 부담, 청소년 보호 이슈가 리스크입니다.</p></div>
+    <div class="card"><span class="tag warn">FINANCIAL</span><p>현재 PER 20.02, PSR 6.5 및 목표가 상승여력 50.35%를 함께 보면 안전마진이 충분한지 따로 확인해야 합니다.</p></div>
+    <div class="card"><span class="tag gold">POLICY/MACRO</span><p>AI와 개인정보 규제는 제품 설계와 고객 도입 속도에 영향을 줍니다.</p></div>
   </div>
   <div class="card" style="margin-top:16px">
     <h3 style="color:var(--red)">핵심 경고</h3>
-    <p>현재 밸류에이션은 <span class="mono">P/E 19.75</span>, <span class="mono">P/S 6.41</span>, <span class="mono">EV/EBITDA 12.66</span>다. 성장률이 높아도 기대치가 이미 가격에 반영된 종목은 실적보다 가이던스의 작은 변화에 더 크게 반응할 수 있다.</p>
+    <p>현재 밸류에이션은 <span class="mono">PER 20.02</span>, <span class="mono">PSR 6.5</span>, <span class="mono">EV/EBITDA 12.83</span>입니다. 이 약세 요인이 확인되면 좋은 매출 성장률이 있어도 주가는 가이던스와 멀티플 조정에 더 민감하게 반응할 수 있습니다.</p>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 밸류에이션 멀티플은 StockAnalysis statistics 기준.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; 밸류에이션 멀티플은 StockAnalysis statistics 기준.</span></div>
 </section>
 
 <section class="slide reveal" data-no="07 / VALUATION">
-  <div class="eyebrow">밸류에이션 & 컨센서스</div>
+  <div class="eyebrow">밸류에이션 &amp; 컨센서스</div>
   <h2>평균 목표가가 말하는 기대수익률</h2>
-  <p class="lead">컨센서스는 투자 결론이 아니라 시장 기대치의 위치를 알려주는 좌표다. 최근 상향·하향 코멘트와 peer 대비 멀티플을 함께 봐야 한다.</p>
-  <div class="chartwrap">
-    
-      <svg viewBox="0 0 700 150" role="img" aria-label="META analyst target spectrum">
-        <line class="axis" x1="70" y1="78" x2="630" y2="78"/>
-        <rect x="214.2" y="70" width="415.8" height="16" rx="8" fill="#3a8dde" opacity=".22"/>
-        <circle cx="214.2" cy="78" r="7" fill="var(--red)"/><text class="alab" x="214.2" y="112" text-anchor="middle">LOW $664</text>
-        <circle cx="407.4" cy="78" r="9" fill="#2fd4c4"/><text class="alab" x="407.4" y="46" text-anchor="middle">AVG $827</text>
-        <circle cx="404.6" cy="78" r="6" fill="#3a8dde"/><text class="alab" x="404.6" y="132" text-anchor="middle">MED $825</text>
-        <circle cx="630.0" cy="78" r="7" fill="var(--green)"/><text class="alab" x="630.0" y="112" text-anchor="middle">HIGH $1,015</text>
-        <line x1="70.0" y1="42" x2="70.0" y2="112" stroke="var(--ink)" stroke-width="2"/>
-        <text class="alab" x="70.0" y="30" text-anchor="middle" fill="var(--ink)">현재 $543</text>
-      </svg>
-    
-    <div class="legend"><span><i class="dot" style="background:#2fd4c4"></i>평균 목표가</span><span><i class="dot" style="background:var(--ink)"></i>현재가</span><span>강력매수 50 · 매수 8 · 보유 6 · 매도 0 · 강력매도 0</span></div>
+  <p class="lead">애널리스트 목표가는 정답이 아니라 시장 기대의 위치입니다. 현재가와의 간격으로 기대수익률을 읽습니다.</p>
+  <div class="card">
+    <div class="grid3" style="gap:14px">
+      <div class="card accent"><div class="kpi up">$827</div><div class="kpi-label">평균 목표가 · <span style="color:var(--green)">+50.4% 업사이드</span></div></div>
+      <div class="card"><div class="kpi" style="font-size:30px">$664.46–$1015</div><div class="kpi-label">목표가 범위 (최저–최고)</div></div>
+      <div class="card"><div class="kpi neu">$550</div><div class="kpi-label">현재가</div></div>
+    </div>
+    <div style="margin-top:18px"><svg viewBox="0 0 700 104" role="img" aria-label="목표가 범위">
+        <text class="alab" text-anchor="start"><tspan x="70" y="22">LOW</tspan><tspan x="70" y="37">$664.46</tspan></text>
+        <text class="alab" text-anchor="middle"><tspan x="330.2" y="22">평균</tspan><tspan x="330.2" y="37">$827</tspan></text>
+        <text class="alab" text-anchor="end"><tspan x="630" y="22">HIGH</tspan><tspan x="630" y="37">$1015</tspan></text>
+        <line x1="70" y1="58" x2="630" y2="58" stroke="#aab2c0" stroke-width="2"/>
+        <line x1="70" y1="53" x2="70" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="330.2" y1="53" x2="330.2" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="70.0" y1="53" x2="70.0" y2="63" stroke="#aab2c0" stroke-width="2"/><line x1="630" y1="53" x2="630" y2="63" stroke="#aab2c0" stroke-width="2"/>
+        <text class="alab" text-anchor="middle"><tspan x="70.0" y="78">현재</tspan><tspan x="70.0" y="93">$550</tspan></text>
+      </svg></div>
+  </div>
+  <div class="card" style="margin-top:16px">
+    <h3>애널리스트 컨센서스</h3>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">강력매수</div><div class="tgttrack"><div class="tgtfill" style="width:100.0%;background:var(--green)"></div></div><div class="tgtval">50</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">매수</div><div class="tgttrack"><div class="tgtfill" style="width:16.0%;background:#7ef0b3"></div></div><div class="tgtval">8</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">보유</div><div class="tgttrack"><div class="tgtfill" style="width:12.0%;background:var(--amber)"></div></div><div class="tgtval">6</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">매도</div><div class="tgttrack"><div class="tgtfill" style="width:0.0%;background:#ff8095"></div></div><div class="tgtval">0</div></div>
+      <div class="tgtrow" style="grid-template-columns:74px 1fr 34px"><div class="tgtname">강력매도</div><div class="tgttrack"><div class="tgtfill" style="width:0.0%;background:var(--red)"></div></div><div class="tgtval">0</div></div>
   </div>
   <div class="grid2" style="margin-top:16px">
     <div class="card">
       <h3>최근 애널리스트 액션</h3>
-      <table><tr><th>기관</th><th>등급</th><th>액션</th><th class="mono">목표가</th><th class="mono">일자</th></tr><tr><td>Piper Sandler</td><td>Buy Reiterates $800</td><td>Reiterates</td><td class="mono">$800</td><td class="mono">Jun 25, 2026</td></tr><tr><td>Evercore ISI</td><td>Buy Reiterates $930</td><td>Reiterates</td><td class="mono">$930</td><td class="mono">Jun 17, 2026</td></tr><tr><td>Bank of America Securities</td><td>Buy Maintains $835</td><td>Maintains</td><td class="mono">$835</td><td class="mono">Jun 15, 2026</td></tr><tr><td>Bernstein</td><td>Buy Maintains $850</td><td>Maintains</td><td class="mono">$850</td><td class="mono">Jun 11, 2026</td></tr></table>
+      <table><tr><th>기관</th><th>등급</th><th>액션</th><th class="mono">목표가</th><th class="mono">일자</th></tr><tr><td>Piper Sandler</td><td>Buy Reiterates $800</td><td>Reiterates</td><td class="mono">$800</td><td class="mono">Jun 25, 2026</td></tr><tr><td>Evercore ISI</td><td>Buy Reiterates $930</td><td>Reiterates</td><td class="mono">$930</td><td class="mono">Jun 17, 2026</td></tr><tr><td>Bank of America Securities</td><td>Buy Maintains $835</td><td>Maintains</td><td class="mono">$835</td><td class="mono">Jun 15, 2026</td></tr><tr><td>Bernstein</td><td>Buy Maintains $850</td><td>Maintains</td><td class="mono">$850</td><td class="mono">Jun 11, 2026</td></tr><tr><td>Truist Financial</td><td>Buy Maintains n/a</td><td>Maintains</td><td class="mono">n/a</td><td class="mono">Jun 9, 2026</td></tr></table>
     </div>
     <div class="card">
       <h3>동종/연관 종목 비교</h3>
-      <table><tr><th>티커</th><th>시총</th><th class="mono">P/E</th><th class="mono">P/S</th><th class="mono">YTD</th></tr><tr><td class="mono">META</td><td>$1.38T</td><td class="mono">19.75</td><td class="mono">6.41</td><td class="mono">-16.4%</td></tr><tr><td class="mono">GOOGL</td><td>$4.19T</td><td class="mono">26.22</td><td class="mono">9.93</td><td class="mono">9.2%</td></tr><tr><td class="mono">NFLX</td><td>$298.6B</td><td class="mono">22.9</td><td class="mono">6.37</td><td class="mono">-22.1%</td></tr><tr><td class="mono">MSFT</td><td>$2.62T</td><td class="mono">21.01</td><td class="mono">8.23</td><td class="mono">-25.1%</td></tr><tr><td class="mono">AMZN</td><td>$2.44T</td><td class="mono">27.15</td><td class="mono">3.29</td><td class="mono">0.2%</td></tr></table>
+      <table><tr><th>티커</th><th>시총</th><th class="mono">PER</th><th class="mono">PSR</th><th class="mono">YTD</th></tr><tr><td class="mono">GOOGL</td><td>$4.12T</td><td class="mono">25.74</td><td class="mono">9.74</td><td class="mono">7.06%</td></tr><tr><td class="mono">GOOG</td><td>$4.10T</td><td class="mono">25.61</td><td class="mono">9.71</td><td class="mono">6.14%</td></tr><tr><td class="mono">MSFT</td><td>$2.77T</td><td class="mono">22.21</td><td class="mono">8.71</td><td class="mono">-21.14%</td></tr><tr><td class="mono">META</td><td>$1.40T</td><td class="mono">20.02</td><td class="mono">6.5</td><td class="mono">-15.4%</td></tr><tr><td class="mono">ORCL</td><td>$427.8B</td><td class="mono">25.48</td><td class="mono">6.35</td><td class="mono">-24.11%</td></tr><tr><td class="mono">PLTR</td><td>$270.7B</td><td class="mono">126.95</td><td class="mono">51.82</td><td class="mono">-32.72%</td></tr></table>
     </div>
   </div>
-  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. 애널리스트 목표가는 S&P Global 기반 StockAnalysis forecast 집계.</span></div>
+  <div class="footnote"><span class="src">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; 애널리스트 목표가는 S&amp;P Global 기반 StockAnalysis forecast 집계.</span></div>
 </section>
 
 <section class="slide reveal" data-no="08 / VERDICT">
@@ -306,22 +316,22 @@ table{width:100%;border-collapse:collapse;font-size:14px}th,td{padding:10px 11px
   <h2>진입은 숫자보다 기대치의 온도를 보고 결정</h2>
   <div class="grid2" style="align-items:center">
     <div>
-      <div class="big-num" style="color:var(--accent)">7.5</div>
+      <div class="big-num" style="color:var(--accent)">7.9</div>
       <div class="src">투자 매력도 / 10 · 정량지표 + 질적 리스크를 반영한 주관 점수</div>
     </div>
     <div>
-      <p class="verdict">AI 추천·광고 효율·Llama 생태계가 수익성을 재가속</p>
-      <p style="margin-top:14px">Base case는 평균 목표가 <span class="mono">$827</span>, bear case는 <span class="mono">$664</span>, bull case는 <span class="mono">$1,015</span>로 둔다. 이는 애널리스트 목표가 범위를 그대로 사용한 시나리오이며, 내부 DCF가 아니다.</p>
+      <p class="verdict">META: Facebook, Instagram, WhatsApp 광고 현금흐름으로 AI 추천·메시징·메타버스 옵션을 투자하는 플랫폼입니다.</p>
+      <p style="margin-top:14px">Base case는 평균 목표가 <span class="mono">$827.32</span>, bear case는 <span class="mono">$664.46</span>, bull case는 <span class="mono">$1015</span>로 둡니다. 애널리스트 목표가 범위를 그대로 쓴 시나리오이며, 내부 DCF가 아닙니다.</p>
     </div>
   </div>
   <div class="grid3" style="margin-top:22px">
-    <div class="card accent"><h3>진입전략</h3><p>추격매수보다 실적 발표 전후 변동성, 52주 범위 하단 접근, 목표가 대비 안전마진 회복 구간을 우선 확인한다.</p></div>
-    <div class="card accent"><h3>모니터링</h3><p>다음 실적일, 분기 매출 성장률, EPS surprise, gross/FCF margin, 가이던스 톤 변화를 우선 추적한다.</p></div>
-    <div class="card accent"><h3>캘린더</h3><p>최근 발표일 2026-04-29; StockAnalysis earnings date와 회사 IR 이벤트 캘린더를 다음 업데이트 기준으로 둔다.</p></div>
+    <div class="card accent"><h3>진입전략</h3><p>META: AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제 확인 전에는 추격보다 실적 발표 전후 변동성, 52주 범위 내 위치, 목표가 대비 안전마진을 보고 분할 접근하는 편이 낫습니다.</p></div>
+    <div class="card accent"><h3>모니터링</h3><p>AI 추천 엔진과 Reels 광고 효율, Reality Labs 지출 통제 관련 지표가 다음 실적에서 확인되는지 봐야 합니다., 매출 YoY 33.08%, gross margin 81.85%, FCF margin 23.49%의 방향성이 같은지 추적해야 합니다., 개인정보 규제와 AI capex 부담, 청소년 보호 이슈가 리스크가 뉴스와 컨센서스에 반영되는지 확인해야 합니다.</p></div>
+    <div class="card accent"><h3>캘린더</h3><p>다음 실적 이벤트에서는 매출 성장률, 마진, FCF 전환율, 애널리스트 목표가 변화가 핵심 확인 항목입니다.</p></div>
   </div>
   <div class="footnote">
     <p class="disclaimer">본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 모든 수치는 기준일 이후 변동될 수 있습니다. 정치·정책 내용은 공개 공시·보도·규제 환경 기반의 사실 정리이며 위법성을 단정하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p>
-    <p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://investor.fb.com/">company IR</a>. 기준일 2026-06-26; 가격은 2026-06-25 미국장 종가 기반. </p>
+    <p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/meta/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/meta/statistics/">StockAnalysis statistics</a>, <a href="https://stockanalysis.com/stocks/meta/forecast/">StockAnalysis forecast</a>, <a href="https://stockanalysis.com/stocks/meta/financials/?p=quarterly">StockAnalysis quarterly financials</a>, <a href="https://finance.yahoo.com/quote/META/history/">Yahoo Finance history</a>, <a href="https://www.meta.com">company website</a>, <a href="https://www.sec.gov/edgar/browse/?CIK=0001326801">SEC EDGAR filings</a>. 2026-06-28 기준; 가격은 직전 미국장 종가 기반. </p>
   </div>
 </section>
 
@@ -374,6 +384,27 @@ function draw(){
 }
 addEventListener('resize', resize, {passive:true});
 resize(); draw();
+</script>
+<script type="application/json" id="deck-data">
+{
+  "ticker": "META",
+  "name": "Meta Platforms, Inc.",
+  "sector": "소프트웨어",
+  "marketCap": 1400,
+  "price": 550.25,
+  "revenueGrowthYoY": 33.08,
+  "epsGrowthYoY": 62.36,
+  "fcfMargin": 19.34,
+  "peRatio": 20.02,
+  "psRatio": 6.5,
+  "targetUpside": 50.35,
+  "consensus": "Strong Buy",
+  "ytd": -15.4,
+  "valuationValid": true,
+  "specialNote": "META: Facebook, Instagram, WhatsApp 광고 현금흐름으로 AI 추천·메시징·메타버스 옵션을 투자하는 플랫폼입니다.",
+  "asOf": "2026-06-28",
+  "confidence": "med"
+}
 </script>
 </body>
 </html>

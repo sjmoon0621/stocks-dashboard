@@ -62,4 +62,25 @@
 <section class="slide reveal" data-no="08 / VERDICT"><div class="eyebrow">종합 판단</div><h2>진입은 기대치의 온도를 보고 결정</h2><div class="grid2" style="align-items:center"><div><div class="big-num" style="color:var(--accent)">6.5</div><div class="src">투자 매력도 / 10 · 정량지표와 질적 리스크를 결합한 주관 점수</div></div><div><p class="verdict">헬스케어 관점의 Biotechnology 리더 — 매출 YoY 229.62%, 컨센서스 Strong Buy</p><p style="margin-top:14px">시나리오는 애널리스트 목표가 범위 기반이다. Bear <span class="mono">$140</span>, Base <span class="mono">$197</span>, Bull <span class="mono">$243</span>. 내부 DCF가 아닌 시장 컨센서스 좌표로 봐야 한다.</p></div></div><div class="grid3" style="margin-top:22px"><div class="card accent"><h3>진입전략</h3><p>추격보다 실적 발표 전후 변동성, 52주 범위 하단 접근, 목표가 대비 안전마진 회복 구간을 우선 확인한다.</p></div><div class="card accent"><h3>모니터링</h3><p>분기 매출 성장률, EPS surprise, gross/FCF margin, 가이던스 톤, 애널리스트 목표가 변화를 추적한다.</p></div><div class="card accent"><h3>캘린더</h3><p>최근 발표 기준 2026-05-07; 다음 업데이트는 회사 IR 이벤트와 StockAnalysis earnings date 확인 후 반영한다.</p></div></div><div class="footnote"><p class="disclaimer">본 자료는 정보 제공 목적이며 투자 권유가 아닙니다. 작성자는 재무·법률 자문가가 아닙니다. 모든 수치는 기준일 이후 변동될 수 있습니다. 정치·정책 내용은 공개 공시·보도·규제 환경 기반의 사실 정리이며 위법성을 단정하지 않습니다. 투자 판단과 책임은 투자자 본인에게 있습니다.</p><p class="src" style="margin-top:10px">출처: <a href="https://stockanalysis.com/stocks/insm/">StockAnalysis overview</a>, <a href="https://stockanalysis.com/stocks/insm/statistics/">statistics</a>, <a href="https://stockanalysis.com/stocks/insm/forecast/">forecast</a>, <a href="https://stockanalysis.com/stocks/insm/financials/?p=quarterly">quarterly financials</a>, <a href="https://finance.yahoo.com/quote/INSM/history/">Yahoo Finance history</a>, <a href="https://www.insmed.com">회사 웹사이트</a>. 기준일 2026-06-26; 가격·YTD는 2026-06-25 미국장 종가/조정종가 기준. </p></div></section>
 <script>
 const root=document.documentElement,prog=document.getElementById('prog');window.addEventListener('scroll',()=>{const h=document.documentElement.scrollHeight-innerHeight;prog.style.width=(h>0?scrollY/h*100:0)+'%'},{passive:true});const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('in')}),{threshold:.18});document.querySelectorAll('.reveal').forEach(x=>io.observe(x));const canvas=document.getElementById('field'),ctx=canvas.getContext('2d'),reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;let nodes=[];function resize(){canvas.width=innerWidth*devicePixelRatio;canvas.height=innerHeight*devicePixelRatio;ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);const count=Math.min(46,Math.max(18,Math.floor(innerWidth/38)));nodes=Array.from({length:count},()=>({x:Math.random()*innerWidth,y:Math.random()*innerHeight,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35,r:1.2+Math.random()*2.2}))}function draw(){ctx.clearRect(0,0,innerWidth,innerHeight);const a=getComputedStyle(root).getPropertyValue('--accent').trim(),b=getComputedStyle(root).getPropertyValue('--accent2').trim();for(let i=0;i<nodes.length;i++){const n=nodes[i];if(!reduce){n.x+=n.vx;n.y+=n.vy}if(n.x<0||n.x>innerWidth)n.vx*=-1;if(n.y<0||n.y>innerHeight)n.vy*=-1;ctx.beginPath();ctx.arc(n.x,n.y,n.r,0,Math.PI*2);ctx.fillStyle=i%2?a:b;ctx.globalAlpha=.6;ctx.fill();for(let j=i+1;j<nodes.length;j++){const m=nodes[j],dx=n.x-m.x,dy=n.y-m.y,d=Math.hypot(dx,dy);if(d<150){ctx.beginPath();ctx.moveTo(n.x,n.y);ctx.lineTo(m.x,m.y);ctx.strokeStyle=a;ctx.globalAlpha=(1-d/150)*.18;ctx.stroke()}}}ctx.globalAlpha=1;if(!reduce)requestAnimationFrame(draw)}addEventListener('resize',resize,{passive:true});resize();draw();
-</script></body></html>
+</script><script type="application/json" id="deck-data">
+{
+  "ticker": "INSM",
+  "name": "Insmed Incorporated",
+  "sector": "헬스케어",
+  "marketCap": 22.64,
+  "price": 104.47,
+  "revenueGrowthYoY": 229.62,
+  "epsGrowthYoY": null,
+  "fcfMargin": -73.94,
+  "peRatio": null,
+  "psRatio": 27.63,
+  "targetUpside": 88.6,
+  "consensus": "Strong Buy",
+  "ytd": -41,
+  "valuationValid": true,
+  "specialNote": "헬스케어 관점의 Biotechnology 리더 — 매출 YoY 229.62%, 컨센서스 Strong Buy",
+  "asOf": "2026-06-26",
+  "confidence": "med"
+}
+</script>
+</body></html>
