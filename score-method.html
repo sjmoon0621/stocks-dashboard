@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>매력도 점수 산출 근거 — Equity Research Hub</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+:root{
+  --void:#05060a;--deep:#0b0e17;--panel:#11151f;--panel2:#161b27;--line:#222a3a;
+  --ink:#e8ecf4;--mute:#8a93a8;--faint:#5a6378;
+  --accent:#5cc8ff;--accent2:#7b6cff;--gold:#e3b24a;--green:#3ee08f;--amber:#ffc24b;--red:#ff5071;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:radial-gradient(circle at 15% -5%,rgba(92,200,255,.06),transparent 30%),var(--void);color:var(--ink);font-family:'IBM Plex Sans KR',sans-serif;line-height:1.68;-webkit-font-smoothing:antialiased}
+.wrap{max-width:940px;margin:0 auto;padding:clamp(40px,6vw,80px) clamp(20px,5vw,48px)}
+.mono{font-family:'IBM Plex Mono',monospace}
+a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(92,200,255,.3)}
+.back{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--mute);border:none;display:inline-block;margin-bottom:34px}
+.eyebrow{font-family:'IBM Plex Mono',monospace;font-size:12px;letter-spacing:.3em;text-transform:uppercase;color:var(--accent);margin-bottom:14px}
+h1{font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:clamp(32px,5vw,52px);line-height:1.05;letter-spacing:-.02em;margin-bottom:16px}
+.lead{color:var(--mute);font-size:clamp(15px,1.6vw,18px);font-weight:300;max-width:760px;margin-bottom:12px}
+h2{font-family:'Space Grotesk',sans-serif;font-weight:600;font-size:clamp(21px,2.6vw,28px);margin:52px 0 14px;padding-top:18px;border-top:1px solid var(--line);letter-spacing:-.01em}
+h3{font-size:16px;font-weight:600;margin:22px 0 8px;color:var(--ink)}
+p{color:var(--mute);font-weight:300;margin-bottom:12px}
+strong{color:var(--ink);font-weight:600}
+.formula{background:var(--deep);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:16px 18px;margin:14px 0;font-family:'IBM Plex Mono',monospace;font-size:13.5px;color:var(--ink);overflow-x:auto;line-height:1.9}
+.formula .c{color:var(--accent)}.formula .k{color:var(--gold)}.formula .n{color:var(--green)}
+table{width:100%;border-collapse:collapse;font-size:14px;margin:14px 0}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:left}
+th{font-family:'IBM Plex Mono',monospace;font-size:11px;letter-spacing:.04em;color:var(--faint);font-weight:500;text-transform:uppercase}
+td{color:var(--mute);font-weight:300}td.mono,th.mono{font-family:'IBM Plex Mono',monospace}
+td.hi{color:var(--ink)}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:14px 0}
+.card{background:linear-gradient(160deg,var(--panel),var(--deep));border:1px solid var(--line);border-radius:8px;padding:18px}
+.card h3{margin-top:0}
+ul{list-style:none;margin:6px 0}
+li{position:relative;padding-left:16px;color:var(--mute);font-weight:300;margin-bottom:7px;font-size:14.5px}
+li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--accent)}
+.pill{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:11px;padding:2px 8px;border-radius:5px;background:rgba(92,200,255,.1);border:1px solid rgba(92,200,255,.25);color:var(--accent);margin-right:6px}
+.note{font-size:13px;color:var(--faint);border-top:1px dashed var(--line);margin-top:40px;padding-top:16px;line-height:1.7}
+.tag-green{color:var(--green)}.tag-red{color:var(--red)}.tag-amber{color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← 대시보드로</a>
+  <div class="eyebrow">Scoring Methodology · score.js v0.4</div>
+  <h1>매력도 점수는 어떻게 나오나</h1>
+  <p class="lead">매력도(0~10)는 주관 감이 아니라 <strong>백테스트로 가중치를 정한 투명한 점수 엔진</strong>으로 계산합니다. 이 페이지는 그 공식과 근거를 그대로 공개합니다. "정답 점수"가 아니라 데이터로 계속 고쳐가는 점수입니다.</p>
+
+  <h2>1. 종합 공식</h2>
+  <p>다섯 개 가점 컴포넌트를 각각 0~10으로 정규화해 가중 평균하고, 세 가지 감점을 뺀 뒤 0~10으로 자릅니다.</p>
+  <div class="formula">
+매력도 = <span class="c">Σ</span>( 컴포넌트<span class="k">ᵢ</span> × 가중치<span class="k">ᵢ</span> ) − 리스크감점 − 과열감점 − 사이클정점감점<br>
+&nbsp;&nbsp;&nbsp;&nbsp;→ 0 ~ 10 으로 clamp
+  </div>
+  <p>컴포넌트: <span class="pill">성장성</span><span class="pill">수익성</span><span class="pill">밸류에이션</span><span class="pill">컨센서스</span><span class="pill">촉매</span></p>
+
+  <h2>2. 가중치 (v0.4)</h2>
+  <p>가중치는 감이 아니라 <strong>S&amp;P500 백테스트</strong>로 정했습니다. 넓은 시장에서 각 지표의 12개월 예측력(IC)을 측정한 결과, <strong>밸류에이션이 가장 강하고 수익성은 거의 예측력이 없었습니다</strong>.</p>
+  <table>
+    <tr><th>컴포넌트</th><th class="mono">가중치</th><th>백테스트 근거 (12M IC)</th></tr>
+    <tr><td class="hi">밸류에이션</td><td class="mono hi">0.40</td><td>IC ≈ <span class="tag-green">0.068</span> — 넓은 시장 최강 예측력</td></tr>
+    <tr><td class="hi">컨센서스</td><td class="mono hi">0.20</td><td>등급 + 목표가 여력</td></tr>
+    <tr><td class="hi">성장성</td><td class="mono hi">0.20</td><td>IC ≈ 0.039 — 약함(나스닥 강세장 과적합 경계)</td></tr>
+    <tr><td class="hi">촉매</td><td class="mono hi">0.15</td><td>정성 보정(기본 중립 5)</td></tr>
+    <tr><td class="hi">수익성</td><td class="mono hi">0.05</td><td>IC ≈ <span class="tag-red">−0.018</span> — 예측력 없어 거의 제거</td></tr>
+  </table>
+  <p class="mono" style="font-size:12.5px;color:var(--faint)">이 조합의 패널 IC ≈ 0.071 (밸류 중심 최적군). v0.3(성장 0.40)은 나스닥 79종목 강세장 과적합이라 뒤집음.</p>
+
+  <h2>3. 컴포넌트별 산식</h2>
+  <p>큰 값이 무한정 10이 되지 않도록 <strong>포화(saturating) 곡선</strong>을 씁니다. 매출 +35%와 +65%가 둘 다 10이 되지 않고 구분됩니다. 음수(역성장·적자)는 자연히 기준 아래로 내려가 감점됩니다.</p>
+  <div class="formula">sat(v, floor, span, scale) = floor + span × ( 1 − e<sup>−v/scale</sup> ) , &nbsp;[0~10]</div>
+  <div class="grid2">
+    <div class="card"><h3>성장성</h3><p class="mono" style="font-size:13px">0.6·sat(매출YoY,4,7,40)<br>+ 0.4·sat(EPS&nbsp;YoY,4,6,45)</p><p style="font-size:13.5px">매출 성장 0.6, EPS 성장 0.4. EPS는 변동성이 커서 더 완만하게.</p></div>
+    <div class="card"><h3>수익성</h3><p class="mono" style="font-size:13px">sat(FCF마진%,3,8,18)</p><p style="font-size:13.5px">0%→3, 15%→7.5, 55%→10, 적자→3 미만. (가중치 0.05로 영향 작음)</p></div>
+    <div class="card"><h3>밸류에이션 — 섹터 상대</h3><p class="mono" style="font-size:13px">평균( 5·기준PER/PER , 5·기준PSR/PSR )</p><p style="font-size:13.5px">섹터 기준 멀티플과 같으면 5점, 절반이면 10점, 2배면 2.5점. 고성장 SW와 저PER 산업재를 같은 잣대로 보지 않습니다. 적자(PER≤0)면 PSR만 쓰고 −1 디스카운트. 특수구조(ETF·MSTR 등 <span class="mono">valuationValid:false</span>)는 중립 5.</p></div>
+    <div class="card"><h3>컨센서스</h3><p class="mono" style="font-size:13px">등급점수 + clamp(목표가여력%·0.08, −2, +2)</p><p style="font-size:13.5px">Strong Buy 9 / Buy 7 / Hold 5 / Sell 2 / Strong Sell 1. 목표가 상승여력을 ±2 범위로 반영.</p></div>
+  </div>
+
+  <h3>섹터 기준 멀티플 (밸류 계산의 "정상값")</h3>
+  <table>
+    <tr><th>섹터</th><th class="mono">기준 PER</th><th class="mono">기준 PSR</th><th>섹터</th><th class="mono">기준 PER</th><th class="mono">기준 PSR</th></tr>
+    <tr><td>반도체</td><td class="mono">28</td><td class="mono">7</td><td>에너지</td><td class="mono">12</td><td class="mono">1.8</td></tr>
+    <tr><td>소프트웨어</td><td class="mono">35</td><td class="mono">9</td><td>금융</td><td class="mono">14</td><td class="mono">4</td></tr>
+    <tr><td>하드웨어</td><td class="mono">18</td><td class="mono">3</td><td>부동산</td><td class="mono">30</td><td class="mono">8</td></tr>
+    <tr><td>헬스케어</td><td class="mono">24</td><td class="mono">5</td><td>유틸리티</td><td class="mono">18</td><td class="mono">2.5</td></tr>
+    <tr><td>소비재</td><td class="mono">25</td><td class="mono">3</td><td>필수소비재</td><td class="mono">22</td><td class="mono">2.5</td></tr>
+    <tr><td>산업재</td><td class="mono">22</td><td class="mono">3</td><td>전기차</td><td class="mono">55</td><td class="mono">7</td></tr>
+    <tr><td>커뮤니케이션</td><td class="mono">22</td><td class="mono">4</td><td>기타/기본</td><td class="mono">20~22</td><td class="mono">3~4</td></tr>
+  </table>
+
+  <h2>4. 감점</h2>
+  <div class="grid2">
+    <div class="card"><h3 class="tag-amber">과열 감점 (YTD)</h3><ul>
+      <li>YTD &gt; 100% → <span class="mono">−1.5</span></li>
+      <li>YTD &gt; 60% → <span class="mono">−0.8</span></li>
+      <li>YTD &gt; 40% → <span class="mono">−0.4</span></li>
+    </ul><p style="font-size:13px">이미 많이 오른 종목은 추격 위험을 반영.</p></div>
+    <div class="card"><h3 class="tag-red">사이클 정점 감점</h3><p style="font-size:13.5px">사이클 업종(<strong>반도체·에너지·소재·산업재</strong>)이 매출 <strong>정점</strong>에서 비싸게 사면 평균회귀로 망합니다. 매출 YoY가 80%를 넘으면 감점이 시작돼 150%에서 최대 <span class="mono">−2.0</span>으로 포화.</p><p class="mono" style="font-size:12px;color:var(--faint)">근거: 사이클섹터 &gt;100% 성장 이후 12M +10% vs 역성장 +30%. 내부 IC 0.095→0.102.</p></div>
+  </div>
+  <p style="font-size:13.5px">리스크 감점은 종목별 정성 보정(overlay)에서 최대 −3까지. 소송·규제·지배구조 등 산식이 못 잡는 개별 리스크를 사람이 반영합니다.</p>
+
+  <h2>5. 백테스트 근거와 한계</h2>
+  <p>가중치는 <strong>S&amp;P500 종목 · 2016~2025 · 무료 데이터(SEC EDGAR 펀더멘털 + Yahoo 주가)</strong>로 PIT(시점보존) 팩터 백테스트를 돌려 정했습니다. 종합점수의 12개월 IC와 분위 스프레드가 유의하게 양(+)이었고, 컴포넌트별 IC로 가중치를 재조정했습니다(밸류↑·수익성↓).</p>
+  <h3>솔직한 한계</h3>
+  <ul>
+    <li><strong>생존 편향</strong> — 현재 유니버스 기준이라 절대수익률은 낙관적으로 나옴.</li>
+    <li><strong>겹치는 관측 윈도우</strong> — t값이 과대평가될 수 있음.</li>
+    <li><strong>레짐 의존</strong> — 성장주 강세장 구간의 영향. 그래서 성장 가중치를 낮춤.</li>
+    <li><strong>컨센서스·목표가</strong>는 무료 과거 데이터가 없어 백테스트에선 제외(라이브 점수에는 포함).</li>
+  </ul>
+
+  <p class="note">⚠️ 본 점수와 분석은 정보 제공용이며 투자 권유가 아닙니다. 매력도는 공개 데이터 기반의 정량 산식 결과이며, 기준일 이후 값은 변동됩니다. 특수구조 종목(ETF·트레저리 등)은 일반 밸류 산식이 적용되지 않습니다. 투자 판단과 책임은 본인에게 있습니다. · 엔진 버전 score.js v0.4</p>
+</div>
+</body>
+</html>
